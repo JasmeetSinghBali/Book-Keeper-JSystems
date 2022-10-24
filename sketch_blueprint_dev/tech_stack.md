@@ -17,9 +17,38 @@
 
 - typescript
 - trpc
-- prisma [postgreSQL]
+- prisma "postgreSQL" [supabase](https://supabase.com/docs/guides/integrations/prisma) for cloud hosting the postgres instance with prisma
 
 Misc:
 
-- [supabase](https://supabase.com/docs/guides/integrations/prisma) for cloud hosting the postgres instance with prisma
 - QR Code Based Authenticator
+
+---
+
+> ## Frontend (UI)
+
+```bash
+
+#new project
+yarn create next-app --typescript
+
+```
+
+> Dependencies
+
+```bash
+
+"dependencies": {
+    "@chakra-ui/react": "^2.3.6",
+    "@emotion/react": "^11.10.4",
+    "@emotion/styled": "^11.10.4",
+    "chart.js": "^3.9.1",
+    "framer-motion": "^7.6.1",
+    "next": "12.3.1",
+    "react": "18.2.0",
+    "react-chartjs-2": "^4.3.1",
+    "react-dom": "18.2.0",
+    "react-icons": "^4.6.0"
+  }
+
+```
