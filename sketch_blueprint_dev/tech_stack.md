@@ -52,3 +52,8 @@ yarn create next-app --typescript
   }
 
 ```
+
+> Misc Resources Links
+
+- [UI-react-icons](https://react-icons.github.io/react-icons/icons?name=ai)
+- inspired from [ui design](https://dribbble.com/shots/15640240/attachments/7432009?mode=media)
