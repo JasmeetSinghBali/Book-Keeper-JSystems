@@ -21,4 +21,5 @@
 
 Misc:
 
+- [supabase](https://supabase.com/docs/guides/integrations/prisma) for cloud hosting the postgres instance with prisma
 - QR Code Based Authenticator
