@@ -3,6 +3,10 @@
     <b>NOTE: This guide is subject to change a/c to will of the owner of this project</b>
 </p>
 
+---
+
+---
+
 > Report/Fix Bug
 
 1. Report Only:
