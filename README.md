@@ -63,4 +63,4 @@ The aim for this project is to make the book keeping simpler i.e track & record 
 
 #### <p align="center"> 📝 **_Support & License_** </p>
 
-> Book Keeper System is a [MIT licensed](https://choosealicense.com/licenses/mit/) project. It can grow with your support. If you aim to help this project grow / Purpose & Add new features / Report Bugs follow the instructions mentioned here 👉 [How To Contribute](https://github.com/Jasmeet-1998/Book-Keeper-System/contribute.md)
+> Book Keeper System is a [MIT licensed](https://choosealicense.com/licenses/mit/) project. It can grow with your support. If you aim to help this project grow / Purpose & Add new features / Report Bugs follow the instructions mentioned here 👉 [How To Contribute](https://github.com/Jasmeet-1998/Book-Keeper-System/blob/stable/contribute.md)
