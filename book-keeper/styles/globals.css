@@ -15,12 +15,32 @@ a {
   box-sizing: border-box;
 }
 
-@media (prefers-color-scheme: dark) {
-  html {
-    color-scheme: dark;
-  }
-  body {
-    color: white;
-    background: black;
-  }
+.active {
+  color: #fff;
+}
+
+.active-icon{
+  color:goldenrod !important;
+}
+
+.sidebar-items{
+  color: gray;
+  font-size:x-small
+}
+
+.sidebar-items p {
+  margin-left: 0.8em;
+}
+
+.sidebar-items:hover p {
+  color: goldenrod; 
+}
+
+.sidebar-items:hover svg {
+  color: goldenrod;
+}
+
+/*skipping the margin bottom for the last Settings item as it is the last one*/
+.sidebar-items:not(:last-child) {
+  margin-bottom: 1.2em;
 }
