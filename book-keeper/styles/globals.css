@@ -16,7 +16,7 @@ a {
 }
 
 .active {
-  color: #fff;
+  color:goldenrod;
 }
 
 .active-icon{
@@ -25,7 +25,8 @@ a {
 
 .sidebar-items{
   color: gray;
-  font-size:x-small
+  font-size:x-small;
+  font-weight:lighter;
 }
 
 .sidebar-items p {
