@@ -25,7 +25,8 @@ a {
 
 .sidebar-items{
   color: gray;
-  font-size:x-small
+  font-size:x-small;
+  font-weight:lighter;
 }
 
 .sidebar-items p {
