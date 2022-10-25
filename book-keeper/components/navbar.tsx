@@ -119,7 +119,7 @@ const Navbar = () => {
                     <Flex flexDir="column"alignItems="center" mb={10} mt={5}>
                         <Avatar my={2} src="avatar-1.jpg" />
                         <Heading textAlign="center" fontSize="sm" letterSpacing="tighter" >Jasmeet Bali</Heading>
-                        <Text textAlign="center" fontSize="xs" fontWeight="hairline" letterSpacing="tight">Version: Premium</Text>
+                        <Text textAlign="center" fontSize="xs" fontWeight="hairline" letterSpacing="tight">Plan: Premium</Text>
                     </Flex>
                 </Flex>
             </Flex>
