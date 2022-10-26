@@ -55,8 +55,8 @@ export default function dashboard(){
 
     return(
         <Flex
-            h="100vh"
-            flexDir="row"
+            h={[null,null,"100vh"]}
+            flexDir={["column","column","row"]}
             overflow="hidden"
             maxW="2000px"
         >
@@ -67,7 +67,8 @@ export default function dashboard(){
             
             {/*📝 Search part + Card Slider part + credit/debit Total Funds related to all cards + [For Future Versions] Add new contact + Dispatch/Send funds Section */}
             <Flex
-                w="30%"
+                w={["100%","100%","30%"]} 
+                minW={[null,null,"300px","300px","400px"]}
                 bgColor="#F5F5F5"
                 p="3%"
                 flexDir="column"
@@ -90,6 +91,7 @@ export default function dashboard(){
                         borderRadius="50%"
                         p="10px"
                         aria-label={'Notifications'} 
+                        _hover={{bg:"teal.200"}}
                     />
                     {/*🎈 make this notification count dynamic fetch data from db or redis to tackle this */}
                     <Flex
@@ -318,10 +320,10 @@ export default function dashboard(){
                         </DrawerBody>
 
                         <DrawerFooter borderTopWidth='1px'>
-                            <Button variant='outline' mr={3} onClick={onClose}>
+                            <Button variant='outline' mr={3} onClick={onClose} _hover={{bg:"red.400"}}>
                                 Cancel
                             </Button>
-                            <Button colorScheme='blue'>Add 🎭</Button>
+                            <Button colorScheme='teal'>Add 🎭</Button>
                         </DrawerFooter>
                         </DrawerContent>
                     </Drawer>
