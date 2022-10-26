@@ -42,6 +42,7 @@ import {
     AiOutlineBell,
 } from 'react-icons/ai';
 import {
+    FiDollarSign,
     FiPlus
 } from 'react-icons/fi'
 import Navbar from '../components/navbar';
@@ -325,6 +326,23 @@ export default function dashboard(){
                         </DrawerContent>
                     </Drawer>
                 </Flex>
+                <Text color="gray" mt={10} mb={2}>Card Number</Text>
+                <InputGroup>
+                    <InputLeftElement
+                        pointerEvents="none"
+                        children={<AiFillCreditCard color="gray.700" />} 
+                    />
+                    <Input type="number" placeholder="xxxx xxxx xxxx xxxx" />
+                </InputGroup>
+                <Text color="gray" mt={10} mb={2}>Amount</Text>
+                <InputGroup>
+                    <InputLeftElement
+                        pointerEvents="none"
+                        children={<FiDollarSign color="gray.700" />} 
+                    />
+                    <Input type="number" placeholder="1.00" />
+                </InputGroup>
+                <Button mt={4} _hover={{bg:"teal"}} bgColor="blackAlpha.900" color="white" p={7} borderRadius={15}>Send Money</Button>
             </Flex>
         </Flex>
     )
