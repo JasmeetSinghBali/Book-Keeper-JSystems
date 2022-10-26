@@ -18,7 +18,7 @@ import {
     AiFillCaretDown,
     AiFillCaretUp,
 } from 'react-icons/ai';
-import BKChartMain from '../components/chart.dashboard.tsx'
+import BKChartMain from './chart.dashboard.tsx'
 
 const TxnList = () => {
     const [view,changeView] = useState('hide');
@@ -26,7 +26,7 @@ const TxnList = () => {
         <>
             {/*Chart + Latest Transaction List Section*/}
             <Flex
-                w="55%"
+                w={["100%", "100%", "60%", "60%", "55%"]}
                 p="3%"
                 flexDir="column"
                 overflow="auto"
@@ -49,7 +49,7 @@ const TxnList = () => {
                         <Heading as="h2" size="md" letterSpacing="tighter">Transactions</Heading>
                         <Text fontSize="xs" color="gray" ml={4}>Apr 2023</Text>
                     </Flex>
-                    <IconButton icon={<AiFillCalendar />} aria-label={''}></IconButton>
+                    <IconButton icon={<AiFillCalendar />} aria-label={''} _hover={{bg:"goldenrod"}} ></IconButton>
                 </Flex>
                 {/*Transactions List Section [scrollable & responsive]*/}
                 <Flex flexDir='column'>
@@ -145,6 +145,7 @@ const TxnList = () => {
                     <Flex align="center">
                         <Divider/>
                         <IconButton 
+                            _hover={{bg:"goldenrod"}}
                             icon={view === 'show' ? <AiFillCaretUp /> : <AiFillCaretDown />}
                             aria-label={''}
                             onClick={()=>{

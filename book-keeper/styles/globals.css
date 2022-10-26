@@ -15,6 +15,7 @@ a {
   box-sizing: border-box;
 }
 
+
 .active {
   color:goldenrod;
 }
@@ -25,8 +26,14 @@ a {
 
 .sidebar-items{
   color: gray;
-  font-size:x-small;
+  font-size: medium;
   font-weight:lighter;
+}
+
+@media only screen and (max-width: 768px){
+  .sidebar-items{
+    margin-bottom: 0 !important;
+  }
 }
 
 .sidebar-items p {

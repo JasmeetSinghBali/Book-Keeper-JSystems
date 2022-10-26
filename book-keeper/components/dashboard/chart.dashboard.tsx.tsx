@@ -57,7 +57,6 @@ ChartJS.register(
 );
 
 const options = {
-    responsive: true,
     maintainAspectRatio: true,
     scales: {
         x: {
