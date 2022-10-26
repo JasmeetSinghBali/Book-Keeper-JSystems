@@ -18,7 +18,7 @@ import {
     AiFillCaretDown,
     AiFillCaretUp,
 } from 'react-icons/ai';
-import BKChartMain from '../components/chart.dashboard.tsx'
+import BKChartMain from './chart.dashboard.tsx'
 
 const TxnList = () => {
     const [view,changeView] = useState('hide');
