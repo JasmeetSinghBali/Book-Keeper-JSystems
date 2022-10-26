@@ -14,6 +14,9 @@ import {
     AiOutlineBook,
 } from 'react-icons/ai';
 import {
+    FcApproval 
+} from 'react-icons/fc';
+import {
     SiEthereum
 } from 'react-icons/si';
 import { useRouter } from 'next/router';
@@ -118,8 +121,9 @@ const Navbar = () => {
                     {/*Users Avatar Section Bottom*/}
                     <Flex flexDir="column"alignItems="center" mb={10} mt={5}>
                         <Avatar my={2} src="avatar-1.jpg" />
-                        <Heading textAlign="center" fontSize="sm" letterSpacing="tighter" >Jasmeet Bali</Heading>
-                        <Text textAlign="center" fontSize="xs" fontWeight="hairline" letterSpacing="tight">Plan: Premium</Text>
+                        <Heading textAlign="center" fontSize="md" letterSpacing="tighter" >Jasmeet Bali</Heading>
+                        {/*🎈 make this dynamic if premium then only add Icon FcApproval else not */}
+                        <Text textAlign="center" fontSize="xs" fontWeight="hairline" letterSpacing="tight"><Icon as={FcApproval}></Icon>Premium</Text>
                     </Flex>
                 </Flex>
             </Flex>

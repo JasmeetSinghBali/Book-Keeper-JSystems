@@ -1,6 +1,9 @@
 {
   "name": "book-keeper",
   "version": "0.1.0",
+  "author": "Jasmeet Singh Bali",
+  "description": "Book-Keeper-System",
+  "license": "MIT",
   "private": true,
   "scripts": {
     "dev": "next dev",
