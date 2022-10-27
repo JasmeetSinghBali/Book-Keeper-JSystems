@@ -2,9 +2,9 @@ import React,{ useState } from 'react';
 import { 
     Flex,
 } from "@chakra-ui/react";
-import Navbar from '../components/navbar';
-import TxnList from '../components/dashboard/txnlist.dashboard';
-import SearchNotificationSection from '../components/dashboard/searchnotif.dashboard';
+import Navbar from '../../components/common/navbar';
+import TxnList from '../../components/dashboard/txnlist.dashboard';
+import SearchNotificationSection from '../../components/dashboard/searchnotif.dashboard';
 
 export default function dashboard(){ 
     return(
