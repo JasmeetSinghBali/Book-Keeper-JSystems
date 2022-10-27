@@ -59,17 +59,17 @@ const Navbar = () => {
                         <Flex
                             flexDir={["row","row","column","column","column"]}
                             align={["center","center","center","flex-start","flex-start"]}
-                            justifyContent="center"
+                            justifyContent={["space-between","space-between","center","center","center"]}
                         >   
                             {/*Flex for each individual navbar icons*/}
                             <Flex className="sidebar-items">
                                 <NextLink href="/user/dashboard" passHref>
                                     <Link display={["center","center","center","flex-start","flex-start"]}>
-                                        <Icon display={["none","none","flex","flex","flex"]} as={AiFillHome} fontSize="xl" className={router.pathname === "/user/dashboard"?"active-icon":"" }/>
+                                        <Icon display={["flex","flex","flex","flex","flex"]} as={AiFillHome} fontSize="xl" className={router.pathname === "/user/dashboard"?"active-icon":"" }/>
                                     </Link>
                                 </NextLink>
                                 <NextLink href="/user/dashboard" passHref>
-                                    <Link _hover={{textDecor: 'none'}} display={["flex","flex","none","flex","flex"]}>
+                                    <Link _hover={{textDecor: 'none'}} display={["none","none","none","flex","flex"]}>
                                         <Text className={router.pathname === "/user/dashboard"?"active":""}>Home</Text>
                                     </Link>
                                 </NextLink>
@@ -77,11 +77,11 @@ const Navbar = () => {
                             <Flex className="sidebar-items">
                                 <NextLink href="/user/transactions" passHref>
                                     <Link display={["center","center","center","flex-start","flex-start"]}>
-                                        <Icon display={["none","none","flex","flex","flex"]} as={AiFillDollarCircle} fontSize="xl"  className={router.pathname === "/user/transactions"?"active-icon":"" } />
+                                        <Icon display={["flex","flex","flex","flex","flex"]} as={AiFillDollarCircle} fontSize="xl"  className={router.pathname === "/user/transactions"?"active-icon":"" } />
                                     </Link>
                                 </NextLink>
                                 <NextLink href="/user/transactions" passHref>
-                                    <Link _hover={{textDecor: 'none'}} display={["flex","flex","none","flex","flex"]}>
+                                    <Link _hover={{textDecor: 'none'}} display={["none","none","none","flex","flex"]}>
                                         <Text className={router.pathname === "/user/transactions"?"active":""}>My Txns </Text>
                                     </Link>
                                 </NextLink>
@@ -89,12 +89,12 @@ const Navbar = () => {
                             <Flex className="sidebar-items">
                                 <NextLink href="/user/contacts" passHref>
                                     <Link display={["center","center","center","flex-start","flex-start"]}>
-                                        <Icon display={["none","none","flex","flex","flex"]} as={AiFillContacts} fontSize="xl" className={router.pathname === "/user/contacts"?"active-icon":"" } />
+                                        <Icon display={["flex","flex","flex","flex","flex"]} as={AiFillContacts} fontSize="xl" className={router.pathname === "/user/contacts"?"active-icon":"" } />
                                     </Link>
                                 </NextLink>
                                 
                                 <NextLink href="/user/contacts" passHref>
-                                    <Link _hover={{textDecor: 'none'}} display={["flex","flex","none","flex","flex"]}>
+                                    <Link _hover={{textDecor: 'none'}} display={["none","none","none","flex","flex"]}>
                                         <Text className={router.pathname === "/user/contacts"?"active":""}>My Contacts</Text>
                                     </Link>
                                 </NextLink>
@@ -103,12 +103,12 @@ const Navbar = () => {
                             <Flex className="sidebar-items">
                                 <NextLink href="/user/settings" passHref>
                                     <Link display={["center","center","center","flex-start","flex-start"]}>
-                                        <Icon display={["none","none","flex","flex","flex"]} as={AiFillSetting} fontSize="xl" className={router.pathname === "/user/settings"?"active-icon":"" } />
+                                        <Icon display={["flex","flex","flex","flex","flex"]} as={AiFillSetting} fontSize="xl" className={router.pathname === "/user/settings"?"active-icon":"" } />
                                     </Link>
                                 </NextLink>
                                 
                                 <NextLink href="/user/settings" passHref>
-                                    <Link _hover={{textDecor: 'none'}} display={["flex","flex","none","flex","flex"]}>
+                                    <Link _hover={{textDecor: 'none'}} display={["none","none","none","flex","flex"]}>
                                         <Text className={router.pathname === "/user/settings"?"active":""}>Settings</Text>
                                     </Link>    
                                 </NextLink>

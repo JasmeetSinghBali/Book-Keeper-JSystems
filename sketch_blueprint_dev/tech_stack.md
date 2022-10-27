@@ -57,5 +57,7 @@ yarn create next-app --typescript
 
 - [UI-react-icons](https://react-icons.github.io/react-icons/icons?name=ai)
 - user dashboard inspired from [ui design](https://dribbble.com/shots/15640240/attachments/7432009?mode=media)
+- user settings inspired from [ui design](https://dribbble.com/shots/17219601-Integrations-settings-page-Untitled-UI?utm_source=Clipboard_Shot&utm_campaign=jordanhughes&utm_content=Integrations%20settings%20page%20%E2%80%94%20Untitled%20UI&utm_medium=Social_Share&utm_source=Clipboard_Shot&utm_campaign=jordanhughes&utm_content=Integrations%20settings%20page%20%E2%80%94%20Untitled%20UI&utm_medium=Social_Share)
+
 - [chakra-themes/colors](https://chakra-ui.com/docs/styled-system/theme)
 - [react-charts](https://react-chartjs-2.js.org/) [examples] (https://react-chartjs-2.js.org/examples/line-chart)

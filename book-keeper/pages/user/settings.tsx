@@ -3,10 +3,9 @@ import {
     Flex,
 } from "@chakra-ui/react";
 import Navbar from '../../components/common/navbar';
-import TxnList from '../../components/user-dashboard/txnlist.dashboard';
-import SearchNotificationSection from '../../components/user-dashboard/searchnotif.dashboard';
+import SettingsNavbar from '../../components/user-settings/navbar.settings';
 
-export default function dashboard(){ 
+export default function settings(){ 
     return(
         <Flex
             h={[null,null,"100vh"]}
@@ -15,8 +14,7 @@ export default function dashboard(){
             maxW="2000px"
         >
             <Navbar /> 
-            <TxnList/>
-            <SearchNotificationSection />
+            <SettingsNavbar />
         </Flex>
     )
 }
