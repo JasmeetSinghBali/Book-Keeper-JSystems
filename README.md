@@ -32,7 +32,7 @@ The aim for this project is to make the book keeping simpler i.e track & record 
 
 # development
 
-
+yarn dev
 
 # debug mode
 
