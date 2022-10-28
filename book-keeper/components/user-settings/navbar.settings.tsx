@@ -1,34 +1,64 @@
 import { Flex, Heading, Icon, Link, Text } from "@chakra-ui/react";
-import  NextLink  from "next/link";
-import { useRouter } from "next/router";
 import React, { useState } from "react";
 import { AiFillSetting } from "react-icons/ai";
+import BillingSettings from "./billing.settings";
+import DangerSettings from "./danger.settings";
+import GeneralSettings from "./general.settings";
+import IntegrationSettings from "./integrations.settings";
+
+
 
 const SettingsNavbar = () => {
-    const router = useRouter();
-    const [settingsOption,selectSettingsOption] = useState('general')
+    const [settingsOption,selectSettingsOption] = useState('general');
+    function showSection(){
+        const currentSelection = settingsOption;
+        switch (currentSelection) {
+            case 'general':
+                return <GeneralSettings />
+            case 'billing':
+                return <BillingSettings />
+            case 'integrations':
+                return <IntegrationSettings />
+            case 'dangerzone':
+                return <DangerSettings />
+            default:
+                return <GeneralSettings />
+        }
+    }
     return(
         <>    
             {/*Settings navbar*/}
             <Flex
-                w={["100%", "100%", "90%", "90%", "85%"]}
-                maxH="100vh"
+                w="100%"
+                h="100%"
+                flexDir="column"
+                overflow="hidden"
+                p={5}
+                display="flex-start"
             >
                 <Flex
+                    flexDir="row"
+                    justifyContent="center"
+                    h="20%"
+                    w="100%"
+                    p={2}
+                    mb={1}
+                >
+                    <Flex
                         w="100%"
-                        h="20%"
-                        p="3%"
+                        h="100%"
+                        p={[-4,-2,1,5,10]}
                         flexDir="row"
                         as="nav"
+                        justifyContent="flex-start"
+                        mb={10}
                     >
-                        
                             <Heading 
                                 display={["inline-flex","inline-flex","inline-flex","inline-flex","block"]}
                                 fontWeight="bold"
                                 mt={[15,2,7,4,-1]}
-                                fontSize={["xl","3xl","xl","2xl","3xl"]}
+                                fontSize={["xl","2xl","xl","2xl","3xl"]}
                                 letterSpacing="tighter"
-                                mb={10}
                             >
                                     <Icon 
                                     display={["inline-flex","inline-flex","inline-flex","inline-flex","inline-flex"]}
@@ -73,7 +103,10 @@ const SettingsNavbar = () => {
                                     </Flex>
                             </Flex>
                         </Flex>
+                    </Flex>
                 </Flex>
+                {/**Different Settings Section dynamically */}
+                {showSection()}
             </Flex>
         </>
     )
