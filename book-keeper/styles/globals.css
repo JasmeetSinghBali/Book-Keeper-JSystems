@@ -15,7 +15,7 @@ a {
   box-sizing: border-box;
 }
 
-
+/*============= common app navbar styles =======================*/
 .active {
   color:goldenrod;
 }
@@ -48,7 +48,30 @@ a {
   color: goldenrod;
 }
 
-/*skipping the margin bottom for the last Settings item as it is the last one*/
+/*skipping the margin bottom for the last Settings item in common navbar as it is the last one*/
 .sidebar-items:not(:last-child) {
   margin-bottom: 1.2em;
 }
+
+/*============== settings navbar styles =================*/
+.active-two {
+  border-bottom: 2px solid #D53F8C;
+  border-color: #D53F8C ;
+  color:#D53F8C;
+}
+
+.sidebar-items-two{
+  color: gray;
+  font-size: medium;
+  font-weight:600;
+}
+
+.sidebar-items-two p {
+  margin-left: 0.8em;
+}
+
+.sidebar-items-two:hover p {
+  border-bottom: 2px solid #D53F8C;
+  color:#D53F8C; 
+}
+

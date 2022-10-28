@@ -2,16 +2,17 @@ import { Flex, Heading, Icon, Link, Text } from "@chakra-ui/react";
 import  NextLink  from "next/link";
 import { useRouter } from "next/router";
 import React, { useState } from "react";
-import { AiFillHome, AiFillSetting } from "react-icons/ai";
+import { AiFillSetting } from "react-icons/ai";
 
 const SettingsNavbar = () => {
     const router = useRouter();
+    const [settingsOption,selectSettingsOption] = useState('general')
     return(
         <>    
             {/*Settings navbar*/}
             <Flex
                 w={["100%", "100%", "90%", "90%", "85%"]}
-                maxH="30vh"
+                maxH="100vh"
             >
                 <Flex
                         w="100%"
@@ -32,7 +33,7 @@ const SettingsNavbar = () => {
                                     <Icon 
                                     display={["inline-flex","inline-flex","inline-flex","inline-flex","inline-flex"]}
                                     as={AiFillSetting}
-                                    fontSize="xl"
+                                    fontSize="2xl"
                                     color="gray">
                                     </Icon>Settings 
                             </Heading>
@@ -50,64 +51,30 @@ const SettingsNavbar = () => {
                                     marginLeft={[15,-12,-5,-3,-7]}
                                 >   
                                     {/*Flex for each individual navbar icons*/}
-                                    <Flex className="sidebar-items">
-                                        <NextLink href="/user/dashboard" passHref>
-                                            <Link display={["center","center","center","flex-start","flex-start"]}>
-                                                <Icon display={["none","none","flex","flex","flex"]} as={AiFillHome} fontSize="xl" className={router.pathname === "/user/dashboard"?"active-icon":"" }/>
+                                    <Flex className="sidebar-items-two">
+                                            <Link onClick={()=> selectSettingsOption('general')} _hover={{textDecor: 'none'}} display={["flex","flex","flex","flex","flex"]}>
+                                                <Text className={settingsOption === 'general'?"active-two":""}>General</Text>
                                             </Link>
-                                        </NextLink>
-                                        <NextLink href="/user/dashboard" passHref>
-                                            <Link _hover={{textDecor: 'none'}} display={["flex","flex","flex","flex","flex"]}>
-                                                <Text className={router.pathname === "/user/dashboard"?"active":""}>Home</Text>
-                                            </Link>
-                                        </NextLink>
                                     </Flex>
-                                    <Flex className="sidebar-items">
-                                        <NextLink href="/user/transactions" passHref>
-                                            <Link display={["center","center","center","flex-start","flex-start"]}>
-                                                <Icon display={["none","none","flex","flex","flex"]} as={AiFillSetting} fontSize="xl"  className={router.pathname === "/user/transactions"?"active-icon":"" } />
+                                    <Flex className="sidebar-items-two">
+                                            <Link onClick={()=> selectSettingsOption('billing')} _hover={{textDecor: 'none'}} display={["flex","flex","flex","flex","flex"]}>
+                                                <Text className={settingsOption === 'billing'?"active-two":""}>Billing </Text>
                                             </Link>
-                                        </NextLink>
-                                        <NextLink href="/user/transactions" passHref>
-                                            <Link _hover={{textDecor: 'none'}} display={["flex","flex","flex","flex","flex"]}>
-                                                <Text className={router.pathname === "/user/transactions"?"active":""}>My Txns </Text>
-                                            </Link>
-                                        </NextLink>
                                     </Flex>
-                                    <Flex className="sidebar-items">
-                                        <NextLink href="/user/contacts" passHref>
-                                            <Link display={["center","center","center","flex-start","flex-start"]}>
-                                                <Icon display={["none","none","flex","flex","flex"]} as={AiFillSetting} fontSize="xl" className={router.pathname === "/user/contacts"?"active-icon":"" } />
+                                    <Flex className="sidebar-items-two">
+                                            <Link onClick={()=> selectSettingsOption('integrations')} _hover={{textDecor: 'none'}} display={["flex","flex","flex","flex","flex"]}>
+                                                <Text className={settingsOption === 'integrations'?"active-two":""}>Integrations</Text>
                                             </Link>
-                                        </NextLink>
-                                        
-                                        <NextLink href="/user/contacts" passHref>
-                                            <Link _hover={{textDecor: 'none'}} display={["flex","flex","flex","flex","flex"]}>
-                                                <Text className={router.pathname === "/user/contacts"?"active":""}>My Contacts</Text>
-                                            </Link>
-                                        </NextLink>
-                                        
                                     </Flex>
-                                    <Flex className="sidebar-items">
-                                        <NextLink href="/user/settings" passHref>
-                                            <Link display={["center","center","center","flex-start","flex-start"]}>
-                                                <Icon display={["none","none","flex","flex","flex"]} as={AiFillSetting} fontSize="xl" className={router.pathname === "/user/settings"?"active-icon":"" } />
-                                            </Link>
-                                        </NextLink>
-                                        
-                                        <NextLink href="/user/settings" passHref>
-                                            <Link _hover={{textDecor: 'none'}} display={["flex","flex","flex","flex","flex"]}>
-                                                <Text className={router.pathname === "/user/settings"?"active":""}>Settings</Text>
-                                            </Link>    
-                                        </NextLink>       
+                                    <Flex className="sidebar-items-two">
+                                            <Link onClick={()=> selectSettingsOption('dangerzone')} _hover={{textDecor: 'none'}} display={["flex","flex","flex","flex","flex"]}>
+                                                <Text className={settingsOption === 'dangerzone'?"active-two":""}>Close Account</Text>
+                                            </Link>           
                                     </Flex>
                             </Flex>
                         </Flex>
-                            
                 </Flex>
             </Flex>
-            
-            
         </>
     )
 }
