@@ -9,7 +9,7 @@ import IntegrationSettings from "./integrations.settings";
 
 
 const SettingsNavbar = () => {
-    const [settingsOption,selectSettingsOption] = useState('general');
+    const [settingsOption,selectSettingsOption] = useState('integrations');
     function showSection(){
         const currentSelection = settingsOption;
         switch (currentSelection) {

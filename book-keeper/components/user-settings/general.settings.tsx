@@ -1,4 +1,4 @@
-import { Avatar, Flex, Icon, IconButton, Text, Divider, Stack, Heading, TableContainer, Table, Thead, Tr, Th, Tbody, Td, Tfoot, Switch } from '@chakra-ui/react';
+import { Avatar, Flex, Icon, IconButton, Text, Divider, Heading, TableContainer, Table, Thead, Tr, Th, Tbody, Td, Tfoot, Switch } from '@chakra-ui/react';
 import React from 'react';
 import { AiFillCamera, AiFillEdit, AiOutlineAlert, AiOutlineUser } from 'react-icons/ai';
 
@@ -99,89 +99,89 @@ const GeneralSettings = () => {
                     >
                         <TableContainer>
                             <Table size='sm'>
-                            <Thead>
-                                <Tr>
-                                <Th>Update</Th>
-                                <Th>Type</Th>
-                                <Th>Action</Th>
-                                </Tr>
-                            </Thead>
-                            <Tbody>
-                                <Tr>
-                                <Td color="purple.700" fontWeight="semibold" fontSize="sm" letterSpacing="wider" >Email & Phone</Td>
-                                <Td color="purple.700" fontWeight="semibold" fontSize="sm" letterSpacing="wider">Security</Td>
-                                <Td><IconButton
-                                    //onClick={onOpen} 
-                                    icon={<AiFillEdit />}
-                                    fontSize="xs"
-                                    bgColor="gray.200"
-                                    borderRadius="100%"
-                                    aria-label={'EditUserBasicDetails'} 
-                                    _hover={{bg:"pink.200"}}
-                                /></Td>
-                                </Tr>
-                                <Tr>
-                                <Td color="purple.700" fontWeight="semibold" fontSize="sm" letterSpacing="wider">Email-Notifications</Td>
-                                <Td color="purple.700" fontWeight="semibold" fontSize="sm" letterSpacing="wider">Privacy</Td>
-                                <Td>
-                                    <Switch 
-                                    //onClick={} 
-                                    colorScheme="pink"
-                                    borderColor="gray.200">
-                                    </Switch>
-                                </Td>
-                                </Tr>
-                                <Tr>
-                                <Td color="purple.700" fontWeight="semibold" fontSize="sm" letterSpacing="wider">Phone-Notifications</Td>
-                                <Td color="purple.700" fontWeight="semibold" fontSize="sm" letterSpacing="wider">Privacy</Td>
-                                <Td>
-                                    <Switch 
-                                    //onClick={} 
-                                    colorScheme="pink"
-                                    borderColor="gray.200">
-                                    </Switch>
-                                </Td>
-                                </Tr>
-                                <Tr>
-                                <Td color="purple.700" fontWeight="semibold" fontSize="sm" letterSpacing="wider">Email-Subscription</Td>
-                                <Td color="purple.700" fontWeight="semibold" fontSize="sm" letterSpacing="wider">Privacy</Td>
-                                <Td>
-                                    <Switch 
-                                    //onClick={} 
-                                    colorScheme="pink"
-                                    borderColor="gray.200">
-                                    </Switch>
-                                </Td>
-                                </Tr>
-                                <Tr>
-                                <Td color="purple.700" fontWeight="semibold" fontSize="sm" letterSpacing="wider">Password</Td>
-                                <Td color="purple.700" fontWeight="semibold" fontSize="sm" letterSpacing="wider">Security</Td>
-                                <Td><IconButton
-                                    //onClick={onOpen} 
-                                    icon={<AiFillEdit />}
-                                    fontSize="xs"
-                                    bgColor="gray.200"
-                                    borderRadius="100%"
-                                    aria-label={'EditUserBasicDetails'} 
-                                    _hover={{bg:"pink.200"}}
-                                /></Td>
-                                </Tr>
-                                <Tr>
-                                <Td color="purple.700" fontWeight="semibold" fontSize="sm" letterSpacing="wider">MFA</Td>
-                                <Td color="purple.700" fontWeight="semibold" fontSize="sm" letterSpacing="wider">Security</Td>
-                                <Td><IconButton
-                                    //onClick={onOpen} 
-                                    icon={<AiFillEdit />}
-                                    fontSize="xs"
-                                    bgColor="gray.200"
-                                    borderRadius="100%"
-                                    aria-label={'EditUserBasicDetails'} 
-                                    _hover={{bg:"pink.200"}}
-                                /></Td>
-                                </Tr>
-                            </Tbody>
+                                <Thead>
+                                    <Tr>
+                                    <Th>Update</Th>
+                                    <Th>Type</Th>
+                                    <Th>Action</Th>
+                                    </Tr>
+                                </Thead>
+                                <Tbody>
+                                    <Tr>
+                                    <Td  fontWeight="semibold" fontSize="sm" letterSpacing="wider" >Email & Phone</Td>
+                                    <Td  fontWeight="semibold" fontSize="sm" letterSpacing="wider">Security</Td>
+                                    <Td><IconButton
+                                        //onClick={onOpen} 
+                                        icon={<AiFillEdit />}
+                                        fontSize="xs"
+                                        bgColor="gray.200"
+                                        borderRadius="100%"
+                                        aria-label={'EditUserBasicDetails'} 
+                                        _hover={{bg:"pink.200"}}
+                                    /></Td>
+                                    </Tr>
+                                    <Tr>
+                                    <Td  fontWeight="semibold" fontSize="sm" letterSpacing="wider">Email-Notifications</Td>
+                                    <Td  fontWeight="semibold" fontSize="sm" letterSpacing="wider">Privacy</Td>
+                                    <Td>
+                                        <Switch 
+                                        //onClick={} 
+                                        colorScheme="pink"
+                                        borderColor="gray.200">
+                                        </Switch>
+                                    </Td>
+                                    </Tr>
+                                    <Tr>
+                                    <Td  fontWeight="semibold" fontSize="sm" letterSpacing="wider">Phone-Notifications</Td>
+                                    <Td  fontWeight="semibold" fontSize="sm" letterSpacing="wider">Privacy</Td>
+                                    <Td>
+                                        <Switch 
+                                        //onClick={} 
+                                        colorScheme="pink"
+                                        borderColor="gray.200">
+                                        </Switch>
+                                    </Td>
+                                    </Tr>
+                                    <Tr>
+                                    <Td  fontWeight="semibold" fontSize="sm" letterSpacing="wider">Email-Subscription</Td>
+                                    <Td  fontWeight="semibold" fontSize="sm" letterSpacing="wider">Privacy</Td>
+                                    <Td>
+                                        <Switch 
+                                        //onClick={} 
+                                        colorScheme="pink"
+                                        borderColor="gray.200">
+                                        </Switch>
+                                    </Td>
+                                    </Tr>
+                                    <Tr>
+                                    <Td  fontWeight="semibold" fontSize="sm" letterSpacing="wider">Password</Td>
+                                    <Td  fontWeight="semibold" fontSize="sm" letterSpacing="wider">Security</Td>
+                                    <Td><IconButton
+                                        //onClick={onOpen} 
+                                        icon={<AiFillEdit />}
+                                        fontSize="xs"
+                                        bgColor="gray.200"
+                                        borderRadius="100%"
+                                        aria-label={'EditUserBasicDetails'} 
+                                        _hover={{bg:"pink.200"}}
+                                    /></Td>
+                                    </Tr>
+                                    <Tr>
+                                    <Td  fontWeight="semibold" fontSize="sm" letterSpacing="wider">MFA</Td>
+                                    <Td  fontWeight="semibold" fontSize="sm" letterSpacing="wider">Security</Td>
+                                    <Td><IconButton
+                                        //onClick={onOpen} 
+                                        icon={<AiFillEdit />}
+                                        fontSize="xs"
+                                        bgColor="gray.200"
+                                        borderRadius="100%"
+                                        aria-label={'EditUserBasicDetails'} 
+                                        _hover={{bg:"pink.200"}}
+                                    /></Td>
+                                    </Tr>
+                                </Tbody>
                             </Table>
-                            </TableContainer>
+                        </TableContainer>
                     </Flex>
                 </Flex>
             </Flex>
