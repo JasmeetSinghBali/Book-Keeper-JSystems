@@ -9,7 +9,7 @@ import IntegrationSettings from "./integrations.settings";
 
 
 const SettingsNavbar = () => {
-    const [settingsOption,selectSettingsOption] = useState('integrations');
+    const [settingsOption,selectSettingsOption] = useState('billing');
     function showSection(){
         const currentSelection = settingsOption;
         switch (currentSelection) {
