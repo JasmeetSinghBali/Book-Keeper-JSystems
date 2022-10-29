@@ -29,7 +29,7 @@ const SettingsNavbar = () => {
         <>    
             {/*Settings navbar*/}
             <Flex
-                w="100%"
+                w="90%"
                 h="100%"
                 flexDir="column"
                 overflow="hidden"
@@ -59,12 +59,13 @@ const SettingsNavbar = () => {
                                 mt={[15,2,7,4,-1]}
                                 fontSize={["xl","2xl","xl","2xl","3xl"]}
                                 letterSpacing="tighter"
+                                
                             >
                                     <Icon 
                                     display={["inline-flex","inline-flex","inline-flex","inline-flex","inline-flex"]}
                                     as={AiFillSetting}
-                                    fontSize="2xl"
-                                    color="gray">
+                                    fontSize="xl"
+                                    >
                                     </Icon>Settings 
                             </Heading>
                         
