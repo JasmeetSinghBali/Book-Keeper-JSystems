@@ -1,4 +1,4 @@
-import { Flex, Heading, Icon, Link, Text } from "@chakra-ui/react";
+import { Divider, Flex, Heading, Icon, Link, Text } from "@chakra-ui/react";
 import React, { useState } from "react";
 import { AiFillSetting } from "react-icons/ai";
 import BillingSettings from "./billing.settings";

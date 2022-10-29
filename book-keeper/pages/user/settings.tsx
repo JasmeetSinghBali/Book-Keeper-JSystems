@@ -1,7 +1,6 @@
 import React,{ useState } from 'react';
 import { 
-    Box,
-    Flex, Heading,
+    Flex,
 } from "@chakra-ui/react";
 import Navbar from '../../components/common/navbar';
 import SettingsNavbar from '../../components/user-settings/navbar.settings';
