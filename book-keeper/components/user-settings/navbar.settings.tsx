@@ -9,7 +9,7 @@ import IntegrationSettings from "./integrations.settings";
 
 
 const SettingsNavbar = () => {
-    const [settingsOption,selectSettingsOption] = useState('general');
+    const [settingsOption,selectSettingsOption] = useState('dangerzone');
     function showSection(){
         const currentSelection = settingsOption;
         switch (currentSelection) {
@@ -32,7 +32,7 @@ const SettingsNavbar = () => {
                 w="90%"
                 h="100%"
                 flexDir="column"
-                overflow="hidden"
+                overflow="auto"
                 p={5}
                 display="flex-start"
             >
@@ -99,7 +99,7 @@ const SettingsNavbar = () => {
                                     </Flex>
                                     <Flex className="sidebar-items-two">
                                             <Link onClick={()=> selectSettingsOption('dangerzone')} _hover={{textDecor: 'none'}} display={["flex","flex","flex","flex","flex"]}>
-                                                <Text className={settingsOption === 'dangerzone'?"active-two":""}>Close Account</Text>
+                                                <Text className={settingsOption === 'dangerzone'?"active-two":""}>Account</Text>
                                             </Link>           
                                     </Flex>
                             </Flex>
