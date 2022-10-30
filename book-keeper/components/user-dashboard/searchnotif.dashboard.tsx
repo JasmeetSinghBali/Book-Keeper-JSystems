@@ -55,7 +55,7 @@ const SearchNotificationSection = () =>{
                 <Flex alignContent="center">
                     <InputGroup bgColor="#fff" mb={4} border="none" borderColor="#1A202C" borderRadius="10px" mr={2}>
                         <InputLeftElement pointerEvents="none" children={<AiOutlineFileSearch color="#1A202C"/>} />
-                        <Input type="number" placeholder="Search" borderRadius="10px"/>
+                        <Input type="number" placeholder="Search card via number" borderRadius="10px"/>
                     </InputGroup>
                     {/*🧩 Notification Section */}
                     <NotificationSection/>

@@ -17,8 +17,8 @@ import {
     FcApproval 
 } from 'react-icons/fc';
 import {
-    SiBookstack,
-} from 'react-icons/si';
+    RiBookMarkFill
+} from 'react-icons/ri';
 import { useRouter } from 'next/router';
 import NextLink  from 'next/link';
 import {motion} from  'framer-motion';
@@ -65,7 +65,7 @@ const Navbar = () => {
                                 alignSelf="center"
                                 letterSpacing="tighter" 
                             >
-                                <Icon display={["inline","inline","none","inline","inline"]} as={SiBookstack} fontSize="xl" color="goldenrod"></Icon>Keeper.   
+                                <Icon display={["inline","inline","none","inline","inline"]} as={RiBookMarkFill} fontSize="xl" color="goldenrod"></Icon>Keeper.   
                             </Heading>
                         </motion.div>
                         
@@ -261,7 +261,8 @@ const Navbar = () => {
                             }
                         },
                     }}>
-                        <Avatar my={2} src="avatar-1.jpg" />
+                        {/*🎈 make the user name dynamic so if src is not found then initials are displayed*/}
+                        <Avatar bg="goldenrod" my={2} name="Jasmeet Bali" src="avatar-1.jpg" textColor="black" />
                     </motion.div>
                     
                     <motion.div initial="hidden" animate="visible" variants={{

@@ -99,7 +99,7 @@ const SettingsNavbar = () => {
                                     </Flex>
                                     <Flex className="sidebar-items-two">
                                             <Link onClick={()=> selectSettingsOption('dangerzone')} _hover={{textDecor: 'none'}} display={["flex","flex","flex","flex","flex"]}>
-                                                <Text className={settingsOption === 'dangerzone'?"active-two":""}>Close Account</Text>
+                                                <Text className={settingsOption === 'dangerzone'?"active-two":""}>Account</Text>
                                             </Link>           
                                     </Flex>
                             </Flex>

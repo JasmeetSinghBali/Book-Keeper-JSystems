@@ -35,7 +35,7 @@ const IntegrationSettings = () => {
                         <Divider orientation="vertical" borderColor="#D53F8C" />
                         <Icon as={AiOutlineApi} fontSize="md"></Icon>
                         <Heading color="purple.700" mt={[1,1,-1,-1,1]} ml={1.8} letterSpacing="tighter" fontWeight="semibold" fontSize={["2xl","normal","xl","2xl","3xl"]}>Documentations <Badge ml={1} fontSize="md" colorScheme="cyan" >v0.1.0</Badge></Heading>
-                        <Link href="http://keeper.integeration/documentations" _hover={{textDecor: 'none', color: "#9F7AEA"}} display="flex">
+                        <Link href="http://keeper.integeration/documentations" _hover={{textDecor: 'none', color: "#FBB6CE"}} display="flex">
                             <Text><Icon fontSize={["3xl","5xl","4xl","5xl","6xl"]} as={AiOutlineCopy}></Icon></Text>
                         </Link>
                     </Flex>
@@ -73,7 +73,7 @@ const IntegrationSettings = () => {
                                             </Link>
                                             <Switch
                                                 //onClick={} 
-                                                colorScheme="purple"
+                                                colorScheme="pink"
                                                 borderColor="gray.200"
                                             >
 
@@ -103,7 +103,7 @@ const IntegrationSettings = () => {
                                                 </Link>
                                                 <Switch 
                                                     //onClick={} 
-                                                    colorScheme="purple"
+                                                    colorScheme="pink"
                                                     borderColor="gray.200">
                                                 </Switch>
                                             </Flex>
@@ -117,7 +117,7 @@ const IntegrationSettings = () => {
                     <Flex align="center">
                         <Divider/>
                         <IconButton 
-                            _hover={{bg:"#D6BCFA"}}
+                            _hover={{bg:"#FBB6CE"}}
                             icon={view === 'show' ? <AiFillCaretUp /> : <AiFillCaretDown />}
                             aria-label={''}
                             onClick={()=>{
