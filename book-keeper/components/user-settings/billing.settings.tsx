@@ -1,11 +1,11 @@
-import { Avatar, Badge, Button, Divider, Flex, Heading, Icon, IconButton, Input, InputGroup, InputLeftElement, Switch, Table, Tbody, Td, Text, Th, Thead, Tr } from '@chakra-ui/react';
-import Link from 'next/link';
+import { Badge, Button, Divider, Flex, Heading, Icon, IconButton, Input, InputGroup, InputLeftElement, Switch, Table, Tbody, Td, Text, Th, Thead, Tr } from '@chakra-ui/react';
+
 import React,{ useState } from 'react';
-import { AiFillCaretDown, AiFillCaretUp, AiFillQuestionCircle, AiOutlineDownload, AiOutlineFileSearch, AiOutlineQuestion } from 'react-icons/ai';
+import { AiFillCaretDown, AiFillCaretUp, AiOutlineDownload, AiOutlineFileSearch, AiOutlineQuestion } from 'react-icons/ai';
 import {
     RiBillLine, RiFilterLine
 } from 'react-icons/ri';
-import { SiCanonical } from 'react-icons/si';
+
 
 const BillingSettings = () => {
     const [view,changeView] = useState('hide');

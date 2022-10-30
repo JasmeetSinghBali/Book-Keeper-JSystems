@@ -9,7 +9,7 @@ import IntegrationSettings from "./integrations.settings";
 
 
 const SettingsNavbar = () => {
-    const [settingsOption,selectSettingsOption] = useState('billing');
+    const [settingsOption,selectSettingsOption] = useState('dangerzone');
     function showSection(){
         const currentSelection = settingsOption;
         switch (currentSelection) {
@@ -32,7 +32,7 @@ const SettingsNavbar = () => {
                 w="90%"
                 h="100%"
                 flexDir="column"
-                overflow="hidden"
+                overflow="auto"
                 p={5}
                 display="flex-start"
             >

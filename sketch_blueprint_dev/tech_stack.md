@@ -69,3 +69,8 @@ yarn create next-app --typescript
 - for AnimatePresence when [filter props](https://developer.mozilla.org/en-US/docs/Web/CSS/filter)
 
 - [framer-book](https://framerbook.com/animation/example-animations/35-swipe-to-delete/)
+
+- account sub-section settings
+
+        Current Plan, Last Accessed IP & Date  Logs  ||
+        update plan, Report Bug, delete account ||
