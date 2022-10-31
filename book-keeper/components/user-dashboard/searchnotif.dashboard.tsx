@@ -222,6 +222,15 @@ const SearchNotificationSection = () =>{
                         <DrawerBody>
                             <Stack spacing='24px'>
                             <Box>
+                                <Text fontWeight="semibold" mb={1}>Contact's Image</Text>
+                                <Input
+                                    type="file"
+                                    id='contactimage'
+
+                                />
+                                
+                            </Box>
+                            <Box>
                                 <FormLabel htmlFor='contactname'>Name</FormLabel>
                                 <Input
                                 id='contactname'

@@ -9,7 +9,7 @@ import IntegrationSettings from "./integrations.settings";
 
 
 const SettingsNavbar = () => {
-    const [settingsOption,selectSettingsOption] = useState('dangerzone');
+    const [settingsOption,selectSettingsOption] = useState('general');
     function showSection(){
         const currentSelection = settingsOption;
         switch (currentSelection) {

@@ -10,8 +10,8 @@ import {
 import {
     AiFillHome,
     AiFillSetting,
-    AiFillDollarCircle,
     AiFillContacts,
+    AiFillStar,
 } from 'react-icons/ai';
 import {
     FcApproval 
@@ -120,7 +120,7 @@ const Navbar = () => {
                             </Flex>
 
                             <Flex className="sidebar-items">
-                                <NextLink href="/user/transactions" passHref>
+                                <NextLink href="/user/hallofame" passHref>
                                 <motion.div initial="hidden" animate="visible" variants={{
                                         hidden:{
                                             scale: .8,
@@ -135,11 +135,11 @@ const Navbar = () => {
                                         },
                                     }}>
                                     <Link display={["center","center","center","flex-start","flex-start"]}>
-                                        <Icon display={["flex","flex","flex","flex","flex"]} as={AiFillDollarCircle} fontSize="xl"  className={router.pathname === "/user/transactions"?"active-icon":"" } />
+                                        <Icon display={["flex","flex","flex","flex","flex"]} as={AiFillStar} fontSize="xl"  className={router.pathname === "/user/hallofame"?"active-icon":"" } />
                                     </Link>
                                 </motion.div>
                                 </NextLink>
-                                <NextLink href="/user/transactions" passHref>
+                                <NextLink href="/user/hallofame" passHref>
                                 <motion.div initial="hidden" animate="visible" variants={{
                                         hidden:{
                                             scale: .8,
@@ -154,7 +154,7 @@ const Navbar = () => {
                                         },
                                     }}>
                                     <Link _hover={{textDecor: 'none'}} display={["none","none","none","flex","flex"]}>
-                                        <Text className={router.pathname === "/user/transactions"?"active":""}>My Txns </Text>
+                                        <Text className={router.pathname === "/user/hallofame"?"active":""}>Dev. Credits </Text>
                                     </Link>
                                 </motion.div>
                                 </NextLink>
