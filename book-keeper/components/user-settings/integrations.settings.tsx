@@ -1,6 +1,7 @@
 import { Avatar, Badge, Divider, Flex, Heading, Icon, IconButton, Link, Switch, Table, Tbody, Td, Text, Th, Thead, Tr } from '@chakra-ui/react';
 import React,{ useState } from 'react';
 import { AiFillCaretDown, AiFillCaretUp, AiOutlineApi, AiOutlineCopy } from 'react-icons/ai';
+import {motion} from 'framer-motion';
 
 const IntegrationSettings = () => {
     const [view,changeView] = useState('hide');
@@ -34,12 +35,40 @@ const IntegrationSettings = () => {
                         <Divider orientation="vertical" borderColor="#D53F8C"/>
                         <Divider orientation="vertical" borderColor="#D53F8C" />
                         <Icon as={AiOutlineApi} fontSize="md"></Icon>
+                        <motion.div initial="hidden" animate="visible" variants={{
+                            hidden:{
+                                scale: .8,
+                                opacity: 0
+                            },
+                            visible:{
+                                scale: 1,
+                                opacity: 1,
+                                transition: {
+                                    delay: 0.2
+                                }
+                            },
+                        }}>
                         <Heading color="purple.700" mt={[1,1,-1,-1,1]} ml={1.8} letterSpacing="tighter" fontWeight="semibold" fontSize={["2xl","normal","xl","2xl","3xl"]}>Documentations <Badge ml={1} fontSize="md" colorScheme="cyan" >v0.1.0</Badge></Heading>
+                        </motion.div>
                         <Link href="http://keeper.integeration/documentations" _hover={{textDecor: 'none', color: "#FBB6CE"}} display="flex">
                             <Text><Icon fontSize={["3xl","5xl","4xl","5xl","6xl"]} as={AiOutlineCopy}></Icon></Text>
                         </Link>
                     </Flex>
-                    <Heading color="purple.700" fontSize={["normal","large","xl","2xl","normal"]}>Connected Apps</Heading>
+                    <motion.div initial="hidden" animate="visible" variants={{
+                        hidden:{
+                            scale: .8,
+                            opacity: 0
+                        },
+                        visible:{
+                            scale: 1,
+                            opacity: 1,
+                            transition: {
+                                delay: 0.4
+                            }
+                        },
+                    }}>
+                        <Heading color="purple.700" fontSize={["normal","large","xl","2xl","normal"]}>Connected Apps</Heading>
+                    </motion.div>
                     <Text mt={1} fontSize="xs" fontWeight="hairline"color="gray.900">supercharge your workflow and connect the tool you use every day.</Text>
                     
                     {/**Integration List & Action Section */}

@@ -3,9 +3,9 @@ import {
     Flex,
 } from "@chakra-ui/react";
 import Navbar from '../../components/common/navbar';
-import SettingsNavbar from '../../components/user-settings/navbar.settings';
 
-export default function settings(){ 
+
+export default function invoices(){ 
     return(
         <>
             <Flex
@@ -13,11 +13,9 @@ export default function settings(){
                 flexDir={["column","column","row"]}
                 overflow="hidden"
                 maxW="2000px"
-                display="flex"
                 backgroundColor="#EDF2F7"
             >
                 <Navbar /> 
-                <SettingsNavbar />
             </Flex>
         </>
     )

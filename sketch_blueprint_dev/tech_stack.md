@@ -74,3 +74,5 @@ yarn create next-app --typescript
 
         Current Plan, Last Accessed IP & Date  Logs  ||
         update plan, Report Bug, delete account ||
+
+- My Contacts Page [ui design](https://dribbble.com/shots/15221832-Nara-Medics-Contact-Management-Page)

@@ -1,7 +1,7 @@
-import { Avatar, Flex, Icon, IconButton, Text, Divider, Heading, TableContainer, Table, Thead, Tr, Th, Tbody, Td, Tfoot, Switch } from '@chakra-ui/react';
+import { Avatar, Flex, Icon, IconButton, Text, Divider, Heading, TableContainer, Table, Thead, Tr, Th, Tbody, Td, Tfoot, Switch, Tooltip } from '@chakra-ui/react';
 import React from 'react';
 import { AiFillCamera, AiFillEdit, AiOutlineAlert, AiOutlineUser } from 'react-icons/ai';
-
+import {motion} from 'framer-motion';
 
 const GeneralSettings = () => {
     return (
@@ -34,7 +34,21 @@ const GeneralSettings = () => {
                         <Divider orientation="vertical" borderColor="#D53F8C"/>
                         <Divider orientation="vertical" borderColor="#D53F8C" />
                         <Icon as={AiOutlineUser} fontSize="sm"></Icon>
-                        <Heading color="purple.700" mt={[1,1,-1,-1,1]} ml={1.8} letterSpacing="tighter" fontWeight="semibold" fontSize={["2xl","normal","xl","2xl","3xl"]}>Basic</Heading>
+                        <motion.div initial="hidden" animate="visible" variants={{
+                                hidden:{
+                                    scale: .8,
+                                    opacity: 0
+                                },
+                                visible:{
+                                    scale: 1,
+                                    opacity: 1,
+                                    transition: {
+                                        delay: 0.6
+                                    }
+                                },
+                        }}>
+                            <Heading color="purple.700" mt={[1,1,-1,-1,1]} ml={1.8} letterSpacing="tighter" fontWeight="semibold" fontSize={["2xl","normal","xl","2xl","3xl"]}>Basic</Heading>
+                        </motion.div>
                     </Flex>
                     <Flex
                         flexDir="row"
@@ -57,15 +71,6 @@ const GeneralSettings = () => {
                         >
                             <Avatar size={["md","md","md","xl","xl"]} my={2} src="avatar-1.jpg" />
                         </Flex>
-                        <IconButton
-                                //onClick={onOpen} 
-                                icon={<AiFillEdit />}
-                                fontSize={["medium","medium","medium","large","x-large"]}
-                                bgColor="gray.200"
-                                borderRadius="100%"
-                                aria-label={'EditUserBasicDetails'} 
-                                _hover={{bg:"pink.200"}}
-                        />
                         <Flex
                          flexDir="column"
                          ml={1}
@@ -88,7 +93,21 @@ const GeneralSettings = () => {
                         <Divider orientation="vertical" borderColor="#D53F8C"/>
                         <Divider orientation="vertical" borderColor="#D53F8C" />
                         <Icon as={AiOutlineAlert} fontSize="sm"></Icon>
-                        <Heading color="purple.700" mt={[1,1,1,-1,1]} ml={1.8} letterSpacing="tighter" fontWeight="semibold" fontSize={["2xl","normal","xl","2xl","3xl"]}>Privacy & Security</Heading>
+                        <motion.div initial="hidden" animate="visible" variants={{
+                                hidden:{
+                                    scale: .8,
+                                    opacity: 0
+                                },
+                                visible:{
+                                    scale: 1,
+                                    opacity: 1,
+                                    transition: {
+                                        delay: 0.8
+                                    }
+                                },
+                        }}>
+                            <Heading color="purple.700" mt={[1,1,1,-1,1]} ml={1.8} letterSpacing="tighter" fontWeight="semibold" fontSize={["2xl","normal","xl","2xl","3xl"]}>Privacy & Security</Heading>
+                        </motion.div>
                     </Flex>
                     <Flex
                         flexDir="row"
@@ -110,15 +129,18 @@ const GeneralSettings = () => {
                                     <Tr>
                                     <Td  fontWeight="semibold" fontSize="sm" letterSpacing="wider" >Email & Phone</Td>
                                     <Td  fontWeight="semibold" fontSize="sm" letterSpacing="wider">Security</Td>
-                                    <Td><IconButton
-                                        //onClick={onOpen} 
-                                        icon={<AiFillEdit />}
-                                        fontSize="xs"
-                                        bgColor="gray.200"
-                                        borderRadius="100%"
-                                        aria-label={'EditUserBasicDetails'} 
-                                        _hover={{bg:"pink.200"}}
-                                    /></Td>
+                                    <Td>
+                                        <Tooltip label='Note: regardless of wheather you update one or both reverification would be needed via OTP for both email & phone.' hasArrow arrowSize={15} closeDelay={900} placement="right">
+                                            <IconButton
+                                            //onClick={onOpen} 
+                                            icon={<AiFillEdit />}
+                                            fontSize="xs"
+                                            bgColor="gray.200"
+                                            borderRadius="100%"
+                                            aria-label={'EditUserBasicDetails'} 
+                                            _hover={{bg:"pink.200"}}/>
+                                        </Tooltip>
+                                    </Td>
                                     </Tr>
                                     <Tr>
                                     <Td  fontWeight="semibold" fontSize="sm" letterSpacing="wider">Email-Notifications</Td>
@@ -169,7 +191,9 @@ const GeneralSettings = () => {
                                     <Tr>
                                     <Td  fontWeight="semibold" fontSize="sm" letterSpacing="wider">MFA</Td>
                                     <Td  fontWeight="semibold" fontSize="sm" letterSpacing="wider">Security</Td>
-                                    <Td><IconButton
+                                    <Td>
+                                        <Tooltip label='Android: Microsoft Authenticator | Google Authenticator, IOS: Authy' hasArrow arrowSize={15} closeDelay={500} placement="right">
+                                        <IconButton
                                         //onClick={onOpen} 
                                         icon={<AiFillEdit />}
                                         fontSize="xs"
@@ -177,7 +201,9 @@ const GeneralSettings = () => {
                                         borderRadius="100%"
                                         aria-label={'EditUserBasicDetails'} 
                                         _hover={{bg:"pink.200"}}
-                                    /></Td>
+                                        />
+                                        </Tooltip>
+                                    </Td>
                                     </Tr>
                                 </Tbody>
                             </Table>

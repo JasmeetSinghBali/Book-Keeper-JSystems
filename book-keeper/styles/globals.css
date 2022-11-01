@@ -75,3 +75,20 @@ a {
   color:#D53F8C; 
 }
 
+
+/*Misc Browser Scroll/Slider Styles*/
+::-webkit-scrollbar {
+  height: 5px;
+  width: 5px;
+  background: #CBD5E0;
+  -webkit-border-radius: 1ex;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #6B46C1;
+  -webkit-border-radius: 1ex;
+}
+
+::-webkit-scrollbar-corner {
+  background: purple;
+}

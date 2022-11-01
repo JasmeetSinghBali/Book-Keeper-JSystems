@@ -33,6 +33,7 @@ import {
     FiPlus
 } from 'react-icons/fi'
 import NotificationSection from './notification.dashboard';
+import {motion} from 'framer-motion';
 
 const SearchNotificationSection = () =>{
     const [card,selectCard] = useState(1);
@@ -43,7 +44,7 @@ const SearchNotificationSection = () =>{
             <Flex
                 w={["100%","100%","30%"]} 
                 minW={[null,null,"300px","300px","400px"]}
-                bgColor="#F5F5F5"
+                backgroundColor="gray.50"
                 p="3%"
                 flexDir="column"
                 overflow="auto"
@@ -60,7 +61,21 @@ const SearchNotificationSection = () =>{
                     {/*🧩 Notification Section */}
                     <NotificationSection/>
                 </Flex>
-                <Heading letterSpacing="tighter" fontWeight="bold" display="inline-flex" fontSize="xl" >My Cards</Heading>
+                <motion.div initial="hidden" animate="visible" variants={{
+                    hidden:{
+                        scale: .8,
+                        opacity: 0
+                    },
+                    visible:{
+                        scale: 1,
+                        opacity: 1,
+                        transition: {
+                            delay: 1.6
+                        }
+                    },
+                }}>
+                    <Heading letterSpacing="tighter" fontWeight="bold" display="inline-flex" fontSize="xl" >My Cards</Heading>
+                </motion.div>
                 {/**Card Sliding Selector 🎈 make sure to make this dynamic , also limit each user to 3 cards only via backend logic */}
                 {card === 1 &&
                     <Box
@@ -194,7 +209,21 @@ const SearchNotificationSection = () =>{
                 </Flex>
 
                 {/*Send Money Section with Avatar grouping users*/}
-                <Heading letterSpacing="tighter" fontWeight="bold" display="inline-flex" fontSize="xl" my={4}>Send money to</Heading>
+                <motion.div initial="hidden" animate="visible" variants={{
+                    hidden:{
+                        scale: .8,
+                        opacity: 0
+                    },
+                    visible:{
+                        scale: 1,
+                        opacity: 1,
+                        transition: {
+                            delay: 1.8
+                        }
+                    },
+                }}>
+                    <Heading letterSpacing="tighter" fontWeight="bold" display="inline-flex" fontSize="xl" my={4}>Send money to</Heading>
+                </motion.div>
                 <Flex>
                     <AvatarGroup size="md" max={4}>
                         {/*🎈 loop over all the images of curent user contacts avatars */}
@@ -221,6 +250,15 @@ const SearchNotificationSection = () =>{
 
                         <DrawerBody>
                             <Stack spacing='24px'>
+                            <Box>
+                                <Text fontWeight="semibold" mb={1}>Contact's Image</Text>
+                                <Input
+                                    type="file"
+                                    id='contactimage'
+
+                                />
+                                
+                            </Box>
                             <Box>
                                 <FormLabel htmlFor='contactname'>Name</FormLabel>
                                 <Input
