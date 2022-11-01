@@ -53,7 +53,7 @@ export default function AnimatedCharacter({ text}: Props){
                         <motion.span 
                             variants={child}
                             key={index}>
-                                {character === "\u00A0"?"":character}
+                                {character === " "?" ":character}
                         </motion.span>)
                     }
             </motion.div>

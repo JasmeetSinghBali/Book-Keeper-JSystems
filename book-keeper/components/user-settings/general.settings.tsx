@@ -1,7 +1,7 @@
 import { Avatar, Flex, Icon, IconButton, Text, Divider, Heading, TableContainer, Table, Thead, Tr, Th, Tbody, Td, Tfoot, Switch } from '@chakra-ui/react';
 import React from 'react';
 import { AiFillCamera, AiFillEdit, AiOutlineAlert, AiOutlineUser } from 'react-icons/ai';
-
+import {motion} from 'framer-motion';
 
 const GeneralSettings = () => {
     return (
@@ -34,7 +34,21 @@ const GeneralSettings = () => {
                         <Divider orientation="vertical" borderColor="#D53F8C"/>
                         <Divider orientation="vertical" borderColor="#D53F8C" />
                         <Icon as={AiOutlineUser} fontSize="sm"></Icon>
-                        <Heading color="purple.700" mt={[1,1,-1,-1,1]} ml={1.8} letterSpacing="tighter" fontWeight="semibold" fontSize={["2xl","normal","xl","2xl","3xl"]}>Basic</Heading>
+                        <motion.div initial="hidden" animate="visible" variants={{
+                                hidden:{
+                                    scale: .8,
+                                    opacity: 0
+                                },
+                                visible:{
+                                    scale: 1,
+                                    opacity: 1,
+                                    transition: {
+                                        delay: 0.6
+                                    }
+                                },
+                        }}>
+                            <Heading color="purple.700" mt={[1,1,-1,-1,1]} ml={1.8} letterSpacing="tighter" fontWeight="semibold" fontSize={["2xl","normal","xl","2xl","3xl"]}>Basic</Heading>
+                        </motion.div>
                     </Flex>
                     <Flex
                         flexDir="row"
@@ -88,7 +102,21 @@ const GeneralSettings = () => {
                         <Divider orientation="vertical" borderColor="#D53F8C"/>
                         <Divider orientation="vertical" borderColor="#D53F8C" />
                         <Icon as={AiOutlineAlert} fontSize="sm"></Icon>
-                        <Heading color="purple.700" mt={[1,1,1,-1,1]} ml={1.8} letterSpacing="tighter" fontWeight="semibold" fontSize={["2xl","normal","xl","2xl","3xl"]}>Privacy & Security</Heading>
+                        <motion.div initial="hidden" animate="visible" variants={{
+                                hidden:{
+                                    scale: .8,
+                                    opacity: 0
+                                },
+                                visible:{
+                                    scale: 1,
+                                    opacity: 1,
+                                    transition: {
+                                        delay: 0.8
+                                    }
+                                },
+                        }}>
+                            <Heading color="purple.700" mt={[1,1,1,-1,1]} ml={1.8} letterSpacing="tighter" fontWeight="semibold" fontSize={["2xl","normal","xl","2xl","3xl"]}>Privacy & Security</Heading>
+                        </motion.div>
                     </Flex>
                     <Flex
                         flexDir="row"

@@ -2,6 +2,7 @@ import { Badge, Button, Divider, Flex, Grid, GridItem, Heading, Icon, Link, Tag,
 import React from 'react';
 import { AiFillBug, AiFillInfoCircle, AiOutlineIdcard, AiOutlineUpCircle, AiOutlineWarning, AiTwotoneThunderbolt } from 'react-icons/ai';
 import { motion } from 'framer-motion'
+import AnimatedCharacter from '../common/animations/animate.character';
 
 const DangerSettings = () => {
     return (
@@ -34,7 +35,21 @@ const DangerSettings = () => {
                         <Divider orientation="vertical" borderColor="#D53F8C" mt={[1,1,2,-1,1]}/>
                         <Divider orientation="vertical" borderColor="#D53F8C" mt={[1,1,2,-1,1]} />
                         <Icon  display={['none',"flex","flex","flex","flex"]} as={AiOutlineIdcard} fontSize={["xs","sm","sm","md","md"]} mt={[1,1,2,-1,1]}></Icon>
-                        <Heading display={['none',"flex","flex","flex","flex"]} color="purple.700" mt={[1,1,1,-1,1]} ml={1.8} letterSpacing="tighter" fontWeight="semibold" fontSize={["2xl","normal","xl","2xl","3xl"]}>Plan and Access Logs</Heading>
+                        <motion.div initial="hidden" animate="visible" variants={{
+                            hidden:{
+                                scale: .8,
+                                opacity: 0
+                            },
+                            visible:{
+                                scale: 1,
+                                opacity: 1,
+                                transition: {
+                                    delay: 0.3
+                                }
+                            },
+                        }}>
+                            <Heading display={['none',"flex","flex","flex","flex"]} color="purple.700" mt={[1,1,1,-1,1]} ml={1.8} letterSpacing="tighter" fontWeight="semibold" fontSize={["2xl","normal","xl","2xl","3xl"]}>Plan and Access Logs</Heading>
+                        </motion.div>
                     </Flex>
 
                     {/*CurrentPlan, IP & Last Accessed date logs Section*/}
@@ -112,7 +127,21 @@ const DangerSettings = () => {
                         <Divider orientation="vertical" borderColor="#D53F8C" mt={[1,1,2,-1,1]}/>
                         <Divider orientation="vertical" borderColor="#D53F8C" mt={[1,1,2,-1,1]} />
                         <Icon as={AiOutlineUpCircle} fontSize={["xs","sm","sm","md","md"]} mt={[1,1,2,-1,1]}></Icon>
-                        <Heading color="purple.700" mt={[1,1,1,-1,1]} ml={1.8} letterSpacing="tighter" fontWeight="semibold" fontSize={["2xl","normal","xl","2xl","3xl"]}>Update Plan</Heading>
+                        <motion.div initial="hidden" animate="visible" variants={{
+                            hidden:{
+                                scale: .8,
+                                opacity: 0
+                            },
+                            visible:{
+                                scale: 1,
+                                opacity: 1,
+                                transition: {
+                                    delay: 0.3
+                                }
+                            },
+                        }}>
+                            <Heading color="purple.700" mt={[1,1,1,-1,1]} ml={1.8} letterSpacing="tighter" fontWeight="semibold" fontSize={["2xl","normal","xl","2xl","3xl"]}>Update Plan</Heading>
+                        </motion.div>
                         <Link href="http://keeper.updatePlan/paymentGateway" _hover={{textDecor: 'none', color: "pink.500"}} display="flex">
                             <Text fontWeight="thick" letterSpacing="tighter">click here to update/renew your plan -{'>'} <Icon fontSize={["3xl","5xl","4xl","5xl","6xl"]} as={AiTwotoneThunderbolt}></Icon></Text>
                         </Link>

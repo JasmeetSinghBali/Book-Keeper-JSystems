@@ -5,6 +5,7 @@ import { AiFillCaretDown, AiFillCaretUp, AiOutlineDownload, AiOutlineFileSearch,
 import {
     RiBillLine, RiFilterLine
 } from 'react-icons/ri';
+import AnimatedCharacter from '../common/animations/animate.character';
 
 
 const BillingSettings = () => {
@@ -39,7 +40,7 @@ const BillingSettings = () => {
                         <Divider orientation="vertical" borderColor="#D53F8C" mt={[1,1,2,-1,1]}/>
                         <Divider orientation="vertical" borderColor="#D53F8C" mt={[1,1,2,-1,1]} />
                         <Icon as={RiBillLine} fontSize={["xs","sm","sm","md","md"]} mt={[1,1,2,-1,1]}></Icon>
-                        <Heading color="purple.700" mt={[1,1,1,-1,1]} ml={1.8} letterSpacing="tighter" fontWeight="semibold" fontSize={["2xl","normal","xl","2xl","3xl"]}>Billing</Heading>
+                        <Heading color="purple.700" mt={[1,1,1,-1,1]} ml={1.8} letterSpacing="tighter" fontWeight="semibold" fontSize={["2xl","normal","xl","2xl","3xl"]}><AnimatedCharacter text='Billing' /></Heading>
                     </Flex>
                     <Flex
                         mt={-5}

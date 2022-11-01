@@ -1,11 +1,11 @@
-import { Divider, Flex, Heading, Icon, Link, Text } from "@chakra-ui/react";
+import { Flex, Heading, Icon, Link, Text } from "@chakra-ui/react";
 import React, { useState } from "react";
 import { AiFillSetting } from "react-icons/ai";
 import BillingSettings from "./billing.settings";
 import DangerSettings from "./danger.settings";
 import GeneralSettings from "./general.settings";
 import IntegrationSettings from "./integrations.settings";
-
+import {motion} from 'framer-motion';
 
 
 const SettingsNavbar = () => {
@@ -53,7 +53,20 @@ const SettingsNavbar = () => {
                         justifyContent="flex-start"
                         mb={10}
                     >
-                            <Heading 
+                            <motion.div initial="hidden" animate="visible" variants={{
+                                hidden:{
+                                    scale: .8,
+                                    opacity: 0
+                                },
+                                visible:{
+                                    scale: 1,
+                                    opacity: 1,
+                                    transition: {
+                                        delay: 0.5
+                                    }
+                                },
+                            }}>
+                                <Heading 
                                 display={["inline-flex","inline-flex","inline-flex","inline-flex","block"]}
                                 fontWeight="bold"
                                 mt={[15,2,7,4,-1]}
@@ -67,7 +80,8 @@ const SettingsNavbar = () => {
                                     fontSize="xl"
                                     >
                                     </Icon>Settings 
-                            </Heading>
+                                </Heading>
+                            </motion.div>
                         
                         <Flex
                             mt={[50,50,20,20,20]}

@@ -20,6 +20,8 @@ import {
 } from 'react-icons/ai';
 import BKChartMain from './chart.dashboard.tsx'
 import { SiBookmeter } from 'react-icons/si';
+import { motion } from 'framer-motion';
+import AnimatedCharacter from '../common/animations/animate.character';
 
 const TxnList = () => {
     const [view,changeView] = useState('hide');
@@ -33,7 +35,21 @@ const TxnList = () => {
                 overflow="auto"
                 minH="100vh"
             >
-                <Heading fontWeight="normal" mb={1} mt={1} fontSize="xl" letterSpacing="tighter"> Welcome back, <Flex fontWeight="bold" display="inline-flex" fontSize="xl">Jasmeet</Flex></Heading>
+                <motion.div initial="hidden" animate="visible" variants={{
+                    hidden:{
+                        scale: .8,
+                        opacity: 0
+                    },
+                    visible:{
+                        scale: 1,
+                        opacity: 1,
+                        transition: {
+                            delay: 1
+                        }
+                    },
+                 }}>
+                    <Heading fontWeight="normal" mb={1} mt={1} fontSize="xl" letterSpacing="tighter"> Welcome back, <Flex fontWeight="bold" display="inline-flex" fontSize="xl">Jasmeet</Flex></Heading>
+                 </motion.div>
                 <Flex
                     justifyContent="space-between"
                     mt={0}
@@ -41,11 +57,25 @@ const TxnList = () => {
                     <Flex
                         align="flex-end"
                     >
-                        <Text color="gray" fontSize="xs">Funds Accounted Worth</Text>
+                        <motion.div initial="hidden" animate="visible" variants={{
+                            hidden:{
+                                scale: .8,
+                                opacity: 0
+                            },
+                            visible:{
+                                scale: 1,
+                                opacity: 1,
+                                transition: {
+                                    delay: 1.2
+                                }
+                            },
+                        }}>
+                            <Text color="gray" fontSize="xs">Funds Accounted Worth</Text>
+                        </motion.div>
                     </Flex>
                     <IconButton icon={<SiBookmeter />} aria-label={''} _hover={{bg:"goldenrod"}} ></IconButton>
                 </Flex>
-                <Text fontWeight="bold" fontSize="md">$5,325.10</Text>
+                <Text fontWeight="bold" fontSize="md"><AnimatedCharacter text='$5,325.10' /></Text>
                 
                 <BKChartMain />
                 
@@ -57,7 +87,21 @@ const TxnList = () => {
                     <Flex
                         align="flex-end"
                     >
-                        <Heading as="h2" size="md" letterSpacing="tighter">Transactions</Heading>
+                        <motion.div initial="hidden" animate="visible" variants={{
+                            hidden:{
+                                scale: .8,
+                                opacity: 0
+                            },
+                            visible:{
+                                scale: 1,
+                                opacity: 1,
+                                transition: {
+                                    delay: 1.4
+                                }
+                            },
+                        }}>
+                            <Heading as="h2" size="md" letterSpacing="tighter">Transactions</Heading>
+                        </motion.div>
                         <Text fontSize="xs" color="gray" ml={4}>Apr 2023</Text>
                     </Flex>
                     <IconButton icon={<AiFillCalendar />} aria-label={''} _hover={{bg:"goldenrod"}} ></IconButton>
