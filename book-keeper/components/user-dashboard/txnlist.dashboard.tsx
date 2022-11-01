@@ -19,9 +19,10 @@ import {
     AiFillCaretUp,
 } from 'react-icons/ai';
 import BKChartMain from './chart.dashboard.tsx'
-import { SiBookmeter } from 'react-icons/si';
 import { motion } from 'framer-motion';
 import AnimatedCharacter from '../common/animations/animate.character';
+import ChartRanger  from './chart.dashboard.filter';
+import TxnListFilter from './txnlist.dashboard.filter';
 
 const TxnList = () => {
     const [view,changeView] = useState('hide');
@@ -73,7 +74,7 @@ const TxnList = () => {
                             <Text color="gray" fontSize="xs">Funds Accounted Worth</Text>
                         </motion.div>
                     </Flex>
-                    <IconButton icon={<SiBookmeter />} aria-label={''} _hover={{bg:"goldenrod"}} ></IconButton>
+                    <ChartRanger />
                 </Flex>
                 <Text fontWeight="bold" fontSize="md"><AnimatedCharacter text='$5,325.10' /></Text>
                 
@@ -104,7 +105,7 @@ const TxnList = () => {
                         </motion.div>
                         <Text fontSize="xs" color="gray" ml={4}>Apr 2023</Text>
                     </Flex>
-                    <IconButton icon={<AiFillCalendar />} aria-label={''} _hover={{bg:"goldenrod"}} ></IconButton>
+                    <TxnListFilter/>
                 </Flex>
                 {/*Transactions List Section [scrollable & responsive]*/}
                 <Flex flexDir='column'>
@@ -200,9 +201,9 @@ const TxnList = () => {
                     <Flex align="center">
                         <Divider/>
                         <IconButton 
-                            _hover={{bg:"goldenrod"}}
+                            _hover={{bg:"teal.200"}}
                             icon={view === 'show' ? <AiFillCaretUp /> : <AiFillCaretDown />}
-                            aria-label={''}
+                            aria-label={'expandcompresstxnlist'}
                             onClick={()=>{
                                 if(view === 'show'){
                                     changeView('hide');

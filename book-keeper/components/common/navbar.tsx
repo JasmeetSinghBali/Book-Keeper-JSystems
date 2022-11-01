@@ -8,10 +8,10 @@ import {
     Link,
 } from "@chakra-ui/react";
 import {
-    AiFillHome,
     AiFillSetting,
     AiFillContacts,
-    AiFillStar,
+    AiFillSignal,
+    AiFillFileText,
 } from 'react-icons/ai';
 import {
     FcApproval 
@@ -93,7 +93,7 @@ const Navbar = () => {
                                             },
                                         }}>
                                         <Link display={["center","center","center","flex-start","flex-start"]}>
-                                            <Icon display={["flex","flex","flex","flex","flex"]} as={AiFillHome} fontSize="xl" className={router.pathname === "/user/dashboard"?"active-icon":"" }/>
+                                            <Icon display={["flex","flex","flex","flex","flex"]} as={AiFillSignal} fontSize="xl" className={router.pathname === "/user/dashboard"?"active-icon":"" }/>
                                         </Link>
                                     </motion.div>
                                     </NextLink>
@@ -112,7 +112,7 @@ const Navbar = () => {
                                             },
                                         }}>
                                         <Link _hover={{textDecor: 'none'}} display={["none","none","none","flex","flex"]}>
-                                            <Text className={router.pathname === "/user/dashboard"?"active":""}>Home</Text>
+                                            <Text className={router.pathname === "/user/dashboard"?"active":""}>Dashboard</Text>
                                         </Link>
                                     </motion.div>
                                     </NextLink>
@@ -120,7 +120,7 @@ const Navbar = () => {
                             </Flex>
 
                             <Flex className="sidebar-items">
-                                <NextLink href="/user/hallofame" passHref>
+                                <NextLink href="/user/invoices" passHref>
                                 <motion.div initial="hidden" animate="visible" variants={{
                                         hidden:{
                                             scale: .8,
@@ -135,11 +135,11 @@ const Navbar = () => {
                                         },
                                     }}>
                                     <Link display={["center","center","center","flex-start","flex-start"]}>
-                                        <Icon display={["flex","flex","flex","flex","flex"]} as={AiFillStar} fontSize="xl"  className={router.pathname === "/user/hallofame"?"active-icon":"" } />
+                                        <Icon display={["flex","flex","flex","flex","flex"]} as={AiFillFileText} fontSize="xl"  className={router.pathname === "/user/invoices"?"active-icon":"" } />
                                     </Link>
                                 </motion.div>
                                 </NextLink>
-                                <NextLink href="/user/hallofame" passHref>
+                                <NextLink href="/user/invoices" passHref>
                                 <motion.div initial="hidden" animate="visible" variants={{
                                         hidden:{
                                             scale: .8,
@@ -154,7 +154,7 @@ const Navbar = () => {
                                         },
                                     }}>
                                     <Link _hover={{textDecor: 'none'}} display={["none","none","none","flex","flex"]}>
-                                        <Text className={router.pathname === "/user/hallofame"?"active":""}>Dev. Credits </Text>
+                                        <Text className={router.pathname === "/user/invoices"?"active":""}>Tax Invoices </Text>
                                     </Link>
                                 </motion.div>
                                 </NextLink>
