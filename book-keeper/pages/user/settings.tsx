@@ -14,6 +14,7 @@ export default function settings(){
                 overflow="hidden"
                 maxW="2000px"
                 display="flex"
+                backgroundColor="#EDF2F7"
             >
                 <Navbar /> 
                 <SettingsNavbar />

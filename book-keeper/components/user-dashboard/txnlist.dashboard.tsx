@@ -14,7 +14,6 @@ import {
     Divider,
 } from "@chakra-ui/react";
 import {
-    AiFillCalendar,
     AiFillCaretDown,
     AiFillCaretUp,
 } from 'react-icons/ai';
@@ -35,6 +34,7 @@ const TxnList = () => {
                 flexDir="column"
                 overflow="auto"
                 minH="100vh"
+                backgroundColor="#fff"
             >
                 <motion.div initial="hidden" animate="visible" variants={{
                     hidden:{

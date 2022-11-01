@@ -13,7 +13,7 @@ export default function invoices(){
                 flexDir={["column","column","row"]}
                 overflow="hidden"
                 maxW="2000px"
-                backgroundColor="#E2E8F0"
+                backgroundColor="#EDF2F7"
             >
                 <Navbar /> 
             </Flex>

@@ -5,7 +5,6 @@ import { AiFillCalendar } from "react-icons/ai";
 const TxnListFilter = () => {
     const { isOpen, onOpen, onClose } = useDisclosure();
     const [chartFilter, setChartFilter] = useState('1');
-    const [chartSubFilter, setChartSubFilter] = useState('1');
 
     const initialRef = useRef(null);
     const finalRef = useRef(null);    

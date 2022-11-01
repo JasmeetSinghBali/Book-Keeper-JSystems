@@ -44,7 +44,7 @@ const SearchNotificationSection = () =>{
             <Flex
                 w={["100%","100%","30%"]} 
                 minW={[null,null,"300px","300px","400px"]}
-                bgColor="#F5F5F5"
+                backgroundColor="gray.50"
                 p="3%"
                 flexDir="column"
                 overflow="auto"
