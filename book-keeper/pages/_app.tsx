@@ -1,9 +1,10 @@
 import '../styles/globals.css'
 import { ChakraProvider } from '@chakra-ui/react'
-import type { AppProps } from 'next/app'
+import type { AppProps, AppType } from 'next/app'
 import { motion, AnimatePresence } from 'framer-motion';
+import { trpc } from '../utils/trpc';
 
-function MyApp({ Component, pageProps, router }: AppProps) {
+const MyApp: AppType = ({ Component, pageProps, router }: AppProps) => {
   return (
     <ChakraProvider>
       <AnimatePresence>
@@ -27,4 +28,4 @@ function MyApp({ Component, pageProps, router }: AppProps) {
   )
 }
 
-export default MyApp
+export default trpc.withTRPC(MyApp);

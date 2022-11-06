@@ -53,7 +53,9 @@ yarn create next-app --typescript
 
 ```
 
-> Misc Resources Links
+> ## Misc Resources Links
+
+> Frontend
 
 - [UI-react-icons](https://react-icons.github.io/react-icons/icons?name=ai)
 
@@ -76,3 +78,12 @@ yarn create next-app --typescript
         update plan, Report Bug, delete account ||
 
 - My Contacts Page [ui design](https://dribbble.com/shots/15221832-Nara-Medics-Contact-Management-Page)
+
+---
+
+> Backend
+
+- [Supabase](https://app.supabase.com/) cloud hosting postgresql db instance specifically
+- prisma
+- trpc
+- Nextjs Auth https://next-auth.js.org/configuration/providers/oauth
