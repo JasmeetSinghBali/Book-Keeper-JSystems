@@ -5,15 +5,18 @@ import { userRouter } from './user';
 /**@desc- app level router init */
 export const appRouter = router({
     /**@desc- test hello publicProcedure */
-    hello: publicProcedure
+    message: publicProcedure
     .input(
       z.object({
-        text: z.string().nullish(),
+        name: z.string().nullish(),
       }),
     )
-    .query(({ input }) => {
+    .query(({ ctx, input }) => {
+      console.log(ctx.session?.user);
       return {
-        greeting: `hello ${input?.text ?? 'world'}`,
+        greeting: `hello ${input?.name ?? 'world'}`,
+        second: 'test',
+        third: 7,
       };
     }),
     /**@desc- all user related public or private Procedures[query/mutations]  */

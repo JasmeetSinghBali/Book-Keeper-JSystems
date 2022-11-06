@@ -1,9 +1,8 @@
 import type { NextPage } from 'next';
-import styles from '../styles/Home.module.css';
 import { trpc } from '../utils/trpc';
 
 const Home: NextPage = () => {
-  const result = trpc.hello.useQuery({text: 'jasmeet'});
+  const result = trpc.message.useQuery({name: 'jasmeet'});
   if(!result.data) {
     return (
       <div>

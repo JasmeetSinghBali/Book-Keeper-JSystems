@@ -42,13 +42,23 @@ yarn create next-app --typescript
     "@chakra-ui/react": "^2.3.6",
     "@emotion/react": "^11.10.4",
     "@emotion/styled": "^11.10.4",
+    "@prisma/client": "^4.5.0",
+    "@tanstack/react-query": "^4.14.3",
+    "@trpc/client": "^10.0.0-proxy-beta.26",
+    "@trpc/next": "^10.0.0-proxy-beta.26",
+    "@trpc/react": "^9.27.4",
+    "@trpc/react-query": "^10.0.0-proxy-beta.26",
+    "@trpc/server": "^10.0.0-proxy-beta.26",
     "chart.js": "^3.9.1",
-    "framer-motion": "^7.6.1",
+    "framer-motion": "^7.6.2",
     "next": "12.3.1",
+    "next-auth": "^4.16.2",
     "react": "18.2.0",
     "react-chartjs-2": "^4.3.1",
     "react-dom": "18.2.0",
-    "react-icons": "^4.6.0"
+    "react-icons": "^4.6.0",
+    "react-query": "^3.39.2",
+    "zod": "^3.19.1"
   }
 
 ```
@@ -84,6 +94,51 @@ yarn create next-app --typescript
 > Backend
 
 - [Supabase](https://app.supabase.com/) cloud hosting postgresql db instance specifically
-- prisma
+
+- [prisma](https://www.prisma.io/docs/concepts/components/prisma-schema)
+
+  https://www.prisma.io/docs/concepts/components/prisma-schema/data-model
+
+  https://www.prisma.io/docs/concepts/overview/what-is-prisma/data-modeling#:~:text=Using%20Prisma%20Client%20and%20Prisma%20Migrate,-When%20using%20Prisma&text=Manually%20change%20your%20application%20models,Prisma%20Client%20is%20automatically%20generated)
+
+- zod https://blog.logrocket.com/schema-validation-typescript-zod/#composing-complex-schema-objects
+
 - trpc
+
+            # ------procedures--------
+            each procedures corresponds to an endpoint like in rest API
+
+            # each procedure can be
+            - query
+               or
+            - mutation
+
+            # each procedure can have input with validation and any package third party of # home brew could be used to validate inputs
+
+            # renaming symbols at client that make cascaded updates throughout the server as well
+            select a word and press F2 and type the new name and enter
+
+            # @@@ example @@@
+            before
+            trpc.hello
+            after
+            trpc.greetings
+
+🎈 To do 👇
+
+**just make sure to add a check here in oauth provider that user email is registered in the DB**
+
+- [init nextjs](https://next-auth.js.org/configuration/initialization#advanced-initialization)
+
+https://next-auth.js.org/configuration/options
+
 - Nextjs Auth https://next-auth.js.org/configuration/providers/oauth
+
+- [magic email link sign in](https://next-auth.js.org/configuration/providers/email)
+
+- [logging & error & performance reports](https://github.com/vercel/next.js/tree/canary/examples/with-sentry)
+
+- [sentrynpm](https://www.npmjs.com/package/@sentry/nextjs)
+  [sentrydocs](https://docs.sentry.io/platforms/javascript/guides/nextjs/)
+
+- [add more data to next context session like access token](https://stackoverflow.com/questions/71185287/pass-more-data-to-session-in-next-auth)
