@@ -1,4 +1,4 @@
-/**@desc Procedures helpers */
+/**@desc Instantiate the trpc server & export common  router & procedure as publicProcedure & protectedProcedure */
 
 import { TRPCError, initTRPC } from '@trpc/server';
 
