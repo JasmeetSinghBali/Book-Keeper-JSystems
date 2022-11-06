@@ -10,41 +10,41 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Users {
-  id        Int        @id @default(autoincrement())
-  createdAt DateTime   @default(now())
-  updatedAt DateTime   @updatedAt
+model User {
+  id        Int       @id @default(autoincrement())
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
   name      String?
-  email     String     @unique
-  phone     String     @unique
-  role      Role       @default(USER)
-  active    Boolean    @default(true)
-  plan      Plan       @default(COMMUNITY)
-  password  String
-  Contacts  Contacts[]
-  Cards     Cards[]
+  email     String    @unique
+  phone     String    @unique
+  role      Role      @default(USER)
+  active    Boolean   @default(true)
+  plan      Plan      @default(COMMUNITY)
+  Contacts  Contact[]
+  Cards     Card[]
 }
 
-model Contacts {
+model Contact {
   id           Int      @id @default(autoincrement())
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
   name         String?
   email        String   @unique
   phone        String   @unique
-  cardtype     String
+  cardtype     CardType
   cardno       String   @unique
-  user         Users    @relation(fields: [mappeduserId], references: [id])
-  mappeduserId Int
+  user         User     @relation(fields: [mappeduserId], references: [id])
+  mappeduserId Int      @unique
 }
 
-model Cards {
+model Card {
   id           Int      @id @default(autoincrement())
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
+  cardtype     CardType
   cardno       String   @unique
-  user         Users    @relation(fields: [mappeduserId], references: [id])
-  mappeduserId Int
+  user         User     @relation(fields: [mappeduserId], references: [id])
+  mappeduserId Int      @unique
 }
 
 enum Role {
@@ -55,4 +55,9 @@ enum Role {
 enum Plan {
   COMMUNITY
   ENTERPRISE
+}
+
+enum CardType {
+  DEBIT
+  CREDIT
 }

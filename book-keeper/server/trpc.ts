@@ -1,26 +1,27 @@
 /**@desc Instantiate the trpc server & export common  router & procedure as publicProcedure & protectedProcedure */
 
 import { TRPCError, initTRPC } from '@trpc/server';
+import { Context } from './context';
 
 // Avoid exporting the entire t-object since it's not very
 // descriptive and can be confusing to newcomers used to t
 // meaning translation in i18n libraries.
-const t = initTRPC.create();
 
-// Base router and procedure helpers
-export const router = t.router;
-export const publicProcedure = t.procedure;
+/**@desc instantiate trpc instance with common context */
+const t = initTRPC.context<Context>().create();
 
 /**
- * Reusable middleware that checks if users are authenticated.
- * @note Example only, yours may vary depending on how your auth is setup
+ * @desc middleware that tracks incoming requests
  **/
-const isAuthed = t.middleware(({ next, ctx }) => {
-  if (!ctx.session?.user?.email) {
-    throw new TRPCError({
-      code: 'UNAUTHORIZED',
-    });
-  }
+ const requestTracker = t.middleware(({ next, ctx }) => {
+  // if (!ctx.session?.user?.email) {
+  //   throw new TRPCError({
+  //     code: 'UNAUTHORIZED',
+  //   });
+  // }
+
+  // 🎈 tracks incoming request and log IP's , access points & device info, geolocation
+  console.log(ctx.session)
   return next({
     ctx: {
       // Infers the `session` as non-nullable
@@ -29,5 +30,9 @@ const isAuthed = t.middleware(({ next, ctx }) => {
   });
 });
 
+// Base router and procedure helpers
+export const router = t.router;
+export const publicProcedure = t.procedure;
+
 // Protected procedures for logged in users only
-export const protectedProcedure = t.procedure.use(isAuthed);
+export const trackedProcedure = t.procedure.use(requestTracker);
