@@ -3,6 +3,7 @@ import { ChakraProvider } from '@chakra-ui/react'
 import type { AppProps, AppType } from 'next/app'
 import { motion, AnimatePresence } from 'framer-motion';
 import { trpc } from '../utils/trpc';
+import { SessionProvider } from 'next-auth/react';
 
 const MyApp: AppType = ({ Component, pageProps, router }: AppProps) => {
   return (
@@ -21,7 +22,9 @@ const MyApp: AppType = ({ Component, pageProps, router }: AppProps) => {
             opacity: 0
           }
         }}>
-          <Component {...pageProps} />
+          <SessionProvider>
+            <Component {...pageProps} />
+          </SessionProvider>
         </motion.div>
       </AnimatePresence>
     </ChakraProvider>

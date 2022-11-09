@@ -12,7 +12,7 @@ export const appRouter = router({
       }),
     )
     .query(({ ctx, input }) => {
-      console.log(ctx.session?.user);
+      console.log(ctx.req);
       return {
         greeting: `hello ${input?.name ?? 'world'}`,
         second: 'test',

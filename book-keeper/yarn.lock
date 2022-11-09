@@ -1208,6 +1208,11 @@
   resolved "https://registry.yarnpkg.com/@trpc/server/-/server-10.0.0-proxy-beta.26.tgz#0e274b6b40055490826df92b538bc5db662147c5"
   integrity sha512-XMpsQnH5s5Mn7CbRUMq2qT8TlHWNSygAizmpKnMhk3JDuLtqQNfxqGG41JzXiKNUcDrfcWt+MEyEa18sEjLYiA==
 
+"@types/bcryptjs@^2.4.2":
+  version "2.4.2"
+  resolved "https://registry.yarnpkg.com/@types/bcryptjs/-/bcryptjs-2.4.2.tgz#e3530eac9dd136bfdfb0e43df2c4c5ce1f77dfae"
+  integrity sha512-LiMQ6EOPob/4yUL66SZzu6Yh77cbzJFYll+ZfaPiPPFswtIlA/Fs1MzdKYA7JApHU49zQTbJGX3PDmCpIdDBRQ==
+
 "@types/json5@^0.0.29":
   version "0.0.29"
   resolved "https://registry.yarnpkg.com/@types/json5/-/json5-0.0.29.tgz#ee28707ae94e11d2b827bcbe5270bcea7f3e71ee"
@@ -1438,6 +1443,11 @@ balanced-match@^1.0.0:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/balanced-match/-/balanced-match-1.0.2.tgz#e83e3a7e3f300b34cb9d87f615fa0cbf357690ee"
   integrity sha512-3oSeUO0TMV67hN1AmbXsK4yaqU7tjiHlbxRDZOpH0KW9+CeX4bRAaX0Anxt0tx2MrpRpWwQaPwIlISEJhYU5Pw==
+
+bcryptjs@^2.4.3:
+  version "2.4.3"
+  resolved "https://registry.yarnpkg.com/bcryptjs/-/bcryptjs-2.4.3.tgz#9ab5627b93e60621ff7cdac5da9733027df1d0cb"
+  integrity sha512-V/Hy/X9Vt7f3BbPJEi8BdVFMByHi+jNXrYkW3huaybV/kQ0KJg0Y6PkEMbn+zeT+i+SiKZ/HMqJGIIt4LZDqNQ==
 
 big-integer@^1.6.16:
   version "1.6.51"
@@ -2378,9 +2388,9 @@ isexe@^2.0.0:
   integrity sha512-RHxMLp9lnKHGHRng9QFhRCMbYAcVpn69smSGcq3f36xjgVVWThj4qqLbTLlq7Ssj8B+fIQ1EuCEGI2lKsyQeIw==
 
 jose@^4.10.0, jose@^4.9.3:
-  version "4.10.4"
-  resolved "https://registry.yarnpkg.com/jose/-/jose-4.10.4.tgz#5f934b2fcf2995776e8f671f7523c6ac52c138f7"
-  integrity sha512-eBH77Xs9Yc/oTDvukhAEDVMijhekPuNktXJL4tUlB22jqKP1k48v5nmsUmc8feoJPsxB3HsfEt2LbVSoz+1mng==
+  version "4.11.0"
+  resolved "https://registry.yarnpkg.com/jose/-/jose-4.11.0.tgz#1c7f5c7806383d3e836434e8f49da531cb046a9d"
+  integrity sha512-wLe+lJHeG8Xt6uEubS4x0LVjS/3kXXu9dGoj9BNnlhYq7Kts0Pbb2pvv5KiI0yaKH/eaiR0LUOBhOVo9ktd05A==
 
 js-sdsl@^4.1.4:
   version "4.1.5"
@@ -2560,10 +2570,10 @@ natural-compare@^1.4.0:
   resolved "https://registry.yarnpkg.com/natural-compare/-/natural-compare-1.4.0.tgz#4abebfeed7541f2c27acfb29bdbbd15c8d5ba4f7"
   integrity sha512-OWND8ei3VtNC9h7V60qff3SVobHr996CTwgxubgyQYEpg290h9J0buyECNNJexkFm5sOajh5G116RYA1c8ZMSw==
 
-next-auth@^4.16.2:
-  version "4.16.2"
-  resolved "https://registry.yarnpkg.com/next-auth/-/next-auth-4.16.2.tgz#ef2d356ec48a1251fefa1fd8ffb0a24d493d12fa"
-  integrity sha512-ZSb9omFv4hJT9Rm2OUAuUxCCBwpQnvQRXdcFHk7WIyt7Ud4O6NcNKH0fRTelFl30ycvr3Mc5PdnAt+zdr07nQw==
+next-auth@4.15.2:
+  version "4.15.2"
+  resolved "https://registry.yarnpkg.com/next-auth/-/next-auth-4.15.2.tgz#b13d2b8d4ffbe17ba92cb1f3aff68459b24cb43e"
+  integrity sha512-YsjGgY4hkTkN5pTIdwFBS2nTE68oI9KYXUBnOAC+SdWDOCK1vQikAICBdn4uUxBEeH9AH8xWYhpNzELaqFumsQ==
   dependencies:
     "@babel/runtime" "^7.16.3"
     "@panva/hkdf" "^1.0.1"

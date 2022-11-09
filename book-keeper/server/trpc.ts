@@ -21,11 +21,11 @@ const t = initTRPC.context<Context>().create();
   // }
 
   // 🎈 tracks incoming request and log IP's , access points & device info, geolocation
-  console.log(ctx.session)
+  console.log(ctx.req)
   return next({
     ctx: {
       // Infers the `session` as non-nullable
-      session: ctx.session,
+      session: ctx.req,
     },
   });
 });
