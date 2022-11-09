@@ -31,6 +31,9 @@ export const trpc = createTRPCNext<AppRouter>({
           url: `${getBaseUrl()}/api/trpc`,
         }),
       ],
+      headers: {
+        "x-ssr": "1",
+      },
       /**
        * @link https://tanstack.com/query/v4/docs/reference/QueryClient
        **/
