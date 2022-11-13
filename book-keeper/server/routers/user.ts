@@ -14,7 +14,7 @@ export const userRouter = router({
         .input(signUpSchema)
         .mutation(async ({ ctx, input }) => {
             const { email, password } = input;
-            const alreadyExists = await ctx.prisma.users.findFirst({
+            const alreadyExists = await ctx.prisma.user.findFirst({
                 where: {email},
             });
             if(alreadyExists){
@@ -26,15 +26,12 @@ export const userRouter = router({
 
             const hashedP = hashSync(password, 13);
             input.password = hashedP;
-            const result = await ctx.prisma.users.create({data: input});
+            const result = await ctx.prisma.user.create({data: input});
             return {
                 status: 201,
                 message: "Account created successfully",
                 meta: result.email
             } 
-            // 🎈
-            // signup new user ,
-            // & redirect new user to loginPage[email-pass] via UI to login through next/auth credentials form
         }),
     
     /** 📝 tracked routes Section */

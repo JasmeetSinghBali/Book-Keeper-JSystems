@@ -6,7 +6,7 @@ import { GenericCardNoConstraint, GenericEmailConstraint, GenericNameConstraint,
  */
 export const signUpSchema = z.object({
     email: GenericEmailConstraint,
-    username: GenericNameConstraint,  
+    username: z.string(),  
     password: z.string().min(16),   
     phone: GenericPhoneConstraint, 
     Contact: z.object({

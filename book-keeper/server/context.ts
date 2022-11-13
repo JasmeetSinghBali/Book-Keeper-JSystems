@@ -1,7 +1,7 @@
 import { inferAsyncReturnType } from "@trpc/server";
 import * as trpcNext from '@trpc/server/adapters/next';
 import { unstable_getServerSession } from "next-auth";
-import { nextAuthOptions } from "../utils/auth";
+import { nextAuthOptions } from "../utils/nextauth.options";
 import { prisma } from "../utils/prismaInstance";
 
 /**@desc creates common context for all incoming protected requests */

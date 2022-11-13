@@ -12,11 +12,10 @@ export const appRouter = router({
       }),
     )
     .query(({ ctx, input }) => {
-      console.log(ctx.req);
+      // console.log(ctx);
       return {
         greeting: `hello ${input?.name ?? 'world'}`,
-        second: 'test',
-        third: 7,
+        from: 'this message is from trpc server',
       };
     }),
     /**@desc- all user related public or private Procedures[query/mutations]  */

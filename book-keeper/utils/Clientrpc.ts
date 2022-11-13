@@ -19,7 +19,7 @@ function getBaseUrl() {
   return `http://localhost:${process.env.PORT ?? 3000}`;
 }
 
-export const trpc = createTRPCNext<AppRouter>({
+export const trpcClient = createTRPCNext<AppRouter>({
   config({ ctx }) {
     return {
       links: [
