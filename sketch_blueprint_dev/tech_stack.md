@@ -124,9 +124,19 @@ yarn create next-app --typescript
             after
             trpc.greetings
 
-🎈 To do 👇
+---
 
-**just make sure to add a check here in oauth provider that user email is registered in the DB**
+> 🎈 To do 👇 Dev Logs [branch labels]: DatedFrom: 15-11-2022
+
+1.  setup/nextAuth
+
+```bash
+
+- [ ] setup & wire up login page
+- [ ] seprate out the login and signup thing clean and organize them properly
+- [ ] work on sign up end-to-end
+- [ ] to add a check here in oauth provider that user email is registered in the DB if not dont move forward with oauth flow ref: https://next-auth.js.org/configuration/initialization#advanced-initialization
+- [ ] email sign in
 
 - [init nextjs](https://next-auth.js.org/configuration/initialization#advanced-initialization)
 
@@ -136,9 +146,17 @@ https://next-auth.js.org/configuration/options
 
 - [magic email link sign in](https://next-auth.js.org/configuration/providers/email)
 
-- [logging & error & performance reports](https://github.com/vercel/next.js/tree/canary/examples/with-sentry)
+```
 
-- [sentrynpm](https://www.npmjs.com/package/@sentry/nextjs)
+---
+
+> 2. setup/logging
+
+```bash
+
+- [ ] [logging & error & performance reports](https://github.com/vercel/next.js/tree/canary/examples/with-sentry)
+
+  [sentrynpm](https://www.npmjs.com/package/@sentry/nextjs)
   [sentrydocs](https://docs.sentry.io/platforms/javascript/guides/nextjs/)
 
-- [add more data to next context session like access token](https://stackoverflow.com/questions/71185287/pass-more-data-to-session-in-next-auth)
+```
