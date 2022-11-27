@@ -6,6 +6,8 @@ import {
     Text,
     Icon,
     Link,
+    IconButton,
+    Button,
 } from "@chakra-ui/react";
 import {
     AiFillSetting,
@@ -22,9 +24,23 @@ import {
 import { useRouter } from 'next/router';
 import NextLink  from 'next/link';
 import {motion} from  'framer-motion';
+import { BsFillSignpostFill } from 'react-icons/bs';
+import { signOut, useSession } from 'next-auth/react';
+
 
 const Navbar = () => {
     const router = useRouter();
+    const {push} = useRouter();
+    const handleOAuthSignOut = async () =>{
+        const redirection: any = await signOut({redirect: false, callbackUrl:'/user/login'});
+        push(redirection.url); 
+    }
+    /**🎈 if no session show not signed in & redirect user to login page with set timeout */
+    const { data: session, status } = useSession();
+    if(!session){
+        router.push('/user/login');
+    }
+
     return (
         <>
             {/*Navigation Section*/}
@@ -242,6 +258,45 @@ const Navbar = () => {
                                 </motion.div>    
                                 </NextLink>
                                 
+                            </Flex>
+                            {/**🚧 🎈 Oauth Sign Out */}
+                            <Flex className="sidebar-items">
+                                <motion.div initial="hidden" animate="visible" variants={{
+                                        hidden:{
+                                            scale: .8,
+                                            opacity: 0
+                                        },
+                                        visible:{
+                                            scale: 1,
+                                            opacity: 1,
+                                            transition: {
+                                                delay: .9
+                                            }
+                                        },
+                                    }}>
+                                    <Link display={["center","center","center","flex-start","flex-start"]}>
+                                        <IconButton _hover={{bgColor:"purple.900"}} size= "xs" bgColor="purple.900" onClick={() => handleOAuthSignOut()} display={["flex", "flex", "flex", "flex", "flex"]} as={BsFillSignpostFill} fontSize="xl" className={router.pathname === "/user/login" ? "active-icon" : ""} aria-label={''} />
+                                    </Link>
+                                </motion.div>
+                                
+                                
+                                <motion.div initial="hidden" animate="visible" variants={{
+                                        hidden:{
+                                            scale: .8,
+                                            opacity: 0
+                                        },
+                                        visible:{
+                                            scale: 1,
+                                            opacity: 1,
+                                            transition: {
+                                                delay: .9
+                                            }
+                                        },
+                                    }}>
+                                    <Link _hover={{textDecor: 'none'}} display={["none","none","none","flex","flex"]}>
+                                        <Button mt={-2}  bgColor="purple.900" _hover={{bg:"purple.900", color:"goldenrod"}} onClick={()=>handleOAuthSignOut()}>Sign Out</Button>
+                                    </Link>
+                                </motion.div>    
                             </Flex>
                         </Flex>
                     </Flex>
