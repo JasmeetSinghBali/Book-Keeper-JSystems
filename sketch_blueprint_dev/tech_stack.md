@@ -132,7 +132,9 @@ yarn create next-app --typescript
 
 ```bash
 
-- [ ] setup & wire up login page
+- [x] setup & wire up login page. https://next-auth.js.org/providers/google go to -> https://console.developers.google.com/apis/credentials -> create new project -> create credentials selecting the newly created project -> Oauth Client ID & select web application
+add redirect uri http://localhost:3000/api/auth/callback/google & use client ID & secret to configure provider in nextjs provider section
+
 - [ ] seprate out the login and signup thing clean and organize them properly
 - [ ] work on sign up end-to-end
 - [ ] to add a check here in oauth provider that user email is registered in the DB if not dont move forward with oauth flow ref: https://next-auth.js.org/configuration/initialization#advanced-initialization

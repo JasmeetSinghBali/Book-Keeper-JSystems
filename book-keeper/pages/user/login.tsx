@@ -27,10 +27,6 @@ const LogIn: NextPage = () => {
     {
       name: 'google',
       Icon: BsGoogle
-    },
-    {
-      name: 'twitter',
-      Icon: BsTwitter
     }
   ];
   /** handle Oauth single sign in flow a/c to the provider name */
