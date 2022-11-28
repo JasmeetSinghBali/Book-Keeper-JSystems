@@ -1,6 +1,6 @@
 import type { NextPage } from 'next';
 import { useSession, signIn, signOut } from 'next-auth/react';
-import { Box, Button, Divider, Flex, Grid, Heading, Icon, Input, InputGroup, InputLeftAddon, Skeleton, Stack, Text, VStack } from '@chakra-ui/react';
+import { Box, Button, Divider, Flex, Grid, Heading, Icon, Input, InputGroup, InputLeftAddon, Skeleton, Stack, Text, VStack, chakra } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
 import { trpcClient } from '../../utils/Clientrpc';
 import { RiBookMarkFill } from 'react-icons/ri';
@@ -8,8 +8,7 @@ import { BsGithub , BsGoogle, BsTwitter} from 'react-icons/bs';
 import { motion } from 'framer-motion';
 import { FiLogIn } from 'react-icons/fi';
 import { AiFillMail } from 'react-icons/ai';
-import AnimatedCharacter from '../../components/common/animations/animate.character';
-import AnimatedWords from '../../components/common/animations/animate.words';
+import { useState } from 'react';
 
 
 
@@ -17,6 +16,7 @@ const LogIn: NextPage = () => {
   
   const { data: session, status } = useSession();
   const {push} = useRouter();
+  const [userEmail, setUserEmail] = useState('');
 
   /**Oauth single sign in options */
   const providers: any = [
@@ -47,15 +47,28 @@ const LogIn: NextPage = () => {
   if(session){
       setTimeout(()=>{
         push('/user/dashboard');
-      },3000)
+      },2000)
       const userEmail: any = session?.user?.email;
       return <Flex flexDir="column" h={"100vh"} bgGradient='linear(to-r, red.50, blue.50, green.50,yellow.50)' >
-              <Heading fontSize="lg" fontWeight="extrabold"> <AnimatedWords text="Welcome!! Wonderer"/> </Heading>
+              <Heading fontSize="lg" fontWeight="extrabold"> Welcome!! Wonderer</Heading>
               <br/>
-              <Text fontWeight="bold" fontSize="md"><AnimatedWords text={userEmail} /></Text>
+              <Text fontWeight="bold" fontSize="md">{userEmail} </Text>
+              <Text fontWeight="bold" fontSize="sm"> today is {new Date().toDateString()}</Text>
               <br/>
-              <Text fontWeight="semibold" fontSize="sm"><AnimatedWords text="redirecting you to your dashboard..." /></Text>
+              <Text fontWeight="semibold" fontSize="sm"> redirecting you to your dashboard...</Text>
              </Flex>
+  }
+
+  /** 🎈🚧 handle email magic link sign in */
+  const handleEmailSignIn = (e: any): any => {
+    e.preventDefault();
+    if(!userEmail){
+      return false;
+    }
+    signIn('email',{
+      email: userEmail,
+      redirect: false
+    });
   }
 
   return (      
@@ -126,14 +139,28 @@ const LogIn: NextPage = () => {
                             </Heading>
                             {/** email magic link sign in */}
                             <Stack ml={8} mt={6} spacing={2}>
-                              <InputGroup>
-                                <InputLeftAddon children='@mail' />
-                                <Input type='email' placeholder='john.doe@funxmail.com'></Input>
-                              </InputGroup>
-                              {/** 🚧 Sign in button via mail magic link */}
-                              <Button textTransform='uppercase' size={"sm"} width="100%" leftIcon={<AiFillMail />} _hover={{bg:"gray.900"}} colorScheme="purple">
-                                Sign in via mail
-                              </Button>
+                              <chakra.form onSubmit={handleEmailSignIn}>
+                                <InputGroup>
+                                  <InputLeftAddon children='@mail' />
+                                  <Input 
+                                    type='email'
+                                    onChange={e => setUserEmail(e.target.value)} 
+                                    placeholder='john.doe@funxmail.com'>
+                                  </Input>
+                                </InputGroup>
+                                {/** 🚧 Sign in button via mail magic link */}
+                                <Button 
+                                  textTransform='uppercase'
+                                  size={"sm"}
+                                  width="100%"
+                                  leftIcon={<AiFillMail />}
+                                  _hover={{bg:"teal.200"}}
+                                  type="submit"
+                                  my={2}
+                                >
+                                    Sign in via mail
+                                </Button>
+                              </chakra.form>
                             </Stack>
                             {/** 🚧 Oauth sign in options github,microsoft,google */}
                             <VStack marginTop={4} marginLeft={10}>

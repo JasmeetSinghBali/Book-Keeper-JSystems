@@ -35,11 +35,6 @@ const Navbar = () => {
         const redirection: any = await signOut({redirect: false, callbackUrl:'/user/login'});
         push(redirection.url); 
     }
-    /**🎈 if no session show not signed in & redirect user to login page with set timeout */
-    const { data: session, status } = useSession();
-    if(!session){
-        router.push('/user/login');
-    }
 
     return (
         <>
