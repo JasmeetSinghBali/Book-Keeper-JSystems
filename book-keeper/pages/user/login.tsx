@@ -8,8 +8,6 @@ import { BsGithub , BsGoogle, BsTwitter} from 'react-icons/bs';
 import { motion } from 'framer-motion';
 import { FiLogIn } from 'react-icons/fi';
 import { AiFillMail } from 'react-icons/ai';
-import AnimatedCharacter from '../../components/common/animations/animate.character';
-import AnimatedWords from '../../components/common/animations/animate.words';
 
 
 
@@ -47,14 +45,15 @@ const LogIn: NextPage = () => {
   if(session){
       setTimeout(()=>{
         push('/user/dashboard');
-      },3000)
+      },2000)
       const userEmail: any = session?.user?.email;
       return <Flex flexDir="column" h={"100vh"} bgGradient='linear(to-r, red.50, blue.50, green.50,yellow.50)' >
-              <Heading fontSize="lg" fontWeight="extrabold"> <AnimatedWords text="Welcome!! Wonderer"/> </Heading>
+              <Heading fontSize="lg" fontWeight="extrabold"> Welcome!! Wonderer</Heading>
               <br/>
-              <Text fontWeight="bold" fontSize="md"><AnimatedWords text={userEmail} /></Text>
+              <Text fontWeight="bold" fontSize="md">{userEmail} </Text>
+              <Text fontWeight="bold" fontSize="sm"> today is {new Date().toDateString()}</Text>
               <br/>
-              <Text fontWeight="semibold" fontSize="sm"><AnimatedWords text="redirecting you to your dashboard..." /></Text>
+              <Text fontWeight="semibold" fontSize="sm"> redirecting you to your dashboard...</Text>
              </Flex>
   }
 
@@ -131,7 +130,7 @@ const LogIn: NextPage = () => {
                                 <Input type='email' placeholder='john.doe@funxmail.com'></Input>
                               </InputGroup>
                               {/** 🚧 Sign in button via mail magic link */}
-                              <Button textTransform='uppercase' size={"sm"} width="100%" leftIcon={<AiFillMail />} _hover={{bg:"gray.900"}} colorScheme="purple">
+                              <Button textTransform='uppercase' size={"sm"} width="100%" leftIcon={<AiFillMail />} _hover={{bg:"teal.200"}}>
                                 Sign in via mail
                               </Button>
                             </Stack>

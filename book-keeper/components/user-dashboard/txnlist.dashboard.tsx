@@ -76,7 +76,7 @@ const TxnList = () => {
                     </Flex>
                     <ChartRanger />
                 </Flex>
-                <Text fontWeight="bold" fontSize="md"><AnimatedCharacter text='$5,325.10' /></Text>
+                <Text fontWeight="bold" fontSize="md"> $5,325.10 </Text>
                 
                 <BKChartMain />
                 
