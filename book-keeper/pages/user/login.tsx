@@ -1,6 +1,6 @@
 import type { NextPage } from 'next';
 import { useSession, signIn, signOut } from 'next-auth/react';
-import { Box, Button, Divider, Flex, Grid, Heading, Icon, Input, InputGroup, InputLeftAddon, Skeleton, Stack, Text, VStack } from '@chakra-ui/react';
+import { Box, Button, Divider, Flex, Grid, Heading, Icon, Input, InputGroup, InputLeftAddon, Skeleton, Stack, Text, VStack, chakra } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
 import { trpcClient } from '../../utils/Clientrpc';
 import { RiBookMarkFill } from 'react-icons/ri';
@@ -8,6 +8,7 @@ import { BsGithub , BsGoogle, BsTwitter} from 'react-icons/bs';
 import { motion } from 'framer-motion';
 import { FiLogIn } from 'react-icons/fi';
 import { AiFillMail } from 'react-icons/ai';
+import { useState } from 'react';
 
 
 
@@ -15,6 +16,7 @@ const LogIn: NextPage = () => {
   
   const { data: session, status } = useSession();
   const {push} = useRouter();
+  const [userEmail, setUserEmail] = useState('');
 
   /**Oauth single sign in options */
   const providers: any = [
@@ -55,6 +57,18 @@ const LogIn: NextPage = () => {
               <br/>
               <Text fontWeight="semibold" fontSize="sm"> redirecting you to your dashboard...</Text>
              </Flex>
+  }
+
+  /** 🎈🚧 handle email magic link sign in */
+  const handleEmailSignIn = (e: any): any => {
+    e.preventDefault();
+    if(!userEmail){
+      return false;
+    }
+    signIn('email',{
+      email: userEmail,
+      redirect: false
+    });
   }
 
   return (      
@@ -125,14 +139,28 @@ const LogIn: NextPage = () => {
                             </Heading>
                             {/** email magic link sign in */}
                             <Stack ml={8} mt={6} spacing={2}>
-                              <InputGroup>
-                                <InputLeftAddon children='@mail' />
-                                <Input type='email' placeholder='john.doe@funxmail.com'></Input>
-                              </InputGroup>
-                              {/** 🚧 Sign in button via mail magic link */}
-                              <Button textTransform='uppercase' size={"sm"} width="100%" leftIcon={<AiFillMail />} _hover={{bg:"teal.200"}}>
-                                Sign in via mail
-                              </Button>
+                              <chakra.form onSubmit={handleEmailSignIn}>
+                                <InputGroup>
+                                  <InputLeftAddon children='@mail' />
+                                  <Input 
+                                    type='email'
+                                    onChange={e => setUserEmail(e.target.value)} 
+                                    placeholder='john.doe@funxmail.com'>
+                                  </Input>
+                                </InputGroup>
+                                {/** 🚧 Sign in button via mail magic link */}
+                                <Button 
+                                  textTransform='uppercase'
+                                  size={"sm"}
+                                  width="100%"
+                                  leftIcon={<AiFillMail />}
+                                  _hover={{bg:"teal.200"}}
+                                  type="submit"
+                                  my={2}
+                                >
+                                    Sign in via mail
+                                </Button>
+                              </chakra.form>
                             </Stack>
                             {/** 🚧 Oauth sign in options github,microsoft,google */}
                             <VStack marginTop={4} marginLeft={10}>
