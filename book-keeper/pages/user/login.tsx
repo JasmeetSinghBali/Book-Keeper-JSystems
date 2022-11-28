@@ -9,6 +9,7 @@ import { motion } from 'framer-motion';
 import { FiLogIn } from 'react-icons/fi';
 import { AiFillMail } from 'react-icons/ai';
 import { useState } from 'react';
+import Link from 'next/link';
 
 
 
@@ -113,7 +114,7 @@ const LogIn: NextPage = () => {
                         }}>
                             <Heading
                                 mt={8}
-                                ml={10}
+                                ml={5}
                                 fontSize={["4xl","4xl","2xl","3xl","4xl"]}
                                 alignSelf="center"
                                 letterSpacing="tighter"
@@ -122,10 +123,10 @@ const LogIn: NextPage = () => {
                             >
                               <Icon display={"inline"} as={RiBookMarkFill} fontSize="lg" color="#805AD5"></Icon>Keeper.   
                             </Heading>
-                            <Divider ml={10} mt={1} ></Divider>
+                            <Divider mt={2} ></Divider>
                             <Heading
-                                mt={4}
-                                ml={10}
+                                mt={2}
+                                ml={5}
                                 fontSize={["2xl","2xl","lg","xl","2xl"]}
                                 alignSelf="center"
                                 letterSpacing="tighter"
@@ -134,7 +135,7 @@ const LogIn: NextPage = () => {
                               Sign in. <Icon display={"inline"} as={FiLogIn} fontSize="xs" />   
                             </Heading>
                             {/** email magic link sign in */}
-                            <Stack ml={8} mt={6} spacing={2}>
+                            <Stack ml={5} mt={4} spacing={2}>
                               <chakra.form onSubmit={handleEmailSignIn}>
                                 <InputGroup>
                                   <InputLeftAddon children='@mail' />
@@ -159,7 +160,7 @@ const LogIn: NextPage = () => {
                               </chakra.form>
                             </Stack>
                             {/** 🚧 Oauth sign in options github,microsoft,google */}
-                            <VStack marginTop={4} marginLeft={10}>
+                            <VStack marginTop={4} marginLeft={5}>
                               <Text color="gray.500"> OAuth Single Sign In. </Text>
                               {
                                 providers.map(({ name, Icon }: any )=>{
@@ -179,6 +180,9 @@ const LogIn: NextPage = () => {
                                 })
                               }
                             </VStack>
+                            <Divider mt={2} ></Divider>
+                            <Text color="gray.600" fontSize="xs" py={2} ml={44} fontWeight='hairline' fontFamily='cursive'>📝Note from developer📝</Text>
+                            <Text color="gray.600" fontSize="xs" py={2} ml={12} fontWeight='hairline' fontFamily='cursive'>Google-OAuth(in sandbox env) if you are not able to sign in contact jasmeetbali.dev.2021@gmail.com to add your gmail to test accounts.</Text>
                         </motion.div>
                       </Flex>
                     </Flex>

@@ -132,13 +132,25 @@ yarn create next-app --typescript
 
 ```bash
 
+=============== Task List ================
+
 - [x] setup & wire up login page. https://next-auth.js.org/providers/google go to -> https://console.developers.google.com/apis/credentials -> create new project -> create credentials selecting the newly created project -> Oauth Client ID & select web application
 add redirect uri http://localhost:3000/api/auth/callback/google & use client ID & secret to configure provider in nextjs provider section
 
-- [ ] seprate out the login and signup thing clean and organize them properly
+- [ ] sort supabase nextjs integration, maintain session data inside postgresql hosted DB ref: https://next-auth.js.org/adapters/supabase
+
+        API URL and Keys
+        Go to the Settings page in the Dashboard.
+        Click API in the sidebar.
+        Find your API URL , anon , and service_role keys on this page.
+
+
 - [ ] work on sign up end-to-end
 - [ ] to add a check here in oauth provider that user email is registered in the DB if not dont move forward with oauth flow ref: https://next-auth.js.org/configuration/initialization#advanced-initialization
 - [ ] email sign in
+- [ ] add iron sessions next_auth exposed schema by encrypting payloadInterface callback next auth config, need to code out the node crypto encryption/decryption utils.
+
+============ Resources =============
 
 - [init nextjs](https://next-auth.js.org/configuration/initialization#advanced-initialization)
 
