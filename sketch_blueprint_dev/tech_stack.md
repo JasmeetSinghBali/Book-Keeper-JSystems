@@ -101,6 +101,19 @@ yarn create next-app --typescript
 
   https://www.prisma.io/docs/concepts/overview/what-is-prisma/data-modeling#:~:text=Using%20Prisma%20Client%20and%20Prisma%20Migrate,-When%20using%20Prisma&text=Manually%20change%20your%20application%20models,Prisma%20Client%20is%20automatically%20generated)
 
+                # after installing prisma depend & defining first basic in schema.prisma
+                npx prisma init
+                npx prisma generate
+
+                # use until the schema is not definate & after each alteration
+                npx prisma db push
+
+                # on finalization
+                npx prisma migrate dev
+
+                # to run prisma studio locally
+                npx prisma studio
+
 - zod https://blog.logrocket.com/schema-validation-typescript-zod/#composing-complex-schema-objects
 
 - trpc
@@ -137,7 +150,10 @@ yarn create next-app --typescript
 - [x] setup & wire up login page. https://next-auth.js.org/providers/google go to -> https://console.developers.google.com/apis/credentials -> create new project -> create credentials selecting the newly created project -> Oauth Client ID & select web application
 add redirect uri http://localhost:3000/api/auth/callback/google & use client ID & secret to configure provider in nextjs provider section
 
-- [ ] sort supabase nextjs integration, maintain session data inside postgresql hosted DB ref: https://next-auth.js.org/adapters/supabase
+- [ ] email server setup for magic email login, and dispatching
+emails to users https://my.sendinblue.com/dashboard or https://www.siteground.com/kb/gmail-smtp-server/
+
+- [ ] sort prisma+supabase+nextjs integration, maintain session data inside postgresql hosted DB ref: https://next-auth.js.org/adapters/supabase
 
         API URL and Keys
         Go to the Settings page in the Dashboard.
