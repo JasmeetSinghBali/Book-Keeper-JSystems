@@ -34,6 +34,9 @@ import { prisma } from './prismaInstance';
         // add more providers here
     ],
     adapter: PrismaAdapter(prisma),
+    pages: {
+        signIn: '/user/login',
+    },
     theme: {
         colorScheme: "light",
     },

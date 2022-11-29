@@ -57,15 +57,18 @@ const LogIn: NextPage = () => {
   }
 
   /** 🎈🚧 handle email magic link sign in */
-  const handleEmailSignIn = (e: any): any => {
+  const handleEmailSignIn = async (e: any): Promise<any> => {
     e.preventDefault();
     if(!userEmail){
       return false;
     }
-    signIn('email',{
+    const redirection: any = await signIn('email',{
       email: userEmail,
-      redirect: false
+      redirect: false,
+      callbackUrl:'/user/dashboard'
     });
+
+    push(redirection.url);
   }
 
   return (      
@@ -140,6 +143,7 @@ const LogIn: NextPage = () => {
                                 <InputGroup>
                                   <InputLeftAddon children='@mail' />
                                   <Input 
+                                    value={userEmail}
                                     type='email'
                                     onChange={e => setUserEmail(e.target.value)} 
                                     placeholder='john.doe@funxmail.com'>
