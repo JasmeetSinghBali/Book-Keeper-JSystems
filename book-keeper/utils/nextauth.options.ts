@@ -3,6 +3,8 @@ import GithubProvider from 'next-auth/providers/github';
 import GoogleProvider from 'next-auth/providers/google';
 import EmailProvider  from 'next-auth/providers/email';
 import nodemailer from 'nodemailer';
+import { PrismaAdapter } from '@next-auth/prisma-adapter';
+import { prisma } from './prismaInstance';
 
 /**
  * @desc app level next-auth options/config
@@ -31,6 +33,7 @@ import nodemailer from 'nodemailer';
         }),
         // add more providers here
     ],
+    adapter: PrismaAdapter(prisma),
     theme: {
         colorScheme: "light",
     },
