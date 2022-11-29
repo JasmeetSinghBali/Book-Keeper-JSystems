@@ -10,53 +10,53 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model User {
-  id        Int       @id @default(autoincrement())
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
-  username  String    @unique
-  email     String    @unique
-  phone     String    @unique
-  password  String
-  role      Role      @default(USER)
-  active    Boolean   @default(true)
-  plan      Plan      @default(COMMUNITY)
-  Contacts  Contact[]
-  Cards     Card[]
-}
+// model User {
+//   id        Int       @id @default(autoincrement())
+//   createdAt DateTime  @default(now())
+//   updatedAt DateTime  @updatedAt
+//   username  String    @unique
+//   email     String    @unique
+//   phone     String    @unique
+//   password  String
+//   role      Role      @default(USER)
+//   active    Boolean   @default(true)
+//   plan      Plan      @default(COMMUNITY)
+//   Contacts  Contact[]
+//   Cards     Card[]
+// }
 
-model Contact {
-  id           Int      @id @default(autoincrement())
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt
-  name         String?
-  email        String   @unique
-  phone        String   @unique
-  cardtype     CardType
-  cardno       String   @unique
-  user         User     @relation(fields: [mappeduserId], references: [id])
-  mappeduserId Int      @unique
-}
+// model Contact {
+//   id           Int      @id @default(autoincrement())
+//   createdAt    DateTime @default(now())
+//   updatedAt    DateTime @updatedAt
+//   name         String?
+//   email        String   @unique
+//   phone        String   @unique
+//   cardtype     CardType
+//   cardno       String   @unique
+//   user         User     @relation(fields: [mappeduserId], references: [id])
+//   mappeduserId Int      @unique
+// }
 
 model Card {
-  id           Int      @id @default(autoincrement())
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt
-  cardtype     CardType
-  cardno       String   @unique
-  user         User     @relation(fields: [mappeduserId], references: [id])
-  mappeduserId Int      @unique
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  cardtype  CardType
+  cardno    String   @unique
+  // user         User     @relation(fields: [mappeduserId], references: [id])
+  // mappeduserId Int      @unique
 }
 
-enum Role {
-  USER
-  ADMIN
-}
+// enum Role {
+//   USER
+//   ADMIN
+// }
 
-enum Plan {
-  COMMUNITY
-  ENTERPRISE
-}
+// enum Plan {
+//   COMMUNITY
+//   ENTERPRISE
+// }
 
 enum CardType {
   DEBIT
