@@ -20,6 +20,8 @@ The aim for this project is to make the book keeping simpler i.e track & record 
 
 # @v1
 
+1. User-Flows:  passwordless hassel-free sign in cum sign up flow via Email Magic Link or Oauth Github/Google, best in security , best in user-experience.
+
 ```
 
 ---

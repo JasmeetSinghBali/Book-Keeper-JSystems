@@ -74,13 +74,15 @@ const LogIn: NextPage = () => {
   return (      
             <>
                <Flex
-                  h={[null,null,"100vh"]}
+                  h={["200vh","150vh","120vh","100vh","100vh"]}
+                  w={["200%","150%","120%","100%","100%"]}
                   flexDir={["column","column","row"]}
                   overflow="hidden"
                   maxW="2000px"
                 >
                   <Flex
                       w={"100%"}
+                      h={"100%"}
                       flexDir="column"
                       alignItems="center"
                       bgGradient='linear(to-r, red.50, blue.50, green.50,yellow.50)'
@@ -89,7 +91,7 @@ const LogIn: NextPage = () => {
                       flexDir="column"
                       justifyContent="space-between"
                       h={"100%"}
-                      w={"50%"}
+                      w={"100%"}
                       backgroundColor="gray.50"
                       marginTop={20}
                       marginBottom={20}
