@@ -36,6 +36,7 @@ import { prisma } from './prismaInstance';
     adapter: PrismaAdapter(prisma),
     pages: {
         signIn: '/user/login',
+        verifyRequest: '/user/checkemail',
     },
     theme: {
         colorScheme: "light",

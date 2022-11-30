@@ -1,4 +1,4 @@
-import React,{ useState } from 'react';
+import React,{ useEffect, useState } from 'react';
 import { 
     Flex,
     Heading,
@@ -31,10 +31,19 @@ import { signOut, useSession } from 'next-auth/react';
 const Navbar = () => {
     const router = useRouter();
     const {push} = useRouter();
+    const [currentUser, setCurrentUser] = useState(Object);
+    const { data: session, status } = useSession();
+
     const handleOAuthSignOut = async () =>{
         const redirection: any = await signOut({redirect: false, callbackUrl:'/user/login'});
         push(redirection.url); 
     }
+
+    useEffect(()=>{
+        if(session){
+            setCurrentUser(session.user);
+        }
+    },[currentUser]);
 
     return (
         <>
@@ -254,7 +263,7 @@ const Navbar = () => {
                                 </NextLink>
                                 
                             </Flex>
-                            {/**🚧 🎈 Oauth Sign Out */}
+                            {/** Oauth Sign Out */}
                             <Flex className="sidebar-items">
                                 <motion.div initial="hidden" animate="visible" variants={{
                                         hidden:{
@@ -311,8 +320,8 @@ const Navbar = () => {
                             }
                         },
                     }}>
-                        {/*🎈 make the user name dynamic so if src is not found then initials are displayed*/}
-                        <Avatar bg="goldenrod" my={2} name="Jasmeet Bali" src="avatar-1.jpg" textColor="black" />
+                        {/*make the userName/Email dynamic so if src is not found then initials are displayed*/}
+                        <Avatar bg="goldenrod" my={2} name={currentUser ? currentUser.email : 'Unknown' } src={currentUser ? currentUser.image : ''} textColor="black" />
                     </motion.div>
                     
                     <motion.div initial="hidden" animate="visible" variants={{
@@ -328,7 +337,7 @@ const Navbar = () => {
                             }
                         },
                     }}>
-                        <Heading textAlign="center" fontSize={["xl","lg","xs","md","md"]} letterSpacing="tighter" >Jasmeet Bali</Heading>
+                        <Text textAlign="center" fontSize={"xs"} letterSpacing="tighter" display={["flex","flex","none","flex","flex"]} >{currentUser? currentUser.email : 'Unknown'}</Text>
                     </motion.div>
                     <motion.div initial="hidden" animate="visible" variants={{
                         hidden:{
@@ -344,7 +353,7 @@ const Navbar = () => {
                         },
                     }}>
                     {/*🎈 make this dynamic if premium then only add Icon FcApproval else not */}
-                    <Text textAlign="center" fontSize="xs" fontWeight="hairline" letterSpacing="tight"><Icon as={FcApproval}></Icon>Premium</Text>
+                    <Text textAlign="center" fontSize="xs" fontWeight="hairline" letterSpacing="tighter" display={"flex"}><Icon as={FcApproval}></Icon>Premium</Text>
                     </motion.div>
                     </Flex>
                 </Flex>
