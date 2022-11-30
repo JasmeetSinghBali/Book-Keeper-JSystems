@@ -194,9 +194,15 @@ this means that the user directly signed in via mail magic link or Oauth sign in
 
 ```
 
+> 3. dev/trpc-flows
+
+- [ ] getting user data and session data from db
+- [ ] wire up trpc flows and schema along with prisma calls to update user email,phone that they can change in their settings
+- [ ] wrap up and make sure each filter, update, add card, contact by user & change in settings or deleting user account (active: false dont actually delete user account completely) is sorted in reff to frontend end-to-end.
+
 ---
 
-> 3. misc/patches
+> 4. misc/patches
 
 ```bash
 
