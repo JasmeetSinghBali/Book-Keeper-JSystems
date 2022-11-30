@@ -165,7 +165,7 @@ emails to users https://my.sendinblue.com/dashboard or https://www.siteground.co
         # IMPORTANT, for html content over email use port 465 to serve html over TLS in smtp , port 587 wont work
         https://forum.gitlab.com/t/smtp-fail-to-send-email-due-to-ssl-wrong-version-number/33008/2
 
-- [ ] welcome email for new user signup when they login directly via sign in email magic link next-auth events https://next-auth.js.org/configuration/events
+- [x] welcome email for new user signup when they login directly via sign in email magic link 'createUser event' next-auth events https://next-auth.js.org/configuration/events
 
 
 
