@@ -135,7 +135,7 @@ const LogIn: NextPage = () => {
                                 letterSpacing="tighter"
                                 fontWeight="semibold" 
                             >
-                              Sign in. <Icon display={"inline"} as={FiLogIn} fontSize="xs" />   
+                              Sign in cum Sign up. <Icon display={"inline"} as={FiLogIn} fontSize="xs" />   
                             </Heading>
                             {/** email magic link sign in */}
                             <Stack ml={5} mt={4} spacing={2}>
