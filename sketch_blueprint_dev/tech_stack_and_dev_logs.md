@@ -141,7 +141,7 @@ yarn create next-app --typescript
 
 > 🎈 To do 👇 Dev Logs [branch labels]: DatedFrom: 15-11-2022
 
-1.  setup/nextAuth
+1.  setup/nextAuth & OauthSignIn with session data barebones managment
 
 ```bash
 
@@ -150,21 +150,24 @@ yarn create next-app --typescript
 - [x] setup & wire up login page. https://next-auth.js.org/providers/google go to -> https://console.developers.google.com/apis/credentials -> create new project -> create credentials selecting the newly created project -> Oauth Client ID & select web application
 add redirect uri http://localhost:3000/api/auth/callback/google & use client ID & secret to configure provider in nextjs provider section
 
-- [ ] email server setup for magic email login, and dispatching
+- [x] email server setup for magic email login, and dispatching
 emails to users https://my.sendinblue.com/dashboard or https://www.siteground.com/kb/gmail-smtp-server/
 
-- [ ] sort prisma+supabase+nextjs integration, maintain session data inside postgresql hosted DB ref: https://next-auth.js.org/adapters/supabase
+- [x] sort prisma+supabase+nextjs integration, maintain session data inside postgresql hosted DB ref: https://next-auth.js.org/adapters/supabase
 
         API URL and Keys
         Go to the Settings page in the Dashboard.
         Click API in the sidebar.
         Find your API URL , anon , and service_role keys on this page.
 
+- [x] templating dispatched emails, https://www.npmjs.com/package/handlebars, https://www.litmus.com/blog/a-guide-to-bulletproof-buttons-in-email-design
 
-- [ ] work on sign up end-to-end
-- [ ] to add a check here in oauth provider that user email is registered in the DB if not dont move forward with oauth flow ref: https://next-auth.js.org/configuration/initialization#advanced-initialization
-- [ ] email sign in
-- [ ] add iron sessions next_auth exposed schema by encrypting payloadInterface callback next auth config, need to code out the node crypto encryption/decryption utils.
+        # IMPORTANT, for html content over email use port 465 to serve html over TLS in smtp , port 587 wont work
+        https://forum.gitlab.com/t/smtp-fail-to-send-email-due-to-ssl-wrong-version-number/33008/2
+
+- [ ] welcome email for new user signup when they login directly via sign in email magic link next-auth events https://next-auth.js.org/configuration/events
+
+
 
 ============ Resources =============
 
@@ -180,7 +183,30 @@ https://next-auth.js.org/configuration/options
 
 ---
 
-> 2. setup/logging
+> 2. tweaks/signup-and-schema
+
+```bash
+
+- [ ] redirect user to settings page if they dont have username, phone number set yet as
+this means that the user directly signed in via mail magic link or Oauth sign in and it created user in our DB.
+
+- [ ] sort/patch/update schema for contact, cards, user
+
+```
+
+---
+
+> 3. misc/patches
+
+```bash
+
+- [ ] make the data dynamic at frontend for all pages, pulling data from trpc-prisma-supabase and display it on frontend for each user.
+
+```
+
+---
+
+> 4. setup/logging
 
 ```bash
 
