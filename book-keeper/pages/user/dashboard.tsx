@@ -11,9 +11,10 @@ import { useRouter } from 'next/router';
 export default function dashboard(){
 
     const { push } = useRouter(); 
-    /**🎈 if no session show not signed in & redirect user to login page with set timeout */
+    
     const { data: session, status } = useSession();
 
+    /**if no session show not signed in & redirect user to login page with set timeout */
     if(!session){
         setTimeout(()=>{
             push('/user/login');

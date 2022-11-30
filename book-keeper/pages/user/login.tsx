@@ -56,7 +56,7 @@ const LogIn: NextPage = () => {
              </Flex>
   }
 
-  /** 🎈🚧 handle email magic link sign in */
+  /** Magic link email sign in handler */
   const handleEmailSignIn = async (e: any): Promise<any> => {
     e.preventDefault();
     if(!userEmail){

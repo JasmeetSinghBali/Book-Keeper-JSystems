@@ -34,6 +34,6 @@ export const userRouter = router({
             } 
         }),
     
-    /** 📝 tracked routes Section */
+    /** 📝 Protected/tracked routes Section for logged in user only */
     
 })
