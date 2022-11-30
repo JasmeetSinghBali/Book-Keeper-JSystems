@@ -2,6 +2,8 @@
 
 import { TRPCError, initTRPC } from '@trpc/server';
 import { Context } from './context';
+import { getSession } from 'next-auth/react';
+
 
 // Avoid exporting the entire t-object since it's not very
 // descriptive and can be confusing to newcomers used to t
@@ -14,11 +16,13 @@ const t = initTRPC.context<Context>().create();
  * @desc middleware that tracks incoming requests
  **/
  const requestTracker = t.middleware(({ next, ctx }) => {
-  // if (!ctx.session?.user?.email) {
-  //   throw new TRPCError({
-  //     code: 'UNAUTHORIZED',
-  //   });
-  // }
+  
+  /** 📝 Unauthorized error in case session not exist , to protect trpc calls only for logged in users */
+  if(!ctx.session){
+    throw new TRPCError({
+      code: 'UNAUTHORIZED',
+    });
+  }  
 
   // 🎈 tracks incoming request and log IP's , access points & device info, geolocation
   console.log(ctx.req)
