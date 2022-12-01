@@ -187,17 +187,15 @@ https://next-auth.js.org/configuration/options
 
 ```bash
 
-- [ ] redirect user to settings page if they dont have username, phone number set yet as
-this means that the user directly signed in via mail magic link or Oauth sign in and it created user in our DB.
-
-- [ ] sort/patch/update schema for contact, cards, user
+- [x] sort/patch/update schema for contact, cards, user
+- [ ] redirect user to settings page if they dont have username or phone number set in DB yet as this means that the user directly signed in cum sign up via mail magic link or Oauth sign in and it created user in our DB.
 
 ```
 
 > 3. dev/trpc-flows
 
 - [ ] getting user data and session data from db
-- [ ] wire up trpc flows and schema along with prisma calls to update user email,phone that they can change in their settings
+- [ ] wire up trpc flows and schema along with prisma calls to update user email,phone that they can change in their settings, note- only allow user to change email who have verified their email check the sign in via magic email flow wheather that makes emailVerified
 - [ ] wrap up and make sure each filter, update, add card, contact by user & change in settings or deleting user account (active: false dont actually delete user account completely) is sorted in reff to frontend end-to-end.
 
 ---

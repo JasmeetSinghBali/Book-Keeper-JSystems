@@ -49,9 +49,11 @@ model User {
   accounts      Account[]
   sessions      Session[]
   cards         Card[]
+  contacts      Contact[]
   role          Role      @default(USER)
   plan          Plan      @default(COMMUNITY)
   active        Boolean   @default(true)
+  phone         String?   @unique
 }
 
 model VerificationToken {
@@ -72,6 +74,19 @@ model Card {
   user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
+model Contact {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  name      String?
+  email     String   @unique
+  phone     String   @unique
+  cardtype  CardType
+  cardno    String   @unique
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
 enum CardType {
   DEBIT
   CREDIT
@@ -86,32 +101,3 @@ enum Plan {
   COMMUNITY
   ENTERPRISE
 }
-
-// ==== 🚧 helpers =====
-// model User {
-//   id        Int       @id @default(autoincrement())
-//   createdAt DateTime  @default(now())
-//   updatedAt DateTime  @updatedAt
-//   username  String    @unique
-//   email     String    @unique
-//   phone     String    @unique
-//   password  String
-//   role      Role      @default(USER)
-//   active    Boolean   @default(true)
-//   plan      Plan      @default(COMMUNITY)
-//   Contacts  Contact[]
-//   Cards     Card[]
-// }
-
-// model Contact {
-//   id           Int      @id @default(autoincrement())
-//   createdAt    DateTime @default(now())
-//   updatedAt    DateTime @updatedAt
-//   name         String?
-//   email        String   @unique
-//   phone        String   @unique
-//   cardtype     CardType
-//   cardno       String   @unique
-//   user         User     @relation(fields: [mappeduserId], references: [id])
-//   mappeduserId Int      @unique
-// }
