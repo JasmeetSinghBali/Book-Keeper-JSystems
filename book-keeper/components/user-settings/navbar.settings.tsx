@@ -6,23 +6,31 @@ import DangerSettings from "./danger.settings";
 import GeneralSettings from "./general.settings";
 import IntegrationSettings from "./integrations.settings";
 import {motion} from 'framer-motion';
+import { useSession } from "next-auth/react";
+import { trpcClient } from "../../utils/Clientrpc";
 
 
 const SettingsNavbar = () => {
     const [settingsOption,selectSettingsOption] = useState('general');
+    const { data: session } = useSession();
+
+    const userEmail: any = session?.user?.email;
+    const result: any = trpcClient.user.whoami.useQuery({ email: userEmail });
+    const userInfo: any = result?.data?.data;
+
     function showSection(){
         const currentSelection = settingsOption;
         switch (currentSelection) {
             case 'general':
-                return <GeneralSettings />
+                return <GeneralSettings userInfo={userInfo} />
             case 'billing':
-                return <BillingSettings />
+                return <BillingSettings userInfo={userInfo} />
             case 'integrations':
-                return <IntegrationSettings />
+                return <IntegrationSettings  userInfo={userInfo} />
             case 'dangerzone':
-                return <DangerSettings />
+                return <DangerSettings userInfo={userInfo} />
             default:
-                return <GeneralSettings />
+                return <GeneralSettings userInfo={userInfo} />
         }
     }
     return(

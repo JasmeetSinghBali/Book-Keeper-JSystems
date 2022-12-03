@@ -18,13 +18,14 @@ const t = initTRPC.context<Context>().create();
  const requestTracker = t.middleware(({ next, ctx }) => {
   
   /** 📝 Unauthorized error in case session not exist , to protect trpc calls only for logged in users */
-  if(!ctx.session){
+  if( !ctx.session || !ctx.session.user || !ctx.session?.user?.email){
     throw new TRPCError({
       code: 'UNAUTHORIZED',
     });
   }  
 
   // 🎈 tracks incoming request and log IP's , access points & device info, geolocation
+  console.log("----HIT MADE THROUGH TRACKED PROCEDURE----")
   console.log(ctx.req)
   return next({
     ctx: {
