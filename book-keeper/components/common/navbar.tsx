@@ -321,7 +321,7 @@ const Navbar = () => {
                         },
                     }}>
                         {/*make the userName/Email dynamic so if src is not found then initials are displayed*/}
-                        <Avatar bg="goldenrod" my={2} name={currentUser ? currentUser.email : 'Unknown' } src={currentUser ? currentUser.image : ''} textColor="black" />
+                        <Avatar bg="goldenrod" my={2} name={currentUser.email ? currentUser.email : 'Unknown' } src={currentUser.email ? currentUser.image : ''} textColor="black" />
                     </motion.div>
                     
                     <motion.div initial="hidden" animate="visible" variants={{
@@ -337,7 +337,7 @@ const Navbar = () => {
                             }
                         },
                     }}>
-                        <Text textAlign="center" fontSize={"xs"} letterSpacing="tighter" display={["flex","flex","none","flex","flex"]} >{currentUser? currentUser.email : 'Unknown'}</Text>
+                        <Text textAlign="center" fontSize={"xs"} letterSpacing="tighter" display={["flex","flex","none","flex","flex"]} >{currentUser.email ? currentUser.email : 'Unknown'}</Text>
                     </motion.div>
                     <motion.div initial="hidden" animate="visible" variants={{
                         hidden:{
@@ -353,7 +353,7 @@ const Navbar = () => {
                         },
                     }}>
                     {/*🎈 make this dynamic if premium then only add Icon FcApproval else not */}
-                    <Text textAlign="center" fontSize="xs" fontWeight="hairline" letterSpacing="tighter" display={"flex"}><Icon as={FcApproval}></Icon>Premium</Text>
+                    <Text textAlign="center" fontSize="xs" fontWeight="hairline" letterSpacing="tighter" display={"flex"}><Icon as={FcApproval}></Icon>{currentUser.email ? 'Premium' : 'Unknown'}</Text>
                     </motion.div>
                     </Flex>
                 </Flex>

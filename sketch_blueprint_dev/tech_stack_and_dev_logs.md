@@ -42,23 +42,31 @@ yarn create next-app --typescript
     "@chakra-ui/react": "^2.3.6",
     "@emotion/react": "^11.10.4",
     "@emotion/styled": "^11.10.4",
-    "@prisma/client": "^4.5.0",
+    "@hookform/resolvers": "^2.9.10",
+    "@next-auth/prisma-adapter": "^1.0.5",
+    "@prisma/client": "^4.7.0",
     "@tanstack/react-query": "^4.14.3",
     "@trpc/client": "^10.0.0-proxy-beta.26",
     "@trpc/next": "^10.0.0-proxy-beta.26",
     "@trpc/react": "^9.27.4",
     "@trpc/react-query": "^10.0.0-proxy-beta.26",
     "@trpc/server": "^10.0.0-proxy-beta.26",
+    "bcryptjs": "^2.4.3",
     "chart.js": "^3.9.1",
     "framer-motion": "^7.6.2",
+    "handlebars": "^4.7.7",
+    "jsonwebtoken": "^8.5.1",
     "next": "12.3.1",
-    "next-auth": "^4.16.2",
+    "next-auth": "^4.17.0",
+    "nodemailer": "^6.8.0",
     "react": "18.2.0",
     "react-chartjs-2": "^4.3.1",
     "react-dom": "18.2.0",
+    "react-hook-form": "^7.39.2",
     "react-icons": "^4.6.0",
     "react-query": "^3.39.2",
-    "zod": "^3.19.1"
+    "zod": "^3.19.1",
+    "zustand": "^4.1.4"
   }
 
 ```
@@ -139,7 +147,7 @@ yarn create next-app --typescript
 
 ---
 
-> 🎈 To do 👇 Dev Logs [branch labels]: DatedFrom: 15-11-2022
+> ## 🎈 To do 👇 Dev Logs @v1 [branch labels]: DatedFrom: 15-11-2022
 
 1.  setup/nextAuth & OauthSignIn with session data barebones managment
 
@@ -188,6 +196,11 @@ https://next-auth.js.org/configuration/options
 ```bash
 
 - [x] sort/patch/update schema for contact, cards, user
+
+- [x] barebones & research session & state managment setup via zustand 🎈 though look out for this-> https://github.com/acdlite/rfcs/blob/first-class-promises/text/0000-first-class-support-for-promises.md#conditionally-suspending-on-data , maybe state managment will become obsolete altogether when this feature rolls out & nextjs already makes the state managment obsolete with this approach with ssr & server side data fetches.
+
+- [x] add session restriction for each page & component, only logged in user allowed to visit dashboard and other pages
+
 - [ ] redirect user to settings page if they dont have username or phone number set in DB yet as this means that the user directly signed in cum sign up via mail magic link or Oauth sign in and it created user in our DB.
 
 ```
@@ -210,7 +223,26 @@ https://next-auth.js.org/configuration/options
 
 ---
 
-> 4. setup/logging
+> ## 🎈 To do 👇 Dev Logs @v2 [branch labels]: DatedFrom: yet to be decided
+
+> 1. pwa/alignment
+
+google chrome developers
+ref: https://www.youtube.com/watch?v=sOq92prx00w
+
+```bash
+
+- [ ] Integrate workbox nextjs https://web.dev/learn/pwa/workbox/
+- [ ] add caching & routing features
+- [ ] setup service workers properly with network & caching
+- [ ] add push notification
+
+
+```
+
+---
+
+> 2. setup/logging
 
 ```bash
 
