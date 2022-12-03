@@ -50,7 +50,7 @@ const LogIn: NextPage = () => {
               <Heading fontSize="lg" fontWeight="extrabold"> Welcome!! Wonderer</Heading>
               <br/>
               <Text fontWeight="bold" fontSize="md">{userEmail} </Text>
-              <Text fontWeight="bold" fontSize="sm"> today is {new Date().toDateString()}</Text>
+              <Text fontWeight="bold" fontSize="sm"> {new Date().toDateString()}</Text>
               <br/>
               <Text fontWeight="semibold" fontSize="sm"> redirecting you to your dashboard...</Text>
              </Flex>

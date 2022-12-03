@@ -8,7 +8,7 @@ import {
 import AnimatedCharacter from '../common/animations/animate.character';
 
 
-const BillingSettings = () => {
+const BillingSettings = ({...userInfo}) => {
     const [view,changeView] = useState('hide');
     return (
         <>

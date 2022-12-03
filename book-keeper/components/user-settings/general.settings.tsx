@@ -3,7 +3,7 @@ import React from 'react';
 import { AiFillCamera, AiFillEdit, AiOutlineAlert, AiOutlineUser } from 'react-icons/ai';
 import {motion} from 'framer-motion';
 
-const GeneralSettings = () => {
+const GeneralSettings = ({...userInfo}) => {
     return (
         <>
             <Flex
@@ -69,7 +69,7 @@ const GeneralSettings = () => {
                         <Flex
                             flexDir="column"
                         >
-                            <Avatar size={["md","md","md","xl","xl"]} my={2} src="avatar-1.jpg" />
+                            <Avatar size={["md","md","md","xl","xl"]} my={2} src={userInfo?.userInfo?.image ? userInfo?.userInfo?.image : '' } />
                         </Flex>
                         <Flex
                          flexDir="column"
@@ -77,10 +77,10 @@ const GeneralSettings = () => {
                          mt={5}
                         >
                             {/*🎈 Make This Dynamic User Data make sure to show the username & Email in upper case*/}
-                            <Text fontSize={["sm","sm","md","md","md"]} fontWeight="semibold" letterSpacing="tight" >Username: jasmeet.b 
+                            <Text fontSize={["sm","sm","md","md","md"]} color={!userInfo?.userInfo.name ? 'gray.400' : 'black'} fontWeight="semibold" letterSpacing="tight" >Username: {userInfo?.userInfo?.name ? userInfo?.userInfo.name : `🚫`} 
                             </Text>
-                            <Text fontSize={["sm","sm","md","md","md"]} fontWeight="semibold" letterSpacing="tight" >Email: jasmeet.bali@niche.com</Text>
-                            <Text fontSize={["sm","sm","md","md","md"]} fontWeight="semibold" letterSpacing="tight" >Phone: 9871134488</Text>
+                            <Text fontSize={["sm","sm","md","md","md"]} color={!userInfo?.userInfo.email ? 'gray.400' : 'black'} fontWeight="semibold" letterSpacing="tight" >Email: {userInfo?.userInfo?.email ? userInfo?.userInfo?.email : `🚫` }</Text>
+                            <Text fontSize={["sm","sm","md","md","md"]} color={!userInfo?.userInfo.phone ? 'gray.400' : 'black'} fontWeight="semibold" letterSpacing="tight" >Phone: {userInfo?.userInfo?.phone === null ? `🚫` : userInfo?.userInfo?.phone }</Text>
                         </Flex>
                     </Flex>
                     <Flex
@@ -143,52 +143,6 @@ const GeneralSettings = () => {
                                     </Td>
                                     </Tr>
                                     <Tr>
-                                    <Td  fontWeight="semibold" fontSize="sm" letterSpacing="wider">Email-Notifications</Td>
-                                    <Td  fontWeight="semibold" fontSize="sm" letterSpacing="wider">Privacy</Td>
-                                    <Td>
-                                        <Switch 
-                                        //onClick={} 
-                                        colorScheme="pink"
-                                        borderColor="gray.200">
-                                        </Switch>
-                                    </Td>
-                                    </Tr>
-                                    <Tr>
-                                    <Td  fontWeight="semibold" fontSize="sm" letterSpacing="wider">Phone-Notifications</Td>
-                                    <Td  fontWeight="semibold" fontSize="sm" letterSpacing="wider">Privacy</Td>
-                                    <Td>
-                                        <Switch 
-                                        //onClick={} 
-                                        colorScheme="pink"
-                                        borderColor="gray.200">
-                                        </Switch>
-                                    </Td>
-                                    </Tr>
-                                    <Tr>
-                                    <Td  fontWeight="semibold" fontSize="sm" letterSpacing="wider">Email-Subscription</Td>
-                                    <Td  fontWeight="semibold" fontSize="sm" letterSpacing="wider">Privacy</Td>
-                                    <Td>
-                                        <Switch 
-                                        //onClick={} 
-                                        colorScheme="pink"
-                                        borderColor="gray.200">
-                                        </Switch>
-                                    </Td>
-                                    </Tr>
-                                    <Tr>
-                                    <Td  fontWeight="semibold" fontSize="sm" letterSpacing="wider">Password</Td>
-                                    <Td  fontWeight="semibold" fontSize="sm" letterSpacing="wider">Security</Td>
-                                    <Td><IconButton
-                                        //onClick={onOpen} 
-                                        icon={<AiFillEdit />}
-                                        fontSize="xs"
-                                        bgColor="gray.200"
-                                        borderRadius="100%"
-                                        aria-label={'EditUserBasicDetails'} 
-                                        _hover={{bg:"pink.200"}}
-                                    /></Td>
-                                    </Tr>
-                                    <Tr>
                                     <Td  fontWeight="semibold" fontSize="sm" letterSpacing="wider">MFA</Td>
                                     <Td  fontWeight="semibold" fontSize="sm" letterSpacing="wider">Security</Td>
                                     <Td>
@@ -203,6 +157,39 @@ const GeneralSettings = () => {
                                         _hover={{bg:"pink.200"}}
                                         />
                                         </Tooltip>
+                                    </Td>
+                                    </Tr>
+                                    <Tr>
+                                    <Td  fontWeight="semibold" fontSize="sm" letterSpacing="wider">Email-Notifications</Td>
+                                    <Td  fontWeight="semibold" fontSize="sm" letterSpacing="wider">Notifications</Td>
+                                    <Td>
+                                        <Switch 
+                                        //onClick={} 
+                                        colorScheme="pink"
+                                        borderColor="gray.200">
+                                        </Switch>
+                                    </Td>
+                                    </Tr>
+                                    <Tr>
+                                    <Td  fontWeight="semibold" fontSize="sm" letterSpacing="wider">Phone-Notifications</Td>
+                                    <Td  fontWeight="semibold" fontSize="sm" letterSpacing="wider">Notifications</Td>
+                                    <Td>
+                                        <Switch 
+                                        //onClick={} 
+                                        colorScheme="pink"
+                                        borderColor="gray.200">
+                                        </Switch>
+                                    </Td>
+                                    </Tr>
+                                    <Tr>
+                                    <Td  fontWeight="semibold" fontSize="sm" letterSpacing="wider">Email-Subscription</Td>
+                                    <Td  fontWeight="semibold" fontSize="sm" letterSpacing="wider">Subscriptions</Td>
+                                    <Td>
+                                        <Switch 
+                                        //onClick={} 
+                                        colorScheme="pink"
+                                        borderColor="gray.200">
+                                        </Switch>
                                     </Td>
                                     </Tr>
                                 </Tbody>

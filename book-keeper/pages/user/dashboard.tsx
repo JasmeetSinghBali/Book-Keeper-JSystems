@@ -7,29 +7,29 @@ import TxnList from '../../components/user-dashboard/txnlist.dashboard';
 import SearchNotificationSection from '../../components/user-dashboard/searchnotif.dashboard';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/router';
+import { trpcClient } from '../../utils/Clientrpc';
+
 
 export default function dashboard(){
  
     const { push } = useRouter();
-    const { data: session, status } = useSession();
+    const { data: session, status } = useSession(); 
+    const userEmail: any = session?.user?.email;
+    const result: any = trpcClient.user.whoami.useQuery({ email: userEmail });
+    const userInfo: any = result?.data?.data;
 
-    
-    /**if no session show not signed in & redirect user to login page with set timeout */
-    // if(!session){
-    //     setTimeout(()=>{
-    //         push('/user/login');
-    //     },2000);
-    //     <Flex flexDir="column" h={"100vh"} bgGradient='linear(to-r, red.50, blue.50, green.50,yellow.50)'>
-    //         <Heading fontSize="lg" fontWeight="extrabold"> Authenticating.... </Heading>
-    //         <br/>
-    //         <Text fontWeight="semibold" fontSize="sm"> You will be redirected to Sign in page in case authentication fails...</Text>
-    //     </Flex>
-    // }
+    /**
+     * Case-1 if no session show not signed in & redirect user to login page
+     * Case-2 if phone null then newly signed up user & redirect to setting page
+     *   */
     // 📝 moved push to useEffect as server side push is not supported casues router instance error
     useEffect(()=>{
         if(!session){
             push('/user/login');
         }
+        if(userInfo?.phone === null || !userInfo?.name){
+            push('/user/settings');
+        } 
     },[]);
     return ( 
             <Flex
