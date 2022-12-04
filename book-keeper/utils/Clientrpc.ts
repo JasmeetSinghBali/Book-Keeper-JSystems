@@ -31,6 +31,7 @@ export const trpcClient = createTRPCNext<AppRouter>({
           url: `${getBaseUrl()}/api/trpc`,
         }),
       ],
+      // 🎈 add the authorization header here for making trpc server side call from client with authorized jwt token, might be its needed to have two trpcClient instance one without Auth header for public routes & one with Auth header for protected routes
       headers: {
         "x-ssr": "1",
       },

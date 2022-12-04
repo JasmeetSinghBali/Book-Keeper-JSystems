@@ -10,6 +10,7 @@ import { useSession } from "next-auth/react";
 import { trpcClient } from "../../utils/Clientrpc";
 
 
+
 const SettingsNavbar = () => {
     const [settingsOption,selectSettingsOption] = useState('general');
     const { data: session } = useSession();
