@@ -58,8 +58,9 @@ export async function createContext(ctx: trpcNext.CreateNextContextOptions){
         if(!req.headers.authorization){
             return false;
         }
+        const token: string = req.headers.authorization.split(' ')[1]; 
         const pd: any = await verifyJwt(
-            req.headers.authorization.split(' ')[1],
+            token,
         );
         if(!pd){
             return new Promise<verifyJWTInterface|Boolean>((resolve)=>{

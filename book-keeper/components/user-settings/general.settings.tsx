@@ -77,10 +77,10 @@ const GeneralSettings = ({...userInfo}) => {
                          mt={5}
                         >
                             {/*🎈 Make This Dynamic User Data make sure to show the username & Email in upper case*/}
-                            <Text fontSize={["sm","sm","md","md","md"]} color={!userInfo?.userInfo.name ? 'gray.400' : 'black'} fontWeight="semibold" letterSpacing="tight" >Username: {userInfo?.userInfo?.name ? userInfo?.userInfo.name : `🚫`} 
+                            <Text fontSize={["sm","sm","md","md","md"]} color={!userInfo?.userInfo?.name ? 'gray.400' : 'black'} fontWeight="semibold" letterSpacing="tight" >Username: {userInfo?.userInfo?.name ? userInfo?.userInfo.name : `🚫`} 
                             </Text>
-                            <Text fontSize={["sm","sm","md","md","md"]} color={!userInfo?.userInfo.email ? 'gray.400' : 'black'} fontWeight="semibold" letterSpacing="tight" >Email: {userInfo?.userInfo?.email ? userInfo?.userInfo?.email : `🚫` }</Text>
-                            <Text fontSize={["sm","sm","md","md","md"]} color={!userInfo?.userInfo.phone ? 'gray.400' : 'black'} fontWeight="semibold" letterSpacing="tight" >Phone: {userInfo?.userInfo?.phone === null ? `🚫` : userInfo?.userInfo?.phone }</Text>
+                            <Text fontSize={["sm","sm","md","md","md"]} color={!userInfo?.userInfo?.email ? 'gray.400' : 'black'} fontWeight="semibold" letterSpacing="tight" >Email: {userInfo?.userInfo?.email ? userInfo?.userInfo?.email : `🚫` }</Text>
+                            <Text fontSize={["sm","sm","md","md","md"]} color={!userInfo?.userInfo?.phone ? 'gray.400' : 'black'} fontWeight="semibold" letterSpacing="tight" >Phone: {userInfo?.userInfo?.phone === null || !userInfo?.userInfo?.phone ? `🚫` : userInfo?.userInfo?.phone }</Text>
                         </Flex>
                     </Flex>
                     <Flex

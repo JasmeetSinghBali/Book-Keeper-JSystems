@@ -219,15 +219,20 @@ https://next-auth.js.org/configuration/options
 
 - [ ] wrap up and make sure each filter, update, add card, contact by user & change in settings or deleting user account (active: false dont actually delete user account completely) is sorted in reff to frontend end-to-end.
 
----
+- [ ] event-emitters setup for events emitted that handles the logging of IP, access points, device info & geolocation & storing into db in the trpc middleware requestTracker and store against relevant user in DB to show in settings account
 
-> 4. misc/patches
+- [ ] [logging & error & performance reports](https://github.com/vercel/next.js/tree/canary/examples/with-sentry)
 
-```bash
+  [sentrynpm](https://www.npmjs.com/package/@sentry/nextjs)
+  [sentrydocs](https://docs.sentry.io/platforms/javascript/guides/nextjs/)
 
-- [ ] make the data dynamic at frontend for all pages, pulling data from trpc-prisma-supabase and display it on frontend for each user.
+- [ ] check responsiveness of each page in brave,edge specially brave.
 
-```
+- [ ] cleanup, wrapup, update readme, feature section, test all flows, remove console statements, add common header in each code file with Author: Jasmeet Singh Bali
+
+- [ ] deploy this mvp as beta version release
+
+- [ ] 🎈 tasks yet to be expanded Phase -2 : Transaction Manager flow, incoming/outgoing funds manager, notion integ maybe new feature notion ai etc.....
 
 ---
 
@@ -249,14 +254,3 @@ ref: https://www.youtube.com/watch?v=sOq92prx00w
 ```
 
 ---
-
-> 2. setup/logging
-
-```bash
-
-- [ ] [logging & error & performance reports](https://github.com/vercel/next.js/tree/canary/examples/with-sentry)
-
-  [sentrynpm](https://www.npmjs.com/package/@sentry/nextjs)
-  [sentrydocs](https://docs.sentry.io/platforms/javascript/guides/nextjs/)
-
-```
