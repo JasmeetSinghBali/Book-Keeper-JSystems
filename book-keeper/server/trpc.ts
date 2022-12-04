@@ -1,8 +1,7 @@
-/**@desc Instantiate the trpc server & export common  router & procedure as publicProcedure & protectedProcedure */
+/**@desc Instantiate the trpc server & export common  router & procedure as publicProcedure & trackedProcedure */
 
 import { TRPCError, initTRPC } from '@trpc/server';
 import { Context } from './context';
-import { getSession } from 'next-auth/react';
 
 
 // Avoid exporting the entire t-object since it's not very
@@ -13,20 +12,33 @@ import { getSession } from 'next-auth/react';
 const t = initTRPC.context<Context>().create();
 
 /**
- * @desc middleware that tracks incoming requests
+ * 🎈 not yet completed
+ * @desc middleware that tracks incoming requests to trpc server from trpc client
+ * @functions check session,jwt verified payload,log IP's/accesspoints/deviceinfo & geolocation
  **/
  const requestTracker = t.middleware(({ next, ctx }) => {
   
-  /** 📝 Unauthorized error in case session not exist , to protect trpc calls only for logged in users */
+  /** Check: 1 Unauthorized error in case session not exist , to protect trpc calls only for next-auth session logged in users */
   if( !ctx.session || !ctx.session.user || !ctx.session?.user?.email){
     throw new TRPCError({
       code: 'UNAUTHORIZED',
+      message: 'invalid session'
     });
   }  
 
-  // 🎈 tracks incoming request and log IP's , access points & device info, geolocation
+  /** Check: 2 check for attached jwt verified payload*/
+  if(ctx.authorizedpass === null || !ctx.authorizedpass){
+    throw new TRPCError({
+      code: 'UNAUTHORIZED',
+      message: 'invalid access'
+    })
+  }
+
+  // Check: 3 🎈 tracks incoming request and log IP's , access points & device info, geolocation
   console.log("----HIT MADE THROUGH TRACKED PROCEDURE----")
   console.log(ctx.req)
+  // 💭 here events via event-emitters setup can be emitted that handles the logging of IP, access points, device info & geolocation & storing into db 
+
   return next({
     ctx: {
       // Infers the `session` as non-nullable
