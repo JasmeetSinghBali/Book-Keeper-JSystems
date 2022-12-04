@@ -211,9 +211,11 @@ https://next-auth.js.org/configuration/options
 
 - [x] getting user data and session data from db
 
-- [x] setup authorizations trpc , context check using middleware to authorize trpc client request to trpc server ref: https://trpc.io/docs/authorization#option-2-authorize-using-middleware ,
+- [x] setup authorizations trpc , context check using middleware to authorize trpc client request to trpc server ref: https://trpc.io/docs/authorization#option-2-authorize-using-middleware,
 
-- [ ] add jwt token signing & verification flow to send jwt from trpc client instance to the trpc server instance ref: https://trpc.io/docs/header
+- [ ] make public procedure call to trpc/server to get JWT and store in zustand
+
+- [ ] grab jwt token from zustand for signing & verification flow to send jwt from trpc client instance to the trpc server instance in Clientrpc config ref: https://trpc.io/docs/header
 
 - [ ] wire up trpc flows and schema along with prisma calls to update user email,phone that they can change in their settings, note- only allow user to change email who have verified their email check the sign in via magic email flow wheather that makes emailVerified
 
