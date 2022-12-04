@@ -1,29 +1,35 @@
 import { inferAsyncReturnType } from "@trpc/server";
 import * as trpcNext from '@trpc/server/adapters/next';
 import { unstable_getServerSession } from "next-auth";
+import { verifyJwt, verifyJWTInterface } from "../utils/jwtUtils";
 import { nextAuthOptions } from "../utils/nextauth.options";
 import { prisma } from "../utils/prismaInstance";
 
 
-/**@desc creates common context for all incoming protected requests */
-export async function createContext(ctx: trpcNext.CreateNextContextOptions): Promise<Object | null>{
+/**
+ * @desc creates common context for all incoming protected requests 
+ * @attaches session,req,res,authorizedpass(decoded jwt payload) to common context
+ * 
+ * */
+export async function createContext(ctx: trpcNext.CreateNextContextOptions){
     try{
 
         const { req, res } = ctx;
         const session: any = await unstable_getServerSession(req,res,nextAuthOptions);
 
         
-        const authorizedpass: Boolean | Object = await scrapeTokenPayload(req);
-        
+        const authorizedpass: Boolean | verifyJWTInterface = await scrapeTokenPayload(req);
+
         if(!authorizedpass){
             return {
                 req,
                 res,
                 session,
-                prisma
+                prisma,
+                authorizedpass: null
             }
+            
         }
-
         return {
             req,
             res,
@@ -31,34 +37,43 @@ export async function createContext(ctx: trpcNext.CreateNextContextOptions): Pro
             prisma,
             authorizedpass
         }
-
     }catch(err: any){
         console.log(err);
-        return null;
+        return {
+            req: null,
+            res: null,
+            session: null,
+            prisma: null,
+            authorizedpass: null
+        }
     }
-
 }
 
 /**
  * @desc validates jwt in authorization header
  * @returns scraped payload from jwt token
  *  */
- async function scrapeTokenPayload(req: any): Promise<Boolean | Object> {
+ async function scrapeTokenPayload(req: any): Promise<Boolean | verifyJWTInterface> {
     try{
         if(!req.headers.authorization){
             return false;
         }
-        const pd: any = await verifyUserAccessToken(
+        const pd: any = await verifyJwt(
             req.headers.authorization.split(' ')[1],
         );
         if(!pd){
-            return false;
+            return new Promise<verifyJWTInterface|Boolean>((resolve)=>{
+                resolve(false)
+            });
         }
-        return pd;
-        
+        return new Promise<Boolean|verifyJWTInterface>((resolve)=>{
+            resolve(pd)
+        });
     }catch(err: any){
         console.log(err);
-        return false;
+        return new Promise<verifyJWTInterface|Boolean>((resolve)=>{
+            resolve(false)
+        });
     }
 }
 

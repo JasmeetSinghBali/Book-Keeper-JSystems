@@ -210,8 +210,13 @@ https://next-auth.js.org/configuration/options
 > 3. dev/trpc-flows
 
 - [x] getting user data and session data from db
-- [ ] setup authorizations trpc , context check using middleware to authorize trpc client request to trpc server + add jwt token signing & verification flow ref: https://trpc.io/docs/authorization#option-2-authorize-using-middleware
+
+- [x] setup authorizations trpc , context check using middleware to authorize trpc client request to trpc server ref: https://trpc.io/docs/authorization#option-2-authorize-using-middleware ,
+
+- [ ] add jwt token signing & verification flow to send jwt from trpc client instance to the trpc server instance ref: https://trpc.io/docs/header
+
 - [ ] wire up trpc flows and schema along with prisma calls to update user email,phone that they can change in their settings, note- only allow user to change email who have verified their email check the sign in via magic email flow wheather that makes emailVerified
+
 - [ ] wrap up and make sure each filter, update, add card, contact by user & change in settings or deleting user account (active: false dont actually delete user account completely) is sorted in reff to frontend end-to-end.
 
 ---
