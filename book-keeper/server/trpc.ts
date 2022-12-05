@@ -47,9 +47,30 @@ const t = initTRPC.context<Context>().create();
   });
 });
 
+/**
+ * @desc middleware that tracks incoming requests to trpc server from trpc client
+ * @functions only checks for existing session
+ **/
+const sessionTracker = t.middleware(( { next, ctx } )=>{
+  if( !ctx.session || !ctx.session.user || !ctx.session?.user?.email){
+    throw new TRPCError({
+      code: 'UNAUTHORIZED',
+      message: 'invalid session'
+    });
+  }
+  return next({
+    ctx: {
+      session: ctx.req,
+    },
+  });
+});
+
 // Base router and procedure helpers
 export const router = t.router;
 export const publicProcedure = t.procedure;
 
-// Protected procedures for logged in users only
+// Protected procedures for logged in users with session + trpc client access to trpc server with auth token 
 export const trackedProcedure = t.procedure.use(requestTracker);
+
+// Sessioned procedures for logged in user with session only but no trpc client access to trpc server
+export const sessionedProcedure = t.procedure.use(sessionTracker);

@@ -228,9 +228,14 @@ https://next-auth.js.org/configuration/options
   [sentrynpm](https://www.npmjs.com/package/@sentry/nextjs)
   [sentrydocs](https://docs.sentry.io/platforms/javascript/guides/nextjs/)
 
+- [ ] add subscriptions setup for email/phone subscription setting feature KEEP IT MINIMAL
+      ref: https://trpc.io/docs/subscriptions
+
 - [ ] check responsiveness of each page in brave,edge specially brave.
 
 - [ ] cleanup, wrapup, update readme, feature section, test all flows, remove console statements, add common header in each code file with Author: Jasmeet Singh Bali
+
+- [ ] update all http codes and all related to trpc according to these rpc standards ref: https://trpc.io/docs/rpc
 
 - [ ] deploy this mvp as beta version release
 
