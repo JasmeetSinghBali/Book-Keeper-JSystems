@@ -18,14 +18,20 @@ export default function dashboard(){
     const result: any = trpcClient.user.whoami.useQuery({ email: userEmail });
     const userInfo: any = result?.data?.data;
 
+    console.log(result);
+
     /**
      * Case-1 if no session show not signed in & redirect user to login page
-     * Case-2 if phone null then newly signed up user & redirect to setting page
+     * Case-2 if whoami protected procedure fails with unauthorized it means that no auth header token is present, then redirect user to a page with navbar and simplistic ui that asks them to enter the OTP they recieved at their email , use sessioned procedure for that , update the token recieved in zustand store, and reconfig token value in Clientrpc.ts utils
+     * Case-3 if phone null then newly signed up user & redirect to setting page
      *   */
     // 📝 moved push to useEffect as server side push is not supported casues router instance error
     useEffect(()=>{
         if(!session){
             push('/user/login');
+        }
+        if(result.data === undefined){
+            console.log("NAVIGATE USER TO EMAIL OTP PAGE=============");
         }
         if(userInfo?.phone === null || !userInfo?.name){
             push('/user/settings');

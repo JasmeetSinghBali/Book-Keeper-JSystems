@@ -2,6 +2,10 @@ import { httpBatchLink } from '@trpc/client';
 import { createTRPCNext } from '@trpc/next';
 import type { AppRouter } from '../server/routers/_app';
 
+/**🎈 get this from zustand store */
+const token: string = '';
+
+/**set trpc/server instance base url where trpc/client will make request */
 function getBaseUrl() {
   if (typeof window !== 'undefined')
     // browser should use relative path
@@ -19,6 +23,7 @@ function getBaseUrl() {
   return `http://localhost:${process.env.PORT ?? 3000}`;
 }
 
+
 export const trpcClient = createTRPCNext<AppRouter>({
   config({ ctx }) {
     return {
@@ -29,21 +34,23 @@ export const trpcClient = createTRPCNext<AppRouter>({
            * @link https://trpc.io/docs/ssr
            **/
           url: `${getBaseUrl()}/api/trpc`,
+          /**
+           * ref: https://trpc.io/docs/ssr
+           * Headers as function that will be called on each request 
+           * from trpc/client instance ---> trpc/server instance
+           */
+           headers() {
+            return {
+              Authorization: token,
+            };
+          },
         }),
       ],
-      // 🎈 add the authorization header here for making trpc server side call from client with authorized jwt token, might be its needed to have two trpcClient instance one without Auth header for public routes & one with Auth header for protected routes
-      headers: {
-        "x-ssr": "1",
-      },
       /**
        * @link https://tanstack.com/query/v4/docs/reference/QueryClient
        **/
       // queryClientConfig: { defaultOptions: { queries: { staleTime: 60 } } },
     };
   },
-  /**
-   * @link https://trpc.io/docs/ssr
-   **/
-  ssr: true,
 });
 // => { useQuery: ..., useMutation: ...}

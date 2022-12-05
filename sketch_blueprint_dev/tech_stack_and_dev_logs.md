@@ -211,9 +211,11 @@ https://next-auth.js.org/configuration/options
 
 - [x] getting user data and session data from db
 
-- [x] setup authorizations trpc , context check using middleware to authorize trpc client request to trpc server ref: https://trpc.io/docs/authorization#option-2-authorize-using-middleware ,
+- [x] setup authorizations trpc , context check using middleware to authorize trpc client request to trpc server ref: https://trpc.io/docs/authorization#option-2-authorize-using-middleware,
 
-- [ ] add jwt token signing & verification flow to send jwt from trpc client instance to the trpc server instance ref: https://trpc.io/docs/header
+- [ ] make public procedure call to trpc/server to get JWT and store in zustand
+
+- [ ] grab jwt token from zustand for signing & verification flow to send jwt from trpc client instance to the trpc server instance in Clientrpc config ref: https://trpc.io/docs/header
 
 - [ ] wire up trpc flows and schema along with prisma calls to update user email,phone that they can change in their settings, note- only allow user to change email who have verified their email check the sign in via magic email flow wheather that makes emailVerified
 
@@ -226,9 +228,14 @@ https://next-auth.js.org/configuration/options
   [sentrynpm](https://www.npmjs.com/package/@sentry/nextjs)
   [sentrydocs](https://docs.sentry.io/platforms/javascript/guides/nextjs/)
 
+- [ ] add subscriptions setup for email/phone subscription setting feature KEEP IT MINIMAL
+      ref: https://trpc.io/docs/subscriptions
+
 - [ ] check responsiveness of each page in brave,edge specially brave.
 
 - [ ] cleanup, wrapup, update readme, feature section, test all flows, remove console statements, add common header in each code file with Author: Jasmeet Singh Bali
+
+- [ ] update all http codes and all related to trpc according to these rpc standards ref: https://trpc.io/docs/rpc
 
 - [ ] deploy this mvp as beta version release
 

@@ -1,7 +1,7 @@
 /**@desc User Routes */
 import { TRPCError, } from '@trpc/server';
 import { signUpSchema } from '../schemas/users/signup.schema';
-import { router , publicProcedure, trackedProcedure } from '../trpc';
+import { router , trackedProcedure } from '../trpc';
 import { hashSync } from 'bcryptjs';
 import { userInfoSchema } from '../schemas/users/userinfo.schema';
 
@@ -10,9 +10,7 @@ import { userInfoSchema } from '../schemas/users/userinfo.schema';
  */
 export const userRouter = router({
     
-    /**📝 public/untracked routes section */
-
-    /** 📝 Protected/tracked routes Section for logged in user only */
+    /** 📝 Protected/tracked routes Section for logged in user only i.e with session + trpc client access to trpc server with Auth token */
     
     /**
      * @desc fetches information of the user by email from DB &
@@ -22,7 +20,7 @@ export const userRouter = router({
         .input(userInfoSchema)
         .query(async ({ ctx, input }) => {
             const { email } = input;
-            const user = await ctx.prisma.user.findFirst({
+            const user: any = await ctx?.prisma?.user.findFirst({
                 where: {email},
             });
             if(!user){
@@ -55,7 +53,7 @@ export const userRouter = router({
         .input(signUpSchema)
         .mutation(async ({ ctx, input }) => {
             const { email, password } = input;
-            const alreadyExists = await ctx.prisma.user.findFirst({
+            const alreadyExists = await ctx?.prisma?.user.findFirst({
                 where: {email},
             });
             if(alreadyExists){
@@ -67,11 +65,11 @@ export const userRouter = router({
 
             const hashedP = hashSync(password, 13);
             input.password = hashedP;
-            const result = await ctx.prisma.user.create({data: input});
+            const result = await ctx?.prisma?.user.create({data: input});
             return {
                 status: 201,
                 message: "Account created successfully",
-                meta: result.email
+                meta: result?.email
             } 
     }),
 })
