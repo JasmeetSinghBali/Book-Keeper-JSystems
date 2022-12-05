@@ -12,13 +12,12 @@ import { trpcClient } from '../../utils/Clientrpc';
 
 export default function dashboard(){
  
-    const { push } = useRouter();
+    const { push, pathname } = useRouter();
     const { data: session, status } = useSession(); 
     const userEmail: any = session?.user?.email;
     const result: any = trpcClient.user.whoami.useQuery({ email: userEmail });
     const userInfo: any = result?.data?.data;
 
-    console.log(result);
 
     /**
      * Case-1 if no session show not signed in & redirect user to login page
@@ -29,13 +28,17 @@ export default function dashboard(){
     useEffect(()=>{
         if(!session){
             push('/user/login');
+            return;
         }
         if(result.data === undefined){
-            console.log("NAVIGATE USER TO EMAIL OTP PAGE=============");
+            push('/user/verify');
+            return;
         }
-        if(userInfo?.phone === null || !userInfo?.name){
+        if( userInfo?.phone === null || !userInfo?.name){
             push('/user/settings');
+            return;
         } 
+        return;
     },[]);
     return ( 
             <Flex

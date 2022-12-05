@@ -36,7 +36,7 @@ export const rpcServerAccessRouter = router({
     verifyEmailCode: sessionedProcedure
     .input(
       z.object({
-        email_code: z.string().length(5),
+        email_code: z.string().length(6),
       }),
     )
     .mutation(({ctx,input})=>{
@@ -46,6 +46,16 @@ export const rpcServerAccessRouter = router({
           message: `request was rejected.`,
         });
       }
+      if(!input.email_code){
+        throw new TRPCError({
+            code: "BAD_REQUEST",
+            message: `bad request was rejected.`,
+          });
+      }
+      console.log(input.email_code);
+      return{
+        success: true
+      };
       // 🎈 verify OTP & send back jwe cum jwt back to client trpc to make protected/tracked procedures call with this token as Auth header to trpc server now
     }),
     
