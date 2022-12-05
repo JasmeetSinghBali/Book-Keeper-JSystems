@@ -9,9 +9,12 @@ interface CustomNodeJsGlobal {
 // Prevent multiple instances of Prisma Client in development
 declare const global: CustomNodeJsGlobal;
 
-export const prisma = global.prisma || new PrismaClient({
-  log: ["query"],
-});
+// 💭 uncomment below 👇 to see prisma query logs
+// export const prisma = global.prisma || new PrismaClient({
+//   log: ["query"],
+// });
+
+export const prisma = global.prisma || new PrismaClient();
 
 if (process.env.NODE_ENV !== 'production'){
     global.prisma = prisma;
