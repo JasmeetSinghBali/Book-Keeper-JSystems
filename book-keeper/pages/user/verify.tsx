@@ -1,4 +1,4 @@
-import { Button, Divider, Flex, Heading, Icon, Input, InputGroup, InputLeftAddon, Stack, Text, chakra, HStack, PinInput, PinInputField, AlertIcon, Alert } from "@chakra-ui/react";
+import { Button, Divider, Flex, Heading, Icon, Input, InputGroup, InputLeftAddon, Stack, Text, chakra, HStack, PinInput, PinInputField, AlertIcon, Alert, AlertTitle, AlertDescription, Box } from "@chakra-ui/react";
 import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 import { AiOutlineCheck, AiOutlineExclamationCircle } from "react-icons/ai";
@@ -17,7 +17,7 @@ export default function verify(){
     const [ emailCode, SetEmailCode ] = useState('');
     const [ removeError, SetRemoveError] = useState(false);
     const userEmail: any = session?.user?.email;
-    const result: any = trpcClient.rpcAccess.dispatchEmailCode.useQuery({ email: userEmail });
+    const rpcDispatchedEmail: any = trpcClient.rpcAccess.dispatchEmailCode.useQuery({ email: userEmail });
     const mutation: any = trpcClient.rpcAccess.verifyEmailCode.useMutation();
 
     /** 
@@ -48,6 +48,8 @@ export default function verify(){
     //     console.log(result);
     //     // 🎈 if no result push to-> please contact support page
     // },[]);
+
+    console.log(rpcDispatchedEmail);
 
     return (
         <>
@@ -145,11 +147,18 @@ export default function verify(){
                                 Verify
                             </Button>
                             {mutation.error && <Alert display={removeError ? 'none' : 'flex'} status='error'><AlertIcon/>Verification failed! </Alert>}
+                            {
+                                rpcDispatchedEmail && !mutation.error &&
+                                <Alert status='success'>
+                                    <AlertIcon />
+                                    <Box>
+                                        <AlertTitle>{rpcDispatchedEmail.status}</AlertTitle>
+                                        <AlertDescription>Please check your inbox/spam at {userEmail} for the OTP.</AlertDescription>
+                                    </Box>
+                                    </Alert> 
+                            }
                             </chakra.form>
                         </Stack>
-                        <Divider mt={2} ></Divider>
-                        <Text color="gray.600" fontSize="xs" py={2} ml={44} fontWeight='hairline' fontFamily='cursive'>🛑Note from keeper.🛑</Text>
-                        <Text color="gray.600" fontSize="xs" py={2} ml={12} fontWeight='hairline' fontFamily='cursive'>please check your mail for the email code {userEmail && `sent at ${userEmail}` }, we appreciate your patience.</Text>
                     </motion.div>
                     </Flex>
                 </Flex>

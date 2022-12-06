@@ -18,6 +18,7 @@ const LogIn: NextPage = () => {
   const { data: session, status } = useSession();
   const {push} = useRouter();
   const [userEmail, setUserEmail] = useState('');
+  const [loadingRPC,SetLoadingRPC] = useState(false);
 
   /**Oauth single sign in options */
   const providers: any = [
@@ -31,7 +32,10 @@ const LogIn: NextPage = () => {
     }
   ];
   /** handle Oauth single sign in flow a/c to the provider name */
-  const handleOauthSignIn = (providerName: string) => () => signIn(providerName)
+  const handleOauthSignIn = (providerName: string) => () => { 
+    SetLoadingRPC(true);
+    return signIn(providerName)
+  }
   
   console.log(`@Current User Session: ${session}`);
   
@@ -58,10 +62,14 @@ const LogIn: NextPage = () => {
 
   /** Magic link email sign in handler */
   const handleEmailSignIn = async (e: any): Promise<any> => {
+    
+    SetLoadingRPC(true);
+    
     e.preventDefault();
     if(!userEmail){
       return false;
     }
+    
     const redirection: any = await signIn('email',{
       email: userEmail,
       redirect: false,
@@ -160,6 +168,7 @@ const LogIn: NextPage = () => {
                                   _hover={{bg:"teal.200"}}
                                   type="submit"
                                   my={2}
+                                  disabled={loadingRPC && true}
                                 >
                                     Sign in via mail
                                 </Button>
@@ -180,6 +189,7 @@ const LogIn: NextPage = () => {
                                             width="100%"
                                             letterSpacing="tighter"
                                             size="sm"
+                                            disabled={loadingRPC && true}
                                             >
                                               Sign in via {name}
                                           </Button>

@@ -46,6 +46,14 @@ export const trpcClient = createTRPCNext<AppRouter>({
           },
         }),
       ],
+      queryClientConfig:{
+        defaultOptions:{
+          queries: {
+            refetchOnMount: false,
+            refetchOnWindowFocus: false
+          }
+        }
+      }
       /**
        * @link https://tanstack.com/query/v4/docs/reference/QueryClient
        **/
