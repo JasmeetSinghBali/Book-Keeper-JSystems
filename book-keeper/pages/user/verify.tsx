@@ -14,7 +14,7 @@ export default function verify(){
     
     const { push, pathname } = useRouter();
     const {data: session, status} = useSession();
-    const [ emailCode, setEmailCode ] = useState('');
+    const [ emailCode, SetEmailCode ] = useState('');
     const [ removeError, SetRemoveError] = useState(false);
     const userEmail: any = session?.user?.email;
     const result: any = trpcClient.rpcAccess.dispatchEmailCode.useQuery({ email: userEmail });
@@ -26,17 +26,21 @@ export default function verify(){
      * */
     const handleEmailCodeVerification = async (e: any): Promise<any> => {
         e.preventDefault();
-        console.log(emailCode);
         if(!emailCode || emailCode.length !== 6){
             SetRemoveError(false);
         }
+        await mutation.mutate({email_code: emailCode});
         
-        const responserpc: any = await mutation.mutate({email_code: emailCode});
-        if(!responserpc){
+        SetEmailCode('');
+        
+        if(!mutation.isSuccess && !mutation.isLoading && !mutation.data){
+            if(mutation.error !== null){
+                console.log(mutation.error.data);
+            }
             SetRemoveError(false);
             return;
         }
-        console.log(responserpc);
+        
         return;
     }
 
@@ -117,7 +121,7 @@ export default function verify(){
                         <Stack ml={5} mt={4} spacing={2}>
                             <chakra.form onSubmit={handleEmailCodeVerification}>
                             <HStack ml={150}>
-                                <PinInput mask onComplete={(value: string)=> setEmailCode(value)} onChange={(value: string)=>{ if(value.length !== 6){SetRemoveError(false)}}}>
+                                <PinInput mask onComplete={(value: string)=> SetEmailCode(value)} onChange={(value: string)=>{ if(value.length !== 6){SetRemoveError(false)}}}>
                                     <PinInputField onClick={(_e: any) => { if(!removeError) {SetRemoveError(true)} }}/>
                                     <PinInputField />
                                     <PinInputField />
@@ -140,7 +144,7 @@ export default function verify(){
                             >
                                 Verify
                             </Button>
-                            {mutation.error && <Alert display={removeError ? 'none' : 'flex'} status='error'><AlertIcon/>Verification failed!</Alert>}
+                            {mutation.error && <Alert display={removeError ? 'none' : 'flex'} status='error'><AlertIcon/>Verification failed! </Alert>}
                             </chakra.form>
                         </Stack>
                         <Divider mt={2} ></Divider>

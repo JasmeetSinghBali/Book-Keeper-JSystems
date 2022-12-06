@@ -54,7 +54,11 @@ export const rpcServerAccessRouter = router({
       }
       console.log(input.email_code);
       return{
-        success: true
+        status: 200,
+        message: `userInfo: ${input.email_code}`,
+        data: {
+            success: true
+        }
       };
       // 🎈 verify OTP & send back jwe cum jwt back to client trpc to make protected/tracked procedures call with this token as Auth header to trpc server now
     }),
