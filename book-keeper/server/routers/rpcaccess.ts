@@ -4,6 +4,7 @@ import { router , sessionedProcedure } from '../trpc';
 import * as z from 'zod';
 import generateOTP, { generateOTPInterface } from '../../utils/otpGenerator';
 import { sendEmailOTP } from '../../utils/customMailDispatcher';
+import validateOTP, { validationTOTPResultInterface } from '../../utils/otpValidator';
 
 /**
  * @desc public procedure for enabling trpc client access to trpc server for tracked/protected procedures
@@ -46,20 +47,21 @@ export const rpcServerAccessRouter = router({
       }
       console.log(emailDispatched);
       return {
+        status: 200,
         success: true,
         message: `otp was dispatched to ${input.email}`
       };
       
     }),
 
-    /**@desc- get JWT cum JWE access token for trpc-client to make protected/tracked procedures call to trpc-server*/
+    /**@desc- verifies email otp code & dispatches JWT cum JWE access token for trpc-client to make protected/tracked procedures call to trpc-server*/
     verifyEmailCode: sessionedProcedure
     .input(
       z.object({
         email_code: z.string().length(6),
       }),
     )
-    .mutation(({ctx,input})=>{
+    .mutation(async({ctx,input})=>{
       if(ctx.authorizedpass !== null || !ctx.session){
         throw new TRPCError({
           code: "FORBIDDEN",
@@ -72,15 +74,38 @@ export const rpcServerAccessRouter = router({
             message: `bad request was rejected.`,
           });
       }
+      
+      // verify OTP & check for validation & verification & throw appropriate errors 
+      const validationResult:validationTOTPResultInterface = await validateOTP(input.email_code);
+
+      if(!validationResult.isValid){
+        throw new TRPCError({
+          code: "BAD_REQUEST",
+          message: `Invalid OTP was supplied`
+        })
+      }
+
+      if(!validationResult.isVerified){
+        throw new TRPCError({
+          code: "BAD_REQUEST",
+          message: `Incorrect/Expired OTP was supplied`
+        })
+      }
+      console.log(validationResult);
+
+      
+      // 🎈 dispatch jwe cum jwt 
       console.log(input.email_code);
+      
+      // 🎈 try to standardazie the response format https://trpc.io/docs/rpc#successful-response
       return{
         status: 200,
-        message: `userInfo: ${input.email_code}`,
+        message: `email otp was verified successfully`,
         data: {
-            success: true
+            token: ''
         }
       };
-      // 🎈 verify OTP & send back jwe cum jwt back to client trpc to make protected/tracked procedures call with this token as Auth header to trpc server now
+
     }),
     
 })
