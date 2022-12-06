@@ -149,16 +149,19 @@ export default function verify(){
                             {mutation.error && <Alert display={removeError ? 'none' : 'flex'} status='error'><AlertIcon/>Verification failed! </Alert>}
                             {
                                 rpcDispatchedEmail && !mutation.error &&
-                                <Alert status='success'>
+                                <Alert status='info'>
                                     <AlertIcon />
                                     <Box>
-                                        <AlertTitle>{rpcDispatchedEmail.status}</AlertTitle>
-                                        <AlertDescription>Please check your inbox/spam at {userEmail} for the OTP.</AlertDescription>
+                                        <AlertTitle>Status: {rpcDispatchedEmail.status}</AlertTitle>
+                                        <AlertDescription>dispatching an otp to {userEmail}...</AlertDescription>
                                     </Box>
                                     </Alert> 
                             }
                             </chakra.form>
                         </Stack>
+                        <Divider mt={2} ></Divider>
+                        <Text color="gray.600" fontSize="xs" py={2} ml={44} fontWeight='hairline' fontFamily='cursive'>📝Note from developer📝</Text>
+                        <Text color="gray.600" fontSize="xs" py={2} ml={12} fontWeight='hairline' fontFamily='cursive'>Keeper. is still in uat/sandbox env if you are not able to locate the otp in your inbox please check your spam , if its still not accessible please contact jasmeetbali.dev.2021@gmail.com </Text>
                     </motion.div>
                     </Flex>
                 </Flex>

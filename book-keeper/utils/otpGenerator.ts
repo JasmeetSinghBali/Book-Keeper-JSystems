@@ -1,6 +1,6 @@
 import { totp } from "otplib";
 
-interface otpSecretInterface{
+export interface otpSecretInterface{
     sec: string;
 }
 

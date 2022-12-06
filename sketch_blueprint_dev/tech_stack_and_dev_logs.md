@@ -241,6 +241,7 @@ https://next-auth.js.org/configuration/options
 
 - [ ] 🎈 tasks yet to be expanded Phase -2 : Transaction Manager flow, incoming/outgoing funds manager, notion integ maybe new feature notion ai etc.....
 
+
 ---
 
 > ## 🎈 To do 👇 Dev Logs @v2 [branch labels]: DatedFrom: yet to be decided
@@ -261,3 +262,7 @@ ref: https://www.youtube.com/watch?v=sOq92prx00w
 ```
 
 ---
+
+> ## 🎈 To do 👇 Dev Logs @v2.2 [branch labels]: DatedFrom: yet to be decided
+
+> 1. setup buttons on possible location like login,verify, pages where failure chances are high in developer note so that they can directly send me a email from a modal within the app label it as programatically BUG|Feedback keeper when this is sended to my email.
