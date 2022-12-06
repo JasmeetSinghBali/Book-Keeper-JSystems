@@ -45,4 +45,37 @@ export const sendWelcomeEmail = async ({ user }: any) => {
     } catch (error) {
       console.log(`❌ Unable to send welcome email to user (${email})`);
     }
-  };
+};
+
+/**@desc sends email otp to user email*/
+export const sendEmailOTP = async (user_email: string, otp: string) : Promise<Boolean>=> {
+  try {
+    const emailOTPTemplate = readFileSync(path.join(templateDir, 'Verify-otp-email.html'), {
+      encoding: 'utf8',
+    });
+    const emailTemplate = Handlebars.compile(emailOTPTemplate);
+    const mailSent: any = await mailTransporter.sendMail({
+      from: `"📚 Keeper." ${process.env.EMAIL_FROM as string}`,
+      to: user_email,
+      subject: '🔒 Verify Email OTP || Keeper',
+      html: emailTemplate({
+        base_url: process.env.NEXTAUTH_URL as string,
+        email_otp: otp,
+        support_email: process.env.EMAIL_FROM as string,
+      }),
+    });
+    if(!mailSent){
+      return new Promise<Boolean>((resolve)=>{
+        resolve(false);
+      });
+    }
+    return new Promise<Boolean>((resolve)=>{
+      resolve(true);
+    });
+  } catch (error) {
+    console.log(`❌ Unable to send welcome email to the user (${user_email})`);
+    return new Promise<Boolean>((resolve)=>{
+      resolve(false);
+    });
+  }
+};
