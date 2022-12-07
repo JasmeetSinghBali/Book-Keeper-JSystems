@@ -16,7 +16,7 @@ const t = initTRPC.context<Context>().create();
  * @desc middleware that tracks incoming requests to trpc server from trpc client
  * @functions check session,jwt verified payload,log IP's/accesspoints/deviceinfo & geolocation
  **/
- const requestTracker = t.middleware(({ next, ctx }) => {
+ const requestTracker = t.middleware(async({ next, ctx }) => {
   
   /** Check: 1 Unauthorized error in case session not exist , to protect trpc calls only for next-auth session logged in users */
   if( !ctx.session || !ctx.session.user || !ctx.session?.user?.email){
@@ -34,7 +34,27 @@ const t = initTRPC.context<Context>().create();
     })
   }
 
-  // Check: 3 🎈 tracks incoming request and log IP's , access points & device info, geolocation
+  /** Check: 3 check for user existance */
+  const userExists: any = await ctx.prisma?.user.findFirst({
+    where: {
+      email: ctx.session.user.email
+    }
+  });
+
+  if(!userExists){
+    throw new TRPCError({
+      code: 'NOT_FOUND',
+      message: `Not found`
+    });
+  }
+  if(!userExists.active){
+    throw new TRPCError({
+      code: "FORBIDDEN",
+      message: `account: ${userExists.email} is disabled/inactive, please contact support`
+    })
+  }
+
+  // Check: 4 🎈 tracks incoming request and log IP's , access points & device info, geolocation
   console.log("----HIT MADE THROUGH TRACKED PROCEDURE----")
   console.log(ctx.req)
   // 💭 here events via event-emitters setup can be emitted that handles the logging of IP, access points, device info & geolocation & storing into db 
@@ -43,6 +63,7 @@ const t = initTRPC.context<Context>().create();
     ctx: {
       // Infers the `session` as non-nullable
       session: ctx.req,
+      userAttachedData: userExists
     },
   });
 });
@@ -51,16 +72,35 @@ const t = initTRPC.context<Context>().create();
  * @desc middleware that tracks incoming requests to trpc server from trpc client
  * @functions only checks for existing session
  **/
-const sessionTracker = t.middleware(( { next, ctx } )=>{
+const sessionTracker = t.middleware(async( { next, ctx } )=>{
   if( !ctx.session || !ctx.session.user || !ctx.session?.user?.email){
     throw new TRPCError({
       code: 'UNAUTHORIZED',
       message: 'invalid session'
     });
   }
+  const userExists: any = await ctx.prisma?.user.findFirst({
+    where: {
+      email: ctx.session.user.email
+    }
+  });
+
+  if(!userExists){
+    throw new TRPCError({
+      code: 'NOT_FOUND',
+      message: `Not found`
+    });
+  }
+  if(!userExists.active){
+    throw new TRPCError({
+      code: "FORBIDDEN",
+      message: `account: ${userExists.email} is disabled/inactive, please contact support`
+    })
+  }
   return next({
     ctx: {
       session: ctx.req,
+      userAttachedData: userExists
     },
   });
 });

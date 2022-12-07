@@ -16,7 +16,7 @@ export interface GEncryptedKey {
 	text: string,
 	secretKey: string,
 ): GEncryptedKey => {
-    const iv = crypto.randomBytes(32);
+    const iv = crypto.randomBytes(16);
 	const key = crypto
 		.createHash('sha256')
 		.update(String(secretKey))
