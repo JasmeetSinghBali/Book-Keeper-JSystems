@@ -5,6 +5,22 @@ import * as z from 'zod';
 import generateOTP, { generateOTPInterface } from '../../utils/otpGenerator';
 import { sendEmailOTP } from '../../utils/customMailDispatcher';
 import validateOTP, { validationTOTPResultInterface } from '../../utils/otpValidator';
+import { encrypt, GEncryptedKey } from '../../utils/cryptoUtils';
+import { accessTokenPayload, signJwt } from '../../utils/jwtUtils';
+import { User } from '@prisma/client';
+
+/**@desc this is custom query success response interface */
+export interface CustQueryResultInterface {
+  success: boolean;
+  message: string;
+  data: Object;
+}
+
+/**@desc this is custom mutation success response interface */
+export interface CustMutationResultInterface {
+  message: string;
+  data: Object;
+}
 
 /**
  * @desc public procedure for enabling trpc client access to trpc server for tracked/protected procedures
@@ -26,7 +42,7 @@ export const rpcServerAccessRouter = router({
         email: z.string().min(1).email(),
       }),
     )
-    .query(async({ ctx, input }) => {
+    .query(async({ ctx, input }) : Promise<CustQueryResultInterface | TRPCError> => {
       if(ctx.authorizedpass !== null || !ctx.session){
         throw new TRPCError({
           code: "FORBIDDEN",
@@ -46,12 +62,13 @@ export const rpcServerAccessRouter = router({
         })
       }
       console.log(emailDispatched);
-      return {
-        status: 200,
-        success: true,
-        message: `otp was dispatched to ${input.email}`
-      };
-      
+      return new Promise<CustQueryResultInterface>((resolve)=>{
+        resolve(Object.freeze({
+          success: true,
+          message: `otp was dispatched to ${input.email}`,
+          data: {}
+        }))
+      });
     }),
 
     /**@desc- verifies email otp code & dispatches JWT cum JWE access token for trpc-client to make protected/tracked procedures call to trpc-server*/
@@ -61,7 +78,7 @@ export const rpcServerAccessRouter = router({
         email_code: z.string().length(6),
       }),
     )
-    .mutation(async({ctx,input})=>{
+    .mutation(async({ctx,input}) : Promise< CustMutationResultInterface | TRPCError > => {
       if(ctx.authorizedpass !== null || !ctx.session){
         throw new TRPCError({
           code: "FORBIDDEN",
@@ -93,19 +110,55 @@ export const rpcServerAccessRouter = router({
       }
       console.log(validationResult);
 
-      
-      // 🎈 dispatch jwe cum jwt 
-      console.log(input.email_code);
-      
-      // 🎈 try to standardazie the response format https://trpc.io/docs/rpc#successful-response
-      return{
-        status: 200,
-        message: `email otp was verified successfully`,
-        data: {
-            token: ''
-        }
-      };
+      // prepare the decrypted token pd & inc token version in db and sync the same in pd
+      const updatedTV: User | any = await ctx.prisma?.user.update({
+        where: {
+          email: ctx.userAttachedData.email,
+        },
+        data: { 
+          tokenVersion: {
+            increment: 1,
+          },
+        },
+      });
 
+      if(!updatedTV){
+        throw new TRPCError({
+          code: "INTERNAL_SERVER_ERROR",
+          message: `Internal server error occured`
+        })
+      }
+
+      const dectokenPD: accessTokenPayload = Object.freeze({
+        userID: updatedTV.id,
+        userEmail: updatedTV.email,
+        role: updatedTV.role,
+        tokenVersion: updatedTV.tokenVersion
+      });
+
+      //  encrypt the token payload to be sent
+      const enctokenPD: GEncryptedKey = encrypt(JSON.stringify(dectokenPD),process.env.ENC_ACCESS_TOKEN_SECRET as string);
+
+      // sign the jwe token
+      const rpcAT: string = await signJwt(enctokenPD);
+
+      if(!rpcAT){
+        throw new TRPCError({
+          code: "INTERNAL_SERVER_ERROR",
+          message: `Failed to generate token for rpc access`
+        })
+      }
+      
+
+      // dispatch jwe cum jwt 
+      // try to standardazie the response format https://trpc.io/docs/rpc#successful-response
+      return new Promise<CustMutationResultInterface | TRPCError>((resolve)=>{
+        resolve(Object.freeze({
+          message: `email otp was verified successfully & token for rpc access was generated!`,
+          data: {
+              token: rpcAT
+          }
+        }))
+      })
     }),
-    
 })

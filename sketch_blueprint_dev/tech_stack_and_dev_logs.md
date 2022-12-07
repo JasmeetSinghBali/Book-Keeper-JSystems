@@ -105,6 +105,8 @@ yarn create next-app --typescript
 
 - [prisma](https://www.prisma.io/docs/concepts/components/prisma-schema)
 
+- [prismaqueriesclient](// ref: https://www.prisma.io/docs/reference/api-reference/prisma-client-reference#examples-61)
+
   https://www.prisma.io/docs/concepts/components/prisma-schema/data-model
 
   https://www.prisma.io/docs/concepts/overview/what-is-prisma/data-modeling#:~:text=Using%20Prisma%20Client%20and%20Prisma%20Migrate,-When%20using%20Prisma&text=Manually%20change%20your%20application%20models,Prisma%20Client%20is%20automatically%20generated)
@@ -116,8 +118,10 @@ yarn create next-app --typescript
                 # use until the schema is not definate & after each alteration
                 npx prisma db push
 
-                # on finalization
+                # on finalization after each schema alteration
                 npx prisma migrate dev
+
+                # NOTE- if the prisma client schema does not get updated, try reloading VS code close or open / delete node_modules and run npx prisma generate ref: https://stackoverflow.com/questions/65663292/prisma-schema-not-updating-properly-after-adding-new-fields
 
                 # to run prisma studio locally
                 npx prisma studio
@@ -241,7 +245,6 @@ https://next-auth.js.org/configuration/options
 
 - [ ] 🎈 tasks yet to be expanded Phase -2 : Transaction Manager flow, incoming/outgoing funds manager, notion integ maybe new feature notion ai etc.....
 
-
 ---
 
 > ## 🎈 To do 👇 Dev Logs @v2 [branch labels]: DatedFrom: yet to be decided
@@ -266,3 +269,5 @@ ref: https://www.youtube.com/watch?v=sOq92prx00w
 > ## 🎈 To do 👇 Dev Logs @v2.2 [branch labels]: DatedFrom: yet to be decided
 
 > 1. setup buttons on possible location like login,verify, pages where failure chances are high in developer note so that they can directly send me a email from a modal within the app label it as programatically BUG|Feedback keeper when this is sended to my email.
+
+> 2. add cypress for predefined core/basic automation test journeys https://docs.cypress.io/guides/getting-started/installing-cypress#Advanced-Installation

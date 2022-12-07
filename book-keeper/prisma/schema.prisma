@@ -54,6 +54,7 @@ model User {
   plan          Plan      @default(COMMUNITY)
   active        Boolean   @default(true)
   phone         String?   @unique
+  tokenVersion  Int?      @default(0)
 }
 
 model VerificationToken {

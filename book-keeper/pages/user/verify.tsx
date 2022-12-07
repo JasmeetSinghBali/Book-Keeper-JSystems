@@ -30,7 +30,6 @@ export default function verify(){
             SetRemoveError(false);
         }
         await mutation.mutate({email_code: emailCode});
-        
         SetEmailCode('');
         
         if(!mutation.isSuccess && !mutation.isLoading && !mutation.data){
@@ -44,12 +43,19 @@ export default function verify(){
         return;
     }
 
-    // useEffect(()=>{
-    //     console.log(result);
-    //     // 🎈 if no result push to-> please contact support page
-    // },[]);
+    
+    if(mutation.data){
+        console.log("EHHH KANIYAA")
+        console.log(mutation.data);
+        // 🎈 store this mutation data into zustand
+    }
 
-    console.log(rpcDispatchedEmail);
+    useEffect(()=>{
+        // 🎈 store this mutation data token in zustand & then navigate to user dashboard
+        if(mutation.data){
+            push('/user/invoices');
+        }
+    },[mutation.data])
 
     return (
         <>
@@ -78,7 +84,7 @@ export default function verify(){
                     boxShadow="dark-lg"
                     boxSize={"lg"}
                 >
-                    {/*Sign In heading section */}
+                    {/*Verify heading section */}
                     <Flex
                         padding={5}
                         w={"100%"}
@@ -138,17 +144,17 @@ export default function verify(){
                                 size={"sm"}
                                 width="100%"
                                 leftIcon={<AiOutlineCheck />}
-                                _hover={{bg:"teal.200"}}
-                                type="submit"
+                                _hover={!mutation.data ? {bg:"teal.200"} : {bg:"purple.500"}}
+                                type={!mutation.data ? "submit": "button"}
                                 my={2}
-                                disabled={mutation.isLoading}
-                                onClick={()=>{if(removeError) {SetRemoveError(false)} }}
+                                disabled={mutation.isLoading || mutation.data ? true : false}
+                                onClick={()=>{if(removeError) {SetRemoveError(false) } }}
                             >
                                 Verify
                             </Button>
                             {mutation.error && <Alert display={removeError ? 'none' : 'flex'} status='error'><AlertIcon/>Verification failed! </Alert>}
                             {
-                                rpcDispatchedEmail && !mutation.error &&
+                                rpcDispatchedEmail && !mutation.error && !mutation.data &&
                                 <Alert status='info'>
                                     <AlertIcon />
                                     <Box>
