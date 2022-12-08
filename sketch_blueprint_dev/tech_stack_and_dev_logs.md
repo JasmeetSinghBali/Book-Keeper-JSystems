@@ -11,9 +11,12 @@
 1. Book-Keeper UI
 
 - Nextjs
+- Next-Auth (OAuth/Single sign in/magic email link)
 - chakra UI
+- framer motion (for animations)
+- zustand (as minimal&simplistic state manager)
 
-2. Backend [t3 stack]
+2. Backend
 
 - typescript
 - trpc
@@ -217,9 +220,9 @@ https://next-auth.js.org/configuration/options
 
 - [x] setup authorizations trpc , context check using middleware to authorize trpc client request to trpc server ref: https://trpc.io/docs/authorization#option-2-authorize-using-middleware,
 
-- [ ] make public procedure call to trpc/server to get JWT and store in zustand
+- [x] make public procedure call to trpc/server to get JWT and store in zustand
 
-- [ ] grab jwt token from zustand for signing & verification flow to send jwt from trpc client instance to the trpc server instance in Clientrpc config ref: https://trpc.io/docs/header
+- [x] grab jwt token from zustand for signing & verification flow to send jwt from trpc client instance to the trpc server instance in Clientrpc config ref: https://trpc.io/docs/header
 
 - [ ] wire up trpc flows and schema along with prisma calls to update user email,phone that they can change in their settings, note- only allow user to change email who have verified their email check the sign in via magic email flow wheather that makes emailVerified
 
@@ -240,6 +243,8 @@ https://next-auth.js.org/configuration/options
 - [ ] cleanup, wrapup, update readme, feature section, test all flows, remove console statements, add common header in each code file with Author: Jasmeet Singh Bali
 
 - [ ] update all http codes and all related to trpc according to these rpc standards ref: https://trpc.io/docs/rpc
+
+- [ ] tailwind css + landing page premium sleak page
 
 - [ ] deploy this mvp as beta version release
 
