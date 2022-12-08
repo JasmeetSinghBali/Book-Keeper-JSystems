@@ -7,6 +7,8 @@ import { trpcClient } from "../../utils/Clientrpc";
 import { motion } from 'framer-motion';
 import { useRouter } from "next/router";
 
+
+
 /**
  * @desc asks user for email OTP to finally update rpc server token in zustand store & redirect user to dashboard page  
  * */
@@ -15,13 +17,14 @@ export default function verify(){
     const { push, pathname } = useRouter();
     const {data: session, status} = useSession();
     const [ emailCode, SetEmailCode ] = useState('');
-    const [ removeError, SetRemoveError] = useState(false);
+    const [ removeError, SetRemoveError ] = useState(false);
     const userEmail: any = session?.user?.email;
     const rpcDispatchedEmail: any = trpcClient.rpcAccess.dispatchEmailCode.useQuery({ email: userEmail });
     const mutation: any = trpcClient.rpcAccess.verifyEmailCode.useMutation();
-
+    
+    
     /** 
-     * 🎈
+     * 
      * @desc make call to trpc/server to  verify email otp entered by user 
      * */
     const handleEmailCodeVerification = async (e: any): Promise<any> => {
@@ -39,21 +42,12 @@ export default function verify(){
             SetRemoveError(false);
             return;
         }
-        
         return;
     }
 
-    
-    if(mutation.data){
-        console.log("EHHH KANIYAA")
-        console.log(mutation.data);
-        // 🎈 store this mutation data into zustand
-    }
-
     useEffect(()=>{
-        // 🎈 store this mutation data token in zustand & then navigate to user dashboard
         if(mutation.data){
-            push('/user/invoices');
+            push('/user/settings');
         }
     },[mutation.data])
 

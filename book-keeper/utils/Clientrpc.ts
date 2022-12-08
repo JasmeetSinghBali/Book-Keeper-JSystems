@@ -1,9 +1,12 @@
-import { httpBatchLink } from '@trpc/client';
+import { httpBatchLink, OperationLink, TRPCClientRuntime } from '@trpc/client';
 import { createTRPCNext } from '@trpc/next';
 import type { AppRouter } from '../server/routers/_app';
+import { httpLink,splitLink } from '@trpc/react-query';
 
-/**🎈 get this from zustand store */
-const token: string = '';
+
+
+// 📝 custom headers on trpc client procedures-> https://github.com/trpc/trpc/issues/2018
+// 📝 https://trpc.io/docs/v9/links#request-batching
 
 /**set trpc/server instance base url where trpc/client will make request */
 function getBaseUrl() {
@@ -28,22 +31,16 @@ export const trpcClient = createTRPCNext<AppRouter>({
   config({ ctx }) {
     return {
       links: [
-        httpBatchLink({
-          /**
-           * If you want to use SSR, you need to use the server's full URL
-           * @link https://trpc.io/docs/ssr
-           **/
-          url: `${getBaseUrl()}/api/trpc`,
-          /**
-           * ref: https://trpc.io/docs/ssr
-           * Headers as function that will be called on each request 
-           * from trpc/client instance ---> trpc/server instance
-           */
-           headers() {
-            return {
-              Authorization: token,
-            };
+        splitLink({
+          condition(op) {
+            return op.context.skipBatch === true;
           },
+          true: httpLink({
+            url: `${getBaseUrl()}/api/trpc`,
+          }),
+          false: httpBatchLink({
+            url: `${getBaseUrl()}/api/trpc`
+          })
         }),
       ],
       queryClientConfig:{
@@ -62,3 +59,29 @@ export const trpcClient = createTRPCNext<AppRouter>({
   },
 });
 // => { useQuery: ..., useMutation: ...}
+
+
+// 💭 helpers
+// httpBatchLink({
+//   /**
+//    * If you want to use SSR, you need to use the server's full URL
+//    * @link https://trpc.io/docs/ssr
+//    **/
+//   url: `${getBaseUrl()}/api/trpc`,
+//   /**
+//    * ref: https://trpc.io/docs/ssr
+//    * Headers as function that will be called on each request 
+//    * from trpc/client instance ---> trpc/server instance
+//    */
+//   //  headers: () => {
+//   //   const grabbedToken: string = currentUserRPCToken(state=>state.token);
+//   //   if(grabbedToken && grabbedToken.length > 0){
+//   //     return {
+//   //       Authorization: `Bearer ${grabbedToken}`,
+//   //     };
+//   //   }
+//   //   return {
+//   //     Authorization: `Bearer placeholder`,
+//   //   };
+//   // },
+// }),
