@@ -7,9 +7,9 @@ import { useRouter } from 'next/router';
 import { useSession } from 'next-auth/react';
 
 
-export default function invoices(){ 
-    const { push } = useRouter(); 
-    
+export default function invoices(){
+     
+    const { push } = useRouter();     
     const { data: session, status } = useSession();
     
 

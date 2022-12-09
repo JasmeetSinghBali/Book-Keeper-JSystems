@@ -78,7 +78,7 @@ export default function dashboard(){
                 overflow="hidden"
                 maxW="2000px"
             >
-                <Navbar /> 
+                <Navbar userData={userDataGrabbed} /> 
                 <TxnList/>
                 <SearchNotificationSection />
             </Flex>
