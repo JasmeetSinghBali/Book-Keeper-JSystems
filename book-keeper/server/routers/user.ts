@@ -1,8 +1,6 @@
 /**@desc User Routes */
 import { TRPCError, } from '@trpc/server';
-import { signUpSchema } from '../schemas/users/signup.schema';
 import { router , trackedProcedure } from '../trpc';
-import { hashSync } from 'bcryptjs';
 import { userInfoSchema } from '../schemas/users/userinfo.schema';
 
 /**
@@ -18,58 +16,26 @@ export const userRouter = router({
      * */
     whoami: trackedProcedure
         .input(userInfoSchema)
-        .query(async ({ ctx, input }) => {
+        .mutation(async ({ ctx, input }) => {
             const { email } = input;
-            const user: any = await ctx?.prisma?.user.findFirst({
-                where: {email},
-            });
-            if(!user){
-                throw new TRPCError({
-                    code: "NOT_FOUND",
-                    message: `Email: ${email} Not Found`,
-                });
-            }
-            if(user.role !== 'USER'){
+            if(ctx.userAttachedData.role !== 'USER'){
                 throw new TRPCError({
                     code: "UNAUTHORIZED",
                     message: `Unauthorized`,
                 });
             }
+            
             return {
                 status: 200,
                 message: `userInfo: ${email}`,
                 data: {
-                    name: user.name,
-                    email: user.email,
-                    image: user.image,
-                    role: user.role,
-                    plan: user.plan,
-                    phone: user.phone
+                    name: ctx.userAttachedData.name,
+                    email: ctx.userAttachedData.email,
+                    image: ctx.userAttachedData.image,
+                    role: ctx.userAttachedData.role,
+                    plan: ctx.userAttachedData.plan,
+                    phone: ctx.userAttachedData.phone
                 }
-            } 
-    }),
-
-    onboard: trackedProcedure
-        .input(signUpSchema)
-        .mutation(async ({ ctx, input }) => {
-            const { email, password } = input;
-            const alreadyExists = await ctx?.prisma?.user.findFirst({
-                where: {email},
-            });
-            if(alreadyExists){
-                throw new TRPCError({
-                    code: "CONFLICT",
-                    message: "Email already in use",
-                });
-            }
-
-            const hashedP = hashSync(password, 13);
-            input.password = hashedP;
-            const result = await ctx?.prisma?.user.create({data: input});
-            return {
-                status: 201,
-                message: "Account created successfully",
-                meta: result?.email
             } 
     }),
 })

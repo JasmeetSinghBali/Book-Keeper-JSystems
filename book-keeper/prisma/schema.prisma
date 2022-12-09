@@ -55,6 +55,7 @@ model User {
   active        Boolean   @default(true)
   phone         String?   @unique
   tokenVersion  Int?      @default(0)
+  rpcAccess     Boolean   @default(false)
 }
 
 model VerificationToken {

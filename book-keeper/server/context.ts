@@ -16,7 +16,6 @@ export async function createContext(ctx: trpcNext.CreateNextContextOptions){
 
         const { req, res } = ctx;
         const session: any = await unstable_getServerSession(req,res,nextAuthOptions);
-
         
         const authorizedpass: Boolean | verifyJWTInterface = await scrapeTokenPayload(req);
 
@@ -30,6 +29,7 @@ export async function createContext(ctx: trpcNext.CreateNextContextOptions){
             }
             
         }
+        delete req.body?.access_token;
         return {
             req,
             res,
@@ -55,14 +55,19 @@ export async function createContext(ctx: trpcNext.CreateNextContextOptions){
  *  */
  async function scrapeTokenPayload(req: any): Promise<Boolean | verifyJWTInterface> {
     try{
-        if(!req.headers.authorization){
-            return false;
+        if(!req.body['0'].access_token){
+            return new Promise<Boolean | verifyJWTInterface>((resolve)=>{
+                resolve(false)
+            });
         }
-        const token: string = req.headers.authorization.split(' ')[1]; 
+        // console.log("=========logged token payload in scrape token payload function ==========");
+        // console.log(req.body['0'].access_token);
+        const token: string = req.body['0'].access_token; 
         const pd: any = await verifyJwt(
             token,
         );
         if(!pd){
+            console.log("jwt verification failed");
             return new Promise<verifyJWTInterface|Boolean>((resolve)=>{
                 resolve(false)
             });

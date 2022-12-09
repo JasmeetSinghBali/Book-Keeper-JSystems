@@ -36,7 +36,8 @@ export const appRouter = router({
     /**
      * @desc- specific user related routes 
      * @type protected/tracked Procedures
-     * @usage user query/mutations  
+     * @usage user query/mutations
+     * @note requires rpc access user level & access token check in cookies must be passed  
      * */
     user: userRouter,
 

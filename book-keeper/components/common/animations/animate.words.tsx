@@ -4,7 +4,7 @@ interface Props{
     text: string;
 }
 export default function AnimatedWords({ text}: Props){
-    const words = text.split(" ");
+    const words = text?.split(" ");
 
     const container={
         hidden: {opacity: 0},

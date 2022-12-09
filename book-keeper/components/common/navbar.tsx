@@ -28,7 +28,8 @@ import { BsFillSignpostFill } from 'react-icons/bs';
 import { signOut, useSession } from 'next-auth/react';
 
 
-const Navbar = () => {
+const Navbar = ({...userData}) => {
+    console.log(userData);
     const router = useRouter();
     const {push} = useRouter();
     const [currentUser, setCurrentUser] = useState(Object);
@@ -353,7 +354,7 @@ const Navbar = () => {
                         },
                     }}>
                     {/*🎈 make this dynamic if premium then only add Icon FcApproval else not */}
-                    <Text textAlign="center" fontSize="xs" fontWeight="hairline" letterSpacing="tighter" display={"flex"}><Icon as={FcApproval}></Icon>{currentUser.email ? 'Premium' : 'Unknown'}</Text>
+                    <Text textAlign="center" fontSize="xs" fontWeight="hairline" letterSpacing="tighter" display={"flex"}><Icon as={FcApproval}></Icon>{currentUser.email && userData.userData.data ? userData.userData.data.plan : 'Unknown'}</Text>
                     </motion.div>
                     </Flex>
                 </Flex>
