@@ -37,7 +37,7 @@ export interface verifyJWTInterface {
  * @returns decrypted & decoded payload with valid & expired boolean flags
  *  */
 export const verifyJwt = async (token: string) : Promise<verifyJWTInterface|null> => {
-	try {
+    try {
 		const decodedFPD: JwtPayload = verify(
 			token,
 			process.env.JWT_SIGNING_SECRET as string,
@@ -74,6 +74,7 @@ export interface accessTokenPayload {
  * @returns attached decrypted data with actual payload 
  * */
 const reattachDecMetaData = async (decodedEncData: any): Promise<accessTokenPayload> => {
+    
 	const decMetaData: any = decrypt(
 		decodedEncData.meta_data,
 		process.env.ENC_ACCESS_TOKEN_SECRET as string,

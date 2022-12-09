@@ -220,9 +220,8 @@ https://next-auth.js.org/configuration/options
 
 - [x] setup authorizations trpc , context check using middleware to authorize trpc client request to trpc server ref: https://trpc.io/docs/authorization#option-2-authorize-using-middleware,
 
-- [x] make public procedure call to trpc/server to get JWT and store in zustand
-
-- [x] grab jwt token from zustand for signing & verification flow to send jwt from trpc client instance to the trpc server instance in Clientrpc config ref: https://trpc.io/docs/header
+- [ ] make public procedure call to trpc/server to activate rpc access for user get jwt and attach auth header for for user info and store userinfo in zustand store.
+      ref: https://trpc.io/docs/header
 
 - [ ] wire up trpc flows and schema along with prisma calls to update user email,phone that they can change in their settings, note- only allow user to change email who have verified their email check the sign in via magic email flow wheather that makes emailVerified
 
@@ -276,3 +275,11 @@ ref: https://www.youtube.com/watch?v=sOq92prx00w
 > 1. setup buttons on possible location like login,verify, pages where failure chances are high in developer note so that they can directly send me a email from a modal within the app label it as programatically BUG|Feedback keeper when this is sended to my email.
 
 > 2. add cypress for predefined core/basic automation test journeys https://docs.cypress.io/guides/getting-started/installing-cypress#Advanced-Installation
+
+🎈 remove this
+
+> flow
+
+1. login -> dashboard -> if user info who am i not accessible navigate to verify, else userinfo phone null, update the user info in zustand store & navigate to settings allow user to edit details and update phone number all of these will be rpcProtected routes with jwt check in from req.cookies header [UPDATE CONTEXT AUTH HEADER CHECK TO COOKIE HEADER]
+
+2. if user info not accessible in dashboard that means rpa access not activated , navigate to verify, verify otp and make rpaAccess true in db & send back access token attached cookies(ctx.res.cookies) & navigate user to dashboard back making the userinfo route access again which will now have the access token cookies attached and updating zustand store with user info from db so that then this can be utilized by all other pages as well.

@@ -9,6 +9,7 @@ import { encrypt, GEncryptedKey } from '../../utils/cryptoUtils';
 import { accessTokenPayload, signJwt } from '../../utils/jwtUtils';
 import { User } from '@prisma/client';
 
+
 /**@desc this is custom query success response interface */
 export interface CustQueryResultInterface {
   success: boolean;
@@ -27,13 +28,7 @@ export interface CustMutationResultInterface {
  */
 export const rpcServerAccessRouter = router({
     
-    /**📝 sessioned routes section */
-
-    // 🎈 flow end-to-end: 
-    // 1. if trpc server protected call fails like userInfo i.e invalid access from trpc/server due to missing jwt auth header or expired auth header then, show user a simplistic ui expecting a OTP sent at their mail to enter it, showing message we appreciate your patience but security is our topmost priority please verify that you have access to your mail associated to this keeper. account
-    // 2. send an OTP to user's email address which will then be verified & the jwt cum jwe access token will be generated and returned
-    // 3. on client side then update the recieved token in zustand store
-    // 4. pick up the token from zustand store and place it as Authorization header value in the Clientrpc.ts config file 
+    /**📝 sessioned routes section, enables/activates rpc access for the user */
 
     /**@desc- dispatches email code to user with restricted time validity */
     dispatchEmailCode: sessionedProcedure
@@ -71,7 +66,10 @@ export const rpcServerAccessRouter = router({
       });
     }),
 
-    /**@desc- verifies email otp code & dispatches JWT cum JWE access token for trpc-client to make protected/tracked procedures call to trpc-server*/
+    /**
+     * @desc verifies email otp code & activates rpc access (rpcAccess: true)
+     * attaches token in response cookie 
+     * */
     verifyEmailCode: sessionedProcedure
     .input(
       z.object({
@@ -110,7 +108,54 @@ export const rpcServerAccessRouter = router({
       }
       console.log(validationResult);
 
-      // prepare the decrypted token pd & inc token version in db and sync the same in pd
+      const updatedrpcAccess: User | any = await ctx.prisma?.user.update({
+        where:{
+          email: ctx.userAttachedData.email
+        },
+        data: {
+          rpcAccess: true
+        },
+      }) 
+      
+      if(!updatedrpcAccess || !updatedrpcAccess.rpcAccess){
+        throw new TRPCError({
+          code: "INTERNAL_SERVER_ERROR",
+          message: `failed to activate rpc access for the user: ${ctx.userAttachedData.email}`
+        });
+      }
+      
+      return new Promise<CustMutationResultInterface | TRPCError>((resolve)=>{
+        resolve(Object.freeze({
+          message: `email otp was verified successfully & rpc access was granted!`,
+          data: {
+              userEmail: updatedrpcAccess.email
+          }
+        }))
+      });      
+    }),
+
+    /**@desc- dispatch jwe for rpc tracked/protected procedures access */
+    fetchRpcToken: sessionedProcedure
+    .input(
+      z.object({
+        email: z.string().min(1).email(),
+      }),
+    )
+    .query(async({ctx,input}) : Promise< CustQueryResultInterface | TRPCError > => {
+      if(ctx.authorizedpass !== null || !ctx.session){
+        throw new TRPCError({
+          code: "FORBIDDEN",
+          message: `request was rejected.`,
+        });
+      }
+      
+      if(!ctx.userAttachedData.rpcAccess){
+        throw new TRPCError({
+          code: "FORBIDDEN",
+          message: `request was rejected.`,
+        });
+      }
+      
       const updatedTV: User | any = await ctx.prisma?.user.update({
         where: {
           email: ctx.userAttachedData.email,
@@ -148,17 +193,16 @@ export const rpcServerAccessRouter = router({
           message: `Failed to generate token for rpc access`
         })
       }
-      
 
-      // dispatch jwe cum jwt 
-      // try to standardazie the response format https://trpc.io/docs/rpc#successful-response
-      return new Promise<CustMutationResultInterface | TRPCError>((resolve)=>{
+      return new Promise<CustQueryResultInterface | TRPCError>((resolve)=>{
         resolve(Object.freeze({
-          message: `email otp was verified successfully & token for rpc access was generated!`,
+          success: true,
+          message: `rpc access token was generated successfully!`,
           data: {
-              token: rpcAT
+              rpc_token: rpcAT
           }
         }))
-      })
+      });
+
     }),
 })

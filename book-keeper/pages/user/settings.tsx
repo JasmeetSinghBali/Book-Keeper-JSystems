@@ -26,29 +26,7 @@ export default function settings(){
         if(!session){
             push('/user/login');
         }
-        // 🎈 under construction================
-        // exposed an api that dispatches rpc access token and attach them 
-        // as await all promise
-        // 1. get rpc access token from trpc server 
-        // 2. trpc make whoami route with authorization header with this access token to get user info from DB and store in zustand store 
-        // ref: https://trpc.io/docs/links/httpBatchLink
-    
-        // const context : any = {
-        //     skipBatch: false,
-        //     headers: {
-        //         Authorization: `Bearer ${window.localStorage.getItem('rpcAccessToken') ? window.localStorage.getItem('rpcAccessToken') : 'placeholder'}`
-        //     }
-        // } 
-        
-        // const result: any = trpcClient.query( 
-        //     ['user.whoami'], 
-        //     { email: userEmail },
-        //     context,
-        // );
-        
-        // SetUserInfo(result.data.data);
-    
-    },[session]); 
+    },[session,user]); 
     
     
     return(

@@ -10,7 +10,7 @@ import { useRouter } from "next/router";
 
 
 /**
- * @desc asks user for email OTP to finally update rpc server token in zustand store & redirect user to dashboard page  
+ * @desc asks user for email OTP to enable rpc access & attach rpc token in cookie header & redirect user to dashboard page  
  * */
 export default function verify(){
     
@@ -47,7 +47,7 @@ export default function verify(){
 
     useEffect(()=>{
         if(mutation.data){
-            push('/user/settings');
+            push('/user/dashboard');
         }
     },[mutation.data])
 
