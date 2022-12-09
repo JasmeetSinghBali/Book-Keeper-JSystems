@@ -220,10 +220,9 @@ https://next-auth.js.org/configuration/options
 
 - [x] setup authorizations trpc , context check using middleware to authorize trpc client request to trpc server ref: https://trpc.io/docs/authorization#option-2-authorize-using-middleware,
 
-- [x] make public procedure call to trpc/server to activate rpc access for user get jwt and attach auth header for for user info and store userinfo in zustand store.
-      ref: https://trpc.io/docs/header
+- [x] make public procedure call to trpc/server to activate rpc access for user get jwt via seprate route and attach jwt in request body for user info or similar protected/tracked procedure routes.
 
-- [ ] wrap up and make sure each filter, update, add card, contact by user & change in settings or deleting user account (active: false dont actually delete user account completely) is sorted in reff to frontend end-to-end.
+- [ ] wrap up and make sure each filter, update, add card, contact by user & change in settings or deleting user account (active: false dont actually delete user account completely) is sorted in reff to frontend end-to-end to backend trpc server call & setup.
 
 - [ ] event-emitters setup for events emitted that handles the logging of IP, access points, device info & geolocation & storing into db in the trpc middleware requestTracker and store against relevant user in DB to show in settings account
 

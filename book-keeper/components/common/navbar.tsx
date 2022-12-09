@@ -354,7 +354,7 @@ const Navbar = ({...userData}) => {
                         },
                     }}>
                     {/*🎈 make this dynamic if premium then only add Icon FcApproval else not */}
-                    <Text textAlign="center" fontSize="xs" fontWeight="hairline" letterSpacing="tighter" display={"flex"}><Icon as={FcApproval}></Icon>{currentUser.email && userData.userData.data ? userData.userData.data.plan : 'Unknown'}</Text>
+                    <Text textAlign="center" fontSize="xs" fontWeight="hairline" letterSpacing="tighter" display={"flex"}><Icon as={FcApproval}></Icon>{currentUser.email ? userData?.userData?.data.plan : 'Unknown'}</Text>
                     </motion.div>
                     </Flex>
                 </Flex>
