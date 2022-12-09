@@ -29,7 +29,6 @@ export async function createContext(ctx: trpcNext.CreateNextContextOptions){
             }
             
         }
-        delete req.body?.access_token;
         return {
             req,
             res,
@@ -55,14 +54,14 @@ export async function createContext(ctx: trpcNext.CreateNextContextOptions){
  *  */
  async function scrapeTokenPayload(req: any): Promise<Boolean | verifyJWTInterface> {
     try{
-        if(!req.body['0'].access_token){
+        if(!req?.body['0']?.access_token){
             return new Promise<Boolean | verifyJWTInterface>((resolve)=>{
                 resolve(false)
             });
         }
         // console.log("=========logged token payload in scrape token payload function ==========");
         // console.log(req.body['0'].access_token);
-        const token: string = req.body['0'].access_token; 
+        const token: string = req?.body['0']?.access_token; 
         const pd: any = await verifyJwt(
             token,
         );

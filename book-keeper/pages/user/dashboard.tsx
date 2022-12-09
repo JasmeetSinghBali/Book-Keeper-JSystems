@@ -66,7 +66,9 @@ export default function dashboard(){
         return; 
     },[]);
 
-    // 🎈 pass this as props to navbar, txlist & search notifications
+    // 🎈 pass this as props to navbar, txlist & search notifications, replicate the same
+    // for all sub componenets while making the call from the parent component of that page
+    // 
     const userDataGrabbed: any = result.data;
     
     console.log(userDataGrabbed);  
