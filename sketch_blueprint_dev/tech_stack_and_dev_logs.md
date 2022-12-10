@@ -224,7 +224,10 @@ https://next-auth.js.org/configuration/options
 
 - [ ] wrap up and make sure each filter, update, add card, contact by user & change in settings or deleting user account (active: false dont actually delete user account completely) is sorted in reff to frontend end-to-end to backend trpc server call & setup.
 
-- [ ] event-emitters setup for events emitted that handles the logging of IP, access points, device info & geolocation & storing into db in the trpc middleware requestTracker and store against relevant user in DB to show in settings account
+- [ ] clean up & remove the zustand store and along with irrelevant schema or unused code
+      throught project directory.
+
+- [ ] event-emitters setup for events emitted that handles the logging of IP, access points, device info & geolocation & storing into db from the trpc middleware requestTracker and store against relevant user in DB to show in settings account
 
 - [ ] [logging & error & performance reports](https://github.com/vercel/next.js/tree/canary/examples/with-sentry)
 

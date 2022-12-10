@@ -10,7 +10,7 @@ interface CurrentUserInfoInterface {
 export const useCurrentUserInfo = create<CurrentUserInfoInterface>((set): any => ({
     user: {},
     setUserInfo: (userData: any): void => set(
-        _state => ({ user: userData})
+        state => ({ user: userData})
     ),
     resetUserInfo: (): void => set({user: {}})
 }));

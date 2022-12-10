@@ -26,10 +26,12 @@ import NextLink  from 'next/link';
 import {motion} from  'framer-motion';
 import { BsFillSignpostFill } from 'react-icons/bs';
 import { signOut, useSession } from 'next-auth/react';
+import { useCurrentUserInfo } from '../../store/current-user-info.store';
+import { useCurrentRpcToken } from '../../store/rpc-token-store';
 
 
-const Navbar = ({...userData}) => {
-    console.log(userData);
+const Navbar = () => {
+    
     const router = useRouter();
     const {push} = useRouter();
     const [currentUser, setCurrentUser] = useState(Object);
@@ -45,6 +47,15 @@ const Navbar = ({...userData}) => {
             setCurrentUser(session.user);
         }
     },[currentUser]);
+
+    const currentUserDataZustand: any = useCurrentUserInfo.getState();
+    // console.log("Zustand store========user data");
+    // console.log(currentUserDataZustand);
+
+    // 💭 rpc stored token for protected route access if required
+    // const currentRpcTokenZustand: any = useCurrentRpcToken.getState();
+    // console.log("zustand rpc token store========");
+    // console.log(currentRpcTokenZustand);
 
     return (
         <>
@@ -353,8 +364,7 @@ const Navbar = ({...userData}) => {
                             }
                         },
                     }}>
-                    {/*🎈 make this dynamic if premium then only add Icon FcApproval else not */}
-                    <Text textAlign="center" fontSize="xs" fontWeight="hairline" letterSpacing="tighter" display={"flex"}><Icon as={FcApproval}></Icon>{currentUser.email ? userData?.userData?.data.plan : 'Unknown'}</Text>
+                    <Text textAlign="center" fontSize="xs" fontWeight="hairline" letterSpacing="tighter" display={"flex"}><Icon as={FcApproval} display={currentUserDataZustand?.user?.plan === "COMMUNITY" ? "none" : "flex"} ></Icon>{currentUser.email && currentUserDataZustand ? currentUserDataZustand.user.plan : 'Unknown'}</Text>
                     </motion.div>
                     </Flex>
                 </Flex>
