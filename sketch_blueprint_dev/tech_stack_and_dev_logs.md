@@ -220,7 +220,9 @@ https://next-auth.js.org/configuration/options
 
 - [x] setup authorizations trpc , context check using middleware to authorize trpc client request to trpc server ref: https://trpc.io/docs/authorization#option-2-authorize-using-middleware,
 
-- [x] make public procedure call to trpc/server to activate rpc access for user get jwt via seprate route and attach jwt in request body for user info or similar protected/tracked procedure routes.
+- [x] make public procedure call to trpc/server to activate rpc access for user get jwt via seprate route and attach jwt in request body for user info from dashboard and store both rpc token and the user info in the zustand store for other componenets protected routes access.
+
+- [ ] add a check in all other pages in case a protected/tracked call which uses zustand stored jwt fails then navigate the user back to dashboard to repopulate/rotate and get new token from server and update in zustand store.
 
 - [ ] wrap up and make sure each filter, update, add card, contact by user & change in settings or deleting user account (active: false dont actually delete user account completely) is sorted in reff to frontend end-to-end to backend trpc server call & setup.
 
