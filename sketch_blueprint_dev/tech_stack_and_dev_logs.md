@@ -222,11 +222,11 @@ https://next-auth.js.org/configuration/options
 
 - [x] make public procedure call to trpc/server to activate rpc access for user get jwt via seprate route and attach jwt in request body for user info from dashboard and store both rpc token and the user info in the zustand store for other componenets protected routes access.
 
-- [ ] add a check in all other pages in case a protected/tracked call which uses zustand stored jwt fails then navigate the user back to dashboard to repopulate/rotate and get new token from server and update in zustand store.
+- [x] setup a rpc access route that is used just to determine wheather rpc access is allowed or not for a page by using stored zustand token if this protected/tracked call fails navigate user to dashboard , this should be in every main page so that repopulate/rotation of the token can be done with auto update in zustand store via dashoard fetch rpc token call
 
 - [ ] wrap up and make sure each filter, update, add card, contact by user & change in settings or deleting user account (active: false dont actually delete user account completely) is sorted in reff to frontend end-to-end to backend trpc server call & setup.
 
-- [ ] clean up & remove the zustand store and along with irrelevant schema or unused code
+- [ ] clean up & remove the irrelevant schema or unused code
       throught project directory.
 
 - [ ] event-emitters setup for events emitted that handles the logging of IP, access points, device info & geolocation & storing into db from the trpc middleware requestTracker and store against relevant user in DB to show in settings account

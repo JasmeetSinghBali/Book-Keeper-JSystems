@@ -2,8 +2,13 @@ import { Avatar, Flex, Icon, IconButton, Text, Divider, Heading, TableContainer,
 import React from 'react';
 import { AiFillCamera, AiFillEdit, AiOutlineAlert, AiOutlineUser } from 'react-icons/ai';
 import {motion} from 'framer-motion';
+import EditPhoneEmailModal from './edit.phone-email.settings';
 
-const GeneralSettings = ({...userInfo}) => {
+const GeneralSettings = ({userStoreData}: any) => {
+
+    console.log("Inside general settings section");
+    console.log(userStoreData);
+    
     return (
         <>
             <Flex
@@ -69,7 +74,7 @@ const GeneralSettings = ({...userInfo}) => {
                         <Flex
                             flexDir="column"
                         >
-                            <Avatar size={["md","md","md","xl","xl"]} my={2} src={userInfo?.userInfo?.image ? userInfo?.userInfo?.image : '' } />
+                            <Avatar size={["md","md","md","xl","xl"]} my={2} src={userStoreData?.image ? userStoreData?.image : '' } />
                         </Flex>
                         <Flex
                          flexDir="column"
@@ -77,10 +82,8 @@ const GeneralSettings = ({...userInfo}) => {
                          mt={5}
                         >
                             {/*🎈 Make This Dynamic User Data make sure to show the username & Email in upper case*/}
-                            <Text fontSize={["sm","sm","md","md","md"]} color={!userInfo?.userInfo?.name ? 'gray.400' : 'black'} fontWeight="semibold" letterSpacing="tight" >Username: {userInfo?.userInfo?.name ? userInfo?.userInfo.name : `🚫`} 
-                            </Text>
-                            <Text fontSize={["sm","sm","md","md","md"]} color={!userInfo?.userInfo?.email ? 'gray.400' : 'black'} fontWeight="semibold" letterSpacing="tight" >Email: {userInfo?.userInfo?.email ? userInfo?.userInfo?.email : `🚫` }</Text>
-                            <Text fontSize={["sm","sm","md","md","md"]} color={!userInfo?.userInfo?.phone ? 'gray.400' : 'black'} fontWeight="semibold" letterSpacing="tight" >Phone: {userInfo?.userInfo?.phone === null || !userInfo?.userInfo?.phone ? `🚫` : userInfo?.userInfo?.phone }</Text>
+                            <Text fontSize={["sm","sm","md","md","md"]} color={!userStoreData?.email ? 'gray.400' : 'black'} fontWeight="semibold" letterSpacing="tight" >Email: {userStoreData?.email ? userStoreData?.email : `🚫` }</Text>
+                            <Text fontSize={["sm","sm","md","md","md"]} color={!userStoreData?.phone ? 'gray.400' : 'black'} fontWeight="semibold" letterSpacing="tight" >Phone: {userStoreData?.phone === null || !userStoreData?.phone ? `🚫` : userStoreData?.phone }</Text>
                         </Flex>
                     </Flex>
                     <Flex
@@ -130,16 +133,7 @@ const GeneralSettings = ({...userInfo}) => {
                                     <Td  fontWeight="semibold" fontSize="sm" letterSpacing="wider" >Email & Phone</Td>
                                     <Td  fontWeight="semibold" fontSize="sm" letterSpacing="wider">Security</Td>
                                     <Td>
-                                        <Tooltip label='Note: regardless of wheather you update one or both reverification would be needed via OTP for both email & phone.' hasArrow arrowSize={15} closeDelay={900} placement="right">
-                                            <IconButton
-                                            //onClick={onOpen} 
-                                            icon={<AiFillEdit />}
-                                            fontSize="xs"
-                                            bgColor="gray.200"
-                                            borderRadius="100%"
-                                            aria-label={'EditUserBasicDetails'} 
-                                            _hover={{bg:"pink.200"}}/>
-                                        </Tooltip>
+                                        <EditPhoneEmailModal/>
                                     </Td>
                                     </Tr>
                                     <Tr>

@@ -205,4 +205,36 @@ export const rpcServerAccessRouter = router({
       });
 
     }),
+
+    /**@desc- check current user has rpc access or not */
+    checkRpcAccess: sessionedProcedure
+    .input(
+      z.object({
+        email: z.string().min(1).email(),
+      }),
+    )
+    .query(async({ctx,input}) : Promise< CustQueryResultInterface | TRPCError > => {
+      if(ctx.authorizedpass !== null || !ctx.session){
+        throw new TRPCError({
+          code: "FORBIDDEN",
+          message: `request was rejected.`,
+        });
+      }
+      
+      if(!ctx.userAttachedData.rpcAccess){
+        throw new TRPCError({
+          code: "FORBIDDEN",
+          message: `request was rejected.`,
+        });
+      }
+      
+      return new Promise<CustQueryResultInterface | TRPCError>((resolve)=>{
+        resolve(Object.freeze({
+          success: true,
+          message: `rpc access for user: ${input.email} is activated`,
+          data: {}
+        }))
+      });
+    }),
+    
 })

@@ -8,6 +8,7 @@ import IntegrationSettings from "./integrations.settings";
 import {motion} from 'framer-motion';
 import { useSession } from "next-auth/react";
 import { trpcClient } from "../../utils/Clientrpc";
+import { useCurrentUserInfo } from "../../store/current-user-info.store";
 
 
 
@@ -19,21 +20,26 @@ const SettingsNavbar = () => {
     const result: any = trpcClient.user.whoami.useQuery({ email: userEmail });
     const userInfo: any = result?.data?.data;
 
+    const currentUserDataZustand: any = useCurrentUserInfo.getState();
+    console.log("Zustand store========user data==== inside navbar settings");
+    console.log(currentUserDataZustand);
+
     function showSection(){
         const currentSelection = settingsOption;
         switch (currentSelection) {
             case 'general':
-                return <GeneralSettings userInfo={userInfo} />
+                return <GeneralSettings userStoreData={currentUserDataZustand.user}  />
             case 'billing':
-                return <BillingSettings userInfo={userInfo} />
+                return <BillingSettings userStoreData={currentUserDataZustand.user}/>
             case 'integrations':
-                return <IntegrationSettings  userInfo={userInfo} />
+                return <IntegrationSettings userStoreData={currentUserDataZustand.user}/>
             case 'dangerzone':
-                return <DangerSettings userInfo={userInfo} />
+                return <DangerSettings userStoreData={currentUserDataZustand.user}/>
             default:
-                return <GeneralSettings userInfo={userInfo} />
+                return <GeneralSettings userStoreData={currentUserDataZustand.user}/>
         }
     }
+
     return(
         <>    
             {/*Settings navbar*/}

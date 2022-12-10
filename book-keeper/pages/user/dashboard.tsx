@@ -39,7 +39,6 @@ export default function dashboard(){
     /**
      * Case-1 if no session means not signed in, redirect user to login page
      * Case-2 if whoami protected procedure fails with unauthorized it means that no auth cookie header token is present, then redirect user to a verify page with that asks them to enter the OTP they recieved at their email , use sessioned procedure for that , enable the rpcAccess for user & return back the token in cookie header
-     * Case-3 if phone null then this is newly signed up cum sign in user & redirect to setting page to manipulate user to update their phone number and edit their settings
      *   */
     // 📝 moved push to useEffect as server side push is not supported casues router instance error
     useEffect(()=>{
@@ -48,7 +47,7 @@ export default function dashboard(){
             return;
         }
         grabUserData();
-        if(!rpcAccessQuery.data || !rpcAccessQuery.data.data.rpc_token){
+        if(!rpcAccessQuery.data){
             push('/user/verify');
             return;
         }
@@ -65,11 +64,6 @@ export default function dashboard(){
             useCurrentUserInfo.setState({user: result.data.data})
         }
     },[result.data])
-
-    // 💭 helper, get zustand user data
-    // const currentUserDataZustand = useCurrentUserInfo.getState();
-    // console.log("Zustand store========user data");
-    // console.log(currentUserDataZustand);
 
     return ( 
             <Flex
