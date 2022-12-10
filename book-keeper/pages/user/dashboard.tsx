@@ -20,25 +20,14 @@ export default function dashboard(){
     let rpcAccessQuery: any;
     rpcAccessQuery = trpcClient.rpcAccess.fetchRpcToken.useQuery({email: userEmail});
     
-    const { setToken } = useCurrentRpcToken();
-    const {user,setUserInfo} = useCurrentUserInfo()
-
     const result: any = trpcClient.user.whoami.useMutation();
     
-
     const grabUserData = async() => {
         try{
             if(rpcAccessQuery.data && rpcAccessQuery.data.data.rpc_token.length > 1){
-                // store this token in zustand rpc token store
-                setToken(rpcAccessQuery.data.data.rpc_token);
+                await useCurrentRpcToken.setState({token: rpcAccessQuery.data.data.rpc_token});
                 await result.mutate({ email: userEmail, access_token: rpcAccessQuery.data.data.rpc_token })
                 return;
-            }
-            if(result.data){
-                console.log(result.data)
-                // updated user info in zustand store
-                setUserInfo(result.data.data);
-                console.log(user);
             }
             return;
         }catch(err: any){
@@ -66,12 +55,21 @@ export default function dashboard(){
         return; 
     },[]);
 
-    // 🎈 pass this as props to navbar, txlist & search notifications, replicate the same
-    // for all sub componenets while making the call from the parent component of that page
-    // 
-    const userDataGrabbed: any = result.data;
-    
-    console.log(userDataGrabbed);  
+    // 💭 helper , get zustand state token
+    // const rpcTokenInZustand = useCurrentRpcToken.getState();
+    // console.log("==================I AM HERE=============");
+    // console.log(rpcTokenInZustand);
+    useEffect(()=>{
+        if(result.data){
+            // ✨ user data stored in zustand store for other componenets access to the same data
+            useCurrentUserInfo.setState({user: result.data.data})
+        }
+    },[result.data])
+
+    // 💭 helper, get zustand user data
+    // const currentUserDataZustand = useCurrentUserInfo.getState();
+    // console.log("Zustand store========user data");
+    // console.log(currentUserDataZustand);
 
     return ( 
             <Flex
@@ -80,7 +78,7 @@ export default function dashboard(){
                 overflow="hidden"
                 maxW="2000px"
             >
-                <Navbar userData={userDataGrabbed} /> 
+                <Navbar/> 
                 <TxnList/>
                 <SearchNotificationSection />
             </Flex>
