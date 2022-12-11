@@ -4,7 +4,7 @@ import { AiFillBug, AiFillInfoCircle, AiOutlineIdcard, AiOutlineUpCircle, AiOutl
 import { motion } from 'framer-motion'
 import AnimatedCharacter from '../common/animations/animate.character';
 
-const DangerSettings = ({...userInfo}) => {
+const DangerSettings = ({userStoreData}: any) => {
     return (
         <>
             <Flex

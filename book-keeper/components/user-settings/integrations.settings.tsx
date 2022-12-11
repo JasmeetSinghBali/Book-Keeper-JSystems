@@ -3,7 +3,7 @@ import React,{ useState } from 'react';
 import { AiFillCaretDown, AiFillCaretUp, AiOutlineApi, AiOutlineCopy } from 'react-icons/ai';
 import {motion} from 'framer-motion';
 
-const IntegrationSettings = ({...userInfo}) => {
+const IntegrationSettings = ({userStoreData}: any) => {
     const [view,changeView] = useState('hide');
     return (
         <>
