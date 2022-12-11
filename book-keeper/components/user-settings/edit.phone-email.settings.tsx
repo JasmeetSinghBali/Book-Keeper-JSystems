@@ -1,4 +1,4 @@
-import { Button, FormControl, FormLabel, IconButton, Input, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Radio, RadioGroup, Select, Stack, useDisclosure,chakra, Tooltip, Flex } from "@chakra-ui/react";
+import { Button, FormControl, FormLabel, IconButton, Input, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Radio, RadioGroup, Select, Stack, useDisclosure,chakra, Tooltip, Flex, HStack, PinInput, PinInputField, Alert, AlertIcon } from "@chakra-ui/react";
 import { useState, useRef } from 'react';
 import { AiFillCalendar, AiFillEdit, AiOutlineSync } from "react-icons/ai";
 
@@ -8,6 +8,9 @@ const EditPhoneEmailModal = () => {
     const [userPhone, SetUserPhone] = useState(0);
     const [allowEmailEdit,SetAllowEmailEdit] = useState(false);
     const [allowPhoneEdit,SetAllowPhoneEdit] = useState(true);
+    const [switchToOtpVerify,SetSwitchToOtpVerify] = useState(false);
+    const [ emailCode, SetEmailCode ] = useState('');
+    const [ removeError, SetRemoveError ] = useState(false);
 
     const initialRef = useRef(null);
     const finalRef = useRef(null);    
@@ -15,13 +18,23 @@ const EditPhoneEmailModal = () => {
     // 🎈 under construction
     const updateEmailPhone = async (e: any): Promise<any> =>{
         e.preventDefault();
-        // add validators for phone if error then show that error in the modal  body , set error as use state
+        // 🎈 add validators for phone if error then show that error in the modal  body , set error as use state
         console.log("Everything setup good");
-        if(userEmail === '' || userPhone === 0){
+        if(userEmail === '' && userPhone === 0){
             // 🎈 set use state error true and display inside the modal
         }
+        // 🎈 pick up both email and phone and initiate otp flow to update these
         console.log(userPhone);
         console.log(userEmail);
+        SetSwitchToOtpVerify(true);
+        return;
+    }
+
+    // 🎈 under construction
+    const verifyEmailOtpCode = async(e: any): Promise<any>=>{
+        e.preventDefault();
+        console.log(emailCode);
+        SetSwitchToOtpVerify(false)
         return;
     }
     
@@ -52,7 +65,9 @@ const EditPhoneEmailModal = () => {
                 <ModalOverlay />
                 <ModalContent>
                 <ModalHeader>
-                    <Tooltip label='Toggle update email/phone via otp recieved at current email(🎈make this dynamic a/c to user data)' hasArrow arrowSize={5} closeDelay={10} placement="bottom">
+                    {
+                        !switchToOtpVerify && 
+                    <Tooltip label="Hint: toggle's email/phone edit" hasArrow arrowSize={5} closeDelay={10} placement="bottom">
                         <IconButton
                             onClick={()=>{ SetAllowEmailEdit(!allowEmailEdit); SetAllowPhoneEdit(!allowPhoneEdit)}} 
                             icon={<AiOutlineSync />}
@@ -63,37 +78,89 @@ const EditPhoneEmailModal = () => {
                             _hover={{bg:"pink.200"}}
                         />
                     </Tooltip>
-                    Update Email/Phone
+                    }
+                    
+                    {
+                        switchToOtpVerify ?
+                        
+                        'Verify OTP' :
+                        
+                        'Update Email/Phone'                        
+                    }
+
                 </ModalHeader>
                 <ModalCloseButton />
                 
-                    <chakra.form onSubmit={updateEmailPhone}>
+                    <chakra.form onSubmit={!switchToOtpVerify ? updateEmailPhone : verifyEmailOtpCode}>
                         <ModalBody pb={2}>
-                            <FormControl>
+                            {
+                                switchToOtpVerify ? 
                                 
-                                {/*🎈 make this dynamic on basis of use state , make sure user cannot edit both email & phone at the same time , at one time show only either email input with otp verify or phone input with otp verify*/}
-                                
-                                <Input 
-                                    disabled={allowEmailEdit ? true : false}
-                                    ref={initialRef}
-                                    type="email" 
-                                    onInput={(e:any)=>{SetUserEmail(e.target.value)}}
-                                    placeholder="Current Email" 
-                                />
-                                <Input 
-                                    disabled={allowPhoneEdit? true : false}
-                                    placeholder='Current Phone'
-                                    type="tel"
-                                    onInput={(e: any)=>{SetUserPhone(e.target.value)}}
+                                <FormControl>
+                                    
+                                    <HStack ml={150}>
+                                        <PinInput mask onComplete={(value: string)=> SetEmailCode(value)} onChange={(value: string)=>{ if(value.length !== 6){SetRemoveError(false)}}}>
+                                            <PinInputField onClick={(_e: any) => { if(!removeError) {SetRemoveError(true)} }}/>
+                                            <PinInputField />
+                                            <PinInputField />
+                                            <PinInputField />
+                                            <PinInputField />
+                                            <PinInputField />
+                                        </PinInput>
+                                    </HStack>
+
+                                </FormControl>
+
+                                : 
+                                <FormControl>
+                                    
+                                    <Input 
+                                        disabled={allowEmailEdit ? true : false}
+                                        ref={initialRef}
+                                        type="email" 
+                                        onInput={(e:any)=>{SetUserEmail(e.target.value)}}
+                                        placeholder={userEmail} 
                                     />
-                            </FormControl>
+                                    <Input 
+                                        disabled={allowPhoneEdit? true : false}
+                                        placeholder={userPhone.toString()}
+                                        type="tel"
+                                        onInput={(e: any)=>{SetUserPhone(e.target.value)}}
+                                        />
+                                </FormControl>
+                            }
 
                         </ModalBody>
 
                         <ModalFooter>
-                            <Button _hover={{bg: "teal.400"}} bgColor="blackAlpha.900" color="#fff" mr={3} type="submit">
-                                Update
-                            </Button>
+                            {
+                                switchToOtpVerify ? 
+                                
+                                <Button 
+                                _hover={{bg: "teal.400"}}
+                                bgColor="blackAlpha.900"
+                                color="#fff"
+                                mr={3}
+                                type="submit"
+                                >
+                                    Verify
+                                </Button>   
+                                
+                                // 🎈 check a/c to mutation.error if exist then show this ref verify component page
+                                // { <Alert display={removeError ? 'none' : 'flex'} status='error'><AlertIcon/>Verification failed! </Alert>}
+                                
+                                :
+                                
+                                <Button 
+                                _hover={{bg: "teal.400"}}
+                                bgColor="blackAlpha.900"
+                                color="#fff"
+                                mr={3}
+                                type="submit"
+                                >
+                                    Update
+                                </Button>
+                            }
                             <Button onClick={onClose} _hover={{bg: "red.300"}}>Cancel</Button>
                         </ModalFooter>
 
