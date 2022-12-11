@@ -1,11 +1,13 @@
-import { Button, FormControl, FormLabel, IconButton, Input, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Radio, RadioGroup, Select, Stack, useDisclosure,chakra, Tooltip } from "@chakra-ui/react";
+import { Button, FormControl, FormLabel, IconButton, Input, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Radio, RadioGroup, Select, Stack, useDisclosure,chakra, Tooltip, Flex } from "@chakra-ui/react";
 import { useState, useRef } from 'react';
-import { AiFillCalendar, AiFillEdit } from "react-icons/ai";
+import { AiFillCalendar, AiFillEdit, AiOutlineSync } from "react-icons/ai";
 
 const EditPhoneEmailModal = () => {
     const { isOpen, onOpen, onClose } = useDisclosure();
     const [userEmail, SetUserEmail] = useState('');
     const [userPhone, SetUserPhone] = useState(0);
+    const [allowEmailEdit,SetAllowEmailEdit] = useState(false);
+    const [allowPhoneEdit,SetAllowPhoneEdit] = useState(true);
 
     const initialRef = useRef(null);
     const finalRef = useRef(null);    
@@ -49,17 +51,41 @@ const EditPhoneEmailModal = () => {
             >
                 <ModalOverlay />
                 <ModalContent>
-                <ModalHeader>Update Email/Phone</ModalHeader>
-                
+                <ModalHeader>
+                    <Tooltip label='Toggle update email/phone via otp recieved at current email(🎈make this dynamic a/c to user data)' hasArrow arrowSize={5} closeDelay={10} placement="bottom">
+                        <IconButton
+                            onClick={()=>{ SetAllowEmailEdit(!allowEmailEdit); SetAllowPhoneEdit(!allowPhoneEdit)}} 
+                            icon={<AiOutlineSync />}
+                            fontSize="xs"
+                            bgColor="gray.200"
+                            borderRadius="100%"
+                            aria-label={'Edit_User_Email'} 
+                            _hover={{bg:"pink.200"}}
+                        />
+                    </Tooltip>
+                    Update Email/Phone
+                </ModalHeader>
                 <ModalCloseButton />
                 
                     <chakra.form onSubmit={updateEmailPhone}>
                         <ModalBody pb={2}>
                             <FormControl>
-                                <FormLabel>New Email</FormLabel>
-                                <Input ref={initialRef} type="email" onInput={(e:any)=>{SetUserEmail(e.target.value)}} placeholder="Current Email" />
-                                <FormLabel>New Phone</FormLabel>
-                                <Input placeholder='Current Phone' type="tel" onInput={(e: any)=>{SetUserPhone(e.target.value)}}/>
+                                
+                                {/*🎈 make this dynamic on basis of use state , make sure user cannot edit both email & phone at the same time , at one time show only either email input with otp verify or phone input with otp verify*/}
+                                
+                                <Input 
+                                    disabled={allowEmailEdit ? true : false}
+                                    ref={initialRef}
+                                    type="email" 
+                                    onInput={(e:any)=>{SetUserEmail(e.target.value)}}
+                                    placeholder="Current Email" 
+                                />
+                                <Input 
+                                    disabled={allowPhoneEdit? true : false}
+                                    placeholder='Current Phone'
+                                    type="tel"
+                                    onInput={(e: any)=>{SetUserPhone(e.target.value)}}
+                                    />
                             </FormControl>
 
                         </ModalBody>
