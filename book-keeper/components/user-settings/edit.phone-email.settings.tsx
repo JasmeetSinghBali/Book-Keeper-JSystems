@@ -3,14 +3,16 @@ import { useState, useRef } from 'react';
 import { AiFillCalendar, AiFillEdit, AiOutlineSync } from "react-icons/ai";
 
 const EditPhoneEmailModal = () => {
+    
     const { isOpen, onOpen, onClose } = useDisclosure();
-    const [userEmail, SetUserEmail] = useState('');
+    const [userEmail, SetUserEmail] = useState('null');
     const [userPhone, SetUserPhone] = useState(0);
     const [allowEmailEdit,SetAllowEmailEdit] = useState(false);
     const [allowPhoneEdit,SetAllowPhoneEdit] = useState(true);
     const [switchToOtpVerify,SetSwitchToOtpVerify] = useState(false);
     const [ emailCode, SetEmailCode ] = useState('');
     const [ removeError, SetRemoveError ] = useState(false);
+    const [removeValidationError, SetRemoveValidationError] = useState(false);
 
     const initialRef = useRef(null);
     const finalRef = useRef(null);    
@@ -20,12 +22,15 @@ const EditPhoneEmailModal = () => {
         e.preventDefault();
         // 🎈 add validators for phone if error then show that error in the modal  body , set error as use state
         console.log("Everything setup good");
-        if(userEmail === '' && userPhone === 0){
-            // 🎈 set use state error true and display inside the modal
+        if(userEmail === 'null' && userPhone === 0){
+            // 🎈 set use state error true and display inside the modal, saying at least one thing must be updated & dont switch to OTP modal
         }
-        // 🎈 pick up both email and phone and initiate otp flow to update these
+        // 🎈 pick up both email and phone and make sure one passes the validation at least i.e either email is correct or phone is valid
+        // if 1 is validated and other then send the placeholder value for the unvalidated one to be interpreted correctly for mutation procedure  
+        // dispatch OTP with email used sessioned procedure already built
         console.log(userPhone);
         console.log(userEmail);
+        SetRemoveValidationError(true);
         SetSwitchToOtpVerify(true);
         return;
     }
@@ -33,7 +38,11 @@ const EditPhoneEmailModal = () => {
     // 🎈 under construction
     const verifyEmailOtpCode = async(e: any): Promise<any>=>{
         e.preventDefault();
+        // 🎈send email,phone & OTP to verify&updateEmailPhone protected route
+        // show error according to mutation.isLoading or mutation.isError
         console.log(emailCode);
+        console.log(userPhone);
+        console.log(userEmail);
         SetSwitchToOtpVerify(false)
         return;
     }
@@ -150,16 +159,19 @@ const EditPhoneEmailModal = () => {
                                 // { <Alert display={removeError ? 'none' : 'flex'} status='error'><AlertIcon/>Verification failed! </Alert>}
                                 
                                 :
+                                <>
+                                    <Button 
+                                    _hover={{bg: "teal.400"}}
+                                    bgColor="blackAlpha.900"
+                                    color="#fff"
+                                    mr={3}
+                                    type="submit"
+                                    >
+                                        Update
+                                    </Button>
+                                    <Alert display={removeValidationError ? 'none' : 'flex'} status='error'><AlertIcon/>Validation failed! </Alert>
+                                </>
                                 
-                                <Button 
-                                _hover={{bg: "teal.400"}}
-                                bgColor="blackAlpha.900"
-                                color="#fff"
-                                mr={3}
-                                type="submit"
-                                >
-                                    Update
-                                </Button>
                             }
                             <Button onClick={onClose} _hover={{bg: "red.300"}}>Cancel</Button>
                         </ModalFooter>
