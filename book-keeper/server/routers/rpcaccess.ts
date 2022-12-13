@@ -56,6 +56,7 @@ export const rpcServerAccessRouter = router({
           message: `failed to dispatch email otp for ${input.email}`,
         })
       }
+      console.log("rpcAccess sessioned procedure email OTP dispatched....");
       console.log(emailDispatched);
       return new Promise<CustQueryResultInterface>((resolve)=>{
         resolve(Object.freeze({
@@ -214,7 +215,7 @@ export const rpcServerAccessRouter = router({
       }),
     )
     .query(async({ctx,input}) : Promise< CustQueryResultInterface | TRPCError > => {
-      if(ctx.authorizedpass !== null || !ctx.session){
+      if(!ctx.session){
         throw new TRPCError({
           code: "FORBIDDEN",
           message: `request was rejected.`,
@@ -231,7 +232,7 @@ export const rpcServerAccessRouter = router({
       return new Promise<CustQueryResultInterface | TRPCError>((resolve)=>{
         resolve(Object.freeze({
           success: true,
-          message: `rpc access for user: ${input.email} is activated`,
+          message: `rpc access for user: ${input.email} is active`,
           data: {}
         }))
       });

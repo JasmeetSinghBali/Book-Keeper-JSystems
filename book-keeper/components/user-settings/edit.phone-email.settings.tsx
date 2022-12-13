@@ -1,51 +1,130 @@
 import { Button, FormControl, FormLabel, IconButton, Input, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Radio, RadioGroup, Select, Stack, useDisclosure,chakra, Tooltip, Flex, HStack, PinInput, PinInputField, Alert, AlertIcon } from "@chakra-ui/react";
-import { useState, useRef } from 'react';
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/router";
+import { useState, useRef, useEffect } from 'react';
 import { AiFillCalendar, AiFillEdit, AiOutlineSync } from "react-icons/ai";
+import validator from "validator";
+import { useCurrentUserInfo } from "../../store/current-user-info.store";
+import { useCurrentRpcToken } from "../../store/rpc-token-store";
+import { trpcClient } from "../../utils/Clientrpc";
 
 const EditPhoneEmailModal = () => {
     
+    const { push, pathname} = useRouter();
+    const { data: session, status} = useSession();
     const { isOpen, onOpen, onClose } = useDisclosure();
-    const [userEmail, SetUserEmail] = useState('null');
-    const [userPhone, SetUserPhone] = useState(0);
-    const [allowEmailEdit,SetAllowEmailEdit] = useState(false);
-    const [allowPhoneEdit,SetAllowPhoneEdit] = useState(true);
-    const [switchToOtpVerify,SetSwitchToOtpVerify] = useState(false);
+    const [ userEmail, SetUserEmail] = useState('null');
+    const [ userPhone, SetUserPhone] = useState('null');
+    const [ allowEmailEdit, SetAllowEmailEdit] = useState(false);
+    const [ allowPhoneEdit, SetAllowPhoneEdit] = useState(true);
+    const [ switchToOtpVerify, SetSwitchToOtpVerify] = useState(false);
     const [ emailCode, SetEmailCode ] = useState('');
-    const [ removeError, SetRemoveError ] = useState(false);
-    const [removeValidationError, SetRemoveValidationError] = useState(false);
+    const [ removeError, SetRemoveError ] = useState(true);
+    const [ removeValidationError, SetRemoveValidationError] = useState(true);
+    
+
+    const rpcTokenInZustand = useCurrentRpcToken.getState();
+    const currentUserZustand: any = useCurrentUserInfo.getState();
+
+    // const checkQuery: any = trpcClient.rpcAccess.checkRpcAccess.useQuery({ email: session?.user?.email});
+    const trackedMutationProcedure: any = trpcClient.user.updateEmailPhone.useMutation();
+
+    const rpcDispatchedEmail: any = trpcClient.user.dispatchEmailOtp.useMutation();
 
     const initialRef = useRef(null);
     const finalRef = useRef(null);    
     
-    // 🎈 under construction
+    // adjusts email/phone values, dispatches OTP to user old email
     const updateEmailPhone = async (e: any): Promise<any> =>{
+        
         e.preventDefault();
-        // 🎈 add validators for phone if error then show that error in the modal  body , set error as use state
-        console.log("Everything setup good");
-        if(userEmail === 'null' && userPhone === 0){
-            // 🎈 set use state error true and display inside the modal, saying at least one thing must be updated & dont switch to OTP modal
+        if(userEmail === 'null' && userPhone === 'null'){
+            SetRemoveValidationError(false);
+            return;
         }
-        // 🎈 pick up both email and phone and make sure one passes the validation at least i.e either email is correct or phone is valid
-        // if 1 is validated and other then send the placeholder value for the unvalidated one to be interpreted correctly for mutation procedure  
-        // dispatch OTP with email used sessioned procedure already built
+        
+        let emailValidated: Boolean = false;
+        let phoneValidated: Boolean = false;
+
+        if(userEmail !== 'null'){
+            emailValidated = validator.isEmail(userEmail);
+        }
+        if(userPhone !== 'null'){
+            phoneValidated = validator.isMobilePhone(userPhone.toString());
+        }
+        
+        // both email & phone are not valid setValidation error flag and return
+        if(!emailValidated && !phoneValidated){
+            SetRemoveValidationError(false);
+            return;
+        }
+        
+        if(!emailValidated && phoneValidated){    
+            SetUserEmail('null');
+        }
+        if(!phoneValidated && emailValidated){
+            SetUserPhone('null')
+        }
+        
+        console.log("=========phone and email to be sent store in useState=====")
         console.log(userPhone);
         console.log(userEmail);
+        console.log("======just before dispatching OTP=====");
+        
+        // dispatch email otp
+        await rpcDispatchedEmail.mutate({
+            email: session?.user?.email,
+            access_token: rpcTokenInZustand.token
+        });
+        
+        if(rpcDispatchedEmail.isError){
+            SetRemoveValidationError(false);
+            SetRemoveError(false);
+            return;
+        }
         SetRemoveValidationError(true);
         SetSwitchToOtpVerify(true);
         return;
     }
 
-    // 🎈 under construction
+    // mutation request to update email,phone with email OTP
     const verifyEmailOtpCode = async(e: any): Promise<any>=>{
         e.preventDefault();
-        // 🎈send email,phone & OTP to verify&updateEmailPhone protected route
+        
         // show error according to mutation.isLoading or mutation.isError
+        console.log("=====Final data sent to mutate email/phone====");
         console.log(emailCode);
         console.log(userPhone);
         console.log(userEmail);
+        
+        // send email,phone & OTP to verify&updateEmailPhone protected route
+        await trackedMutationProcedure.mutate({email: userEmail,phone:userPhone,emailCode: emailCode, access_token: rpcTokenInZustand.token});
         SetSwitchToOtpVerify(false)
         return;
     }
+
+    useEffect(()=>{
+        if(session?.user?.email !== currentUserZustand.user.email){
+            push('/user/dashboard');
+            return;
+        }
+        return;
+    },[])
+
+    useEffect(()=>{
+        if(trackedMutationProcedure.data){
+            // 🎈 update the zustand store with updated user data
+            console.log("User was updated and trpc server responded with this=======");
+            console.log(trackedMutationProcedure.data);
+        }
+    },[trackedMutationProcedure.data])
+
+    useEffect(()=>{
+        if(!rpcDispatchedEmail.data || rpcDispatchedEmail.isError){
+            SetRemoveError(false);
+            return;
+        }
+    }, [rpcDispatchedEmail.data])
     
     return(
         
@@ -55,7 +134,7 @@ const EditPhoneEmailModal = () => {
                 {/**Edit Phone Email Modal */}
                 <IconButton
                 onClick={onOpen}
-                onMouseEnter={()=>{SetUserEmail(''); SetUserPhone(0);}} 
+                onMouseEnter={()=>{SetUserEmail('null'); SetUserPhone('null'); SetRemoveError(true);}} 
                 icon={<AiFillEdit />}
                 fontSize="xs"
                 bgColor="gray.200"
@@ -119,7 +198,6 @@ const EditPhoneEmailModal = () => {
                                     </HStack>
 
                                 </FormControl>
-
                                 : 
                                 <FormControl>
                                     
@@ -128,11 +206,11 @@ const EditPhoneEmailModal = () => {
                                         ref={initialRef}
                                         type="email" 
                                         onInput={(e:any)=>{SetUserEmail(e.target.value)}}
-                                        placeholder={userEmail} 
+                                        placeholder={currentUserZustand.user.email} 
                                     />
                                     <Input 
                                         disabled={allowPhoneEdit? true : false}
-                                        placeholder={userPhone.toString()}
+                                        placeholder={currentUserZustand.user.phone}
                                         type="tel"
                                         onInput={(e: any)=>{SetUserPhone(e.target.value)}}
                                         />
@@ -145,18 +223,26 @@ const EditPhoneEmailModal = () => {
                             {
                                 switchToOtpVerify ? 
                                 
-                                <Button 
-                                _hover={{bg: "teal.400"}}
-                                bgColor="blackAlpha.900"
-                                color="#fff"
-                                mr={3}
-                                type="submit"
-                                >
-                                    Verify
-                                </Button>   
                                 
-                                // 🎈 check a/c to mutation.error if exist then show this ref verify component page
-                                // { <Alert display={removeError ? 'none' : 'flex'} status='error'><AlertIcon/>Verification failed! </Alert>}
+                                <>
+                                    <Button 
+                                    _hover={{bg: "teal.400"}}
+                                    bgColor="blackAlpha.900"
+                                    color="#fff"
+                                    mr={3}
+                                    type="submit"
+                                    disabled={trackedMutationProcedure.isLoading ? true : false}
+                                    >
+                                        Verify
+                                    </Button>   
+                                    
+                                    <Alert 
+                                        display={trackedMutationProcedure.isError ? 'flex' : 'none'}
+                                        status='error'>
+                                            <AlertIcon/>
+                                        Verification failed! 
+                                    </Alert>
+                                </>
                                 
                                 :
                                 <>
@@ -166,14 +252,15 @@ const EditPhoneEmailModal = () => {
                                     color="#fff"
                                     mr={3}
                                     type="submit"
+                                    disabled={trackedMutationProcedure.isLoading ? true : false}
                                     >
                                         Update
                                     </Button>
-                                    <Alert display={removeValidationError ? 'none' : 'flex'} status='error'><AlertIcon/>Validation failed! </Alert>
                                 </>
                                 
                             }
                             <Button onClick={onClose} _hover={{bg: "red.300"}}>Cancel</Button>
+                            <Alert display={trackedMutationProcedure.isError && !removeError ? 'flex' : 'none'} status='error'><AlertIcon/>Update failed! </Alert>
                         </ModalFooter>
 
                     </chakra.form>

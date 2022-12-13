@@ -6,6 +6,9 @@ import { updateEmailPhoneSchema } from '../schemas/users/update.phone-email.sche
 import validateOTP, { validationTOTPResultInterface } from '../../utils/otpValidator';
 import { User } from '@prisma/client';
 import { CustMutationResultInterface } from './rpcaccess';
+import * as z from 'zod';
+import generateOTP, { generateOTPInterface } from '../../utils/otpGenerator';
+import { sendEmailOTP } from '../../utils/customMailDispatcher';
 
 /**
  * @desc user level router for both public/untracked & protected/tracked procedures(query/mutations)
@@ -44,6 +47,43 @@ export const userRouter = router({
             }) 
     }),
 
+    /**@desc- dispatches email code to user with restricted time validity */
+    dispatchEmailOtp: trackedProcedure
+    .input(
+      z.object({
+        email: z.string().min(1).email(),
+        access_token: z.string().min(1)
+      }),
+    )
+    .mutation(async({ ctx, input }) : Promise<CustMutationResultInterface | TRPCError> => {
+      if(!ctx.session){
+        throw new TRPCError({
+          code: "FORBIDDEN",
+          message: `request was rejected.`,
+        });
+      }
+      // generate an OTP 
+      const emailOTP: generateOTPInterface =  await generateOTP(120); // 2 min validity otp 
+
+      // dispatch it to user email
+      const emailDispatched: Boolean = await sendEmailOTP(input.email, emailOTP.otpToken );
+      
+      if(!emailDispatched){
+        throw new TRPCError({
+          code: "INTERNAL_SERVER_ERROR",
+          message: `failed to dispatch email otp for ${input.email}`,
+        })
+      }
+      console.log("user protected/tracked procedure email OTP dispatched....");
+      console.log(emailDispatched);
+      return new Promise<CustMutationResultInterface| TRPCError>((resolve)=>{
+        resolve(Object.freeze({
+          message: `otp was dispatched to ${input.email}`,
+          data: {}
+        }))
+      });
+    }),
+
     /**
      * @desc verifies OTP & update's user email/phone [general setting flow]
      * @returns mutationResultInterface | TRPCerror
@@ -52,6 +92,7 @@ export const userRouter = router({
     .input(updateEmailPhoneSchema)
     .mutation(async({ctx,input}): Promise<CustMutationResultInterface | TRPCError> =>{
         const { email, phone, emailCode } = input;
+        console.log("reached update email phone route");
         if(ctx.userAttachedData.role !== 'USER'){
             throw new TRPCError({
                 code: "UNAUTHORIZED",
@@ -62,6 +103,12 @@ export const userRouter = router({
             throw new TRPCError({
                 code: "BAD_REQUEST",
                 message: `Please make sure you provide email,phone,emailCode!`
+            })
+        }
+        if(email === 'null' && phone === 'null'){
+            throw new TRPCError({
+                code: "BAD_REQUEST",
+                message: `Please make sure at least email or phone is provided!`
             })
         }
         // check OTP
@@ -84,10 +131,10 @@ export const userRouter = router({
         let updatedUser: User | any = undefined;
 
         // Case1: Only update user phone
-        if(email === 'null' && phone !== '0'){
+        if(email === 'null' && phone !== 'null'){
             updatedUser = await ctx.prisma?.user.update({
                 where: {
-                    email: input.email
+                    email: ctx.userAttachedData.email
                 },
                 data: {
                     phone: input.phone
@@ -96,7 +143,7 @@ export const userRouter = router({
         }
 
         // Case2: Only update user email
-        if(email !== 'null' && phone === '0'){
+        if(email !== 'null' && phone === 'null'){
             updatedUser = await ctx.prisma?.user.update({
                 where: {
                     id: ctx.userAttachedData.id
@@ -108,7 +155,7 @@ export const userRouter = router({
         }
 
         // Case3: Update both email & phone
-        if(email !== 'null' && phone !== '0'){
+        if(email !== 'null' && phone !== 'null'){
             updatedUser = await ctx.prisma?.user.update({
                 where: {
                     id: ctx.userAttachedData.id
