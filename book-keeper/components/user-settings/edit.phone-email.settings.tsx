@@ -2,7 +2,7 @@ import { Button, FormControl, FormLabel, IconButton, Input, Modal, ModalBody, Mo
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import { useState, useRef, useEffect } from 'react';
-import { AiFillCalendar, AiFillEdit, AiOutlineSync } from "react-icons/ai";
+import { AiFillEdit, AiOutlineSync } from "react-icons/ai";
 import validator from "validator";
 import { useCurrentUserInfo } from "../../store/current-user-info.store";
 import { useCurrentRpcToken } from "../../store/rpc-token-store";
