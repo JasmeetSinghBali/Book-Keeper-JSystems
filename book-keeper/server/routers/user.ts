@@ -9,6 +9,11 @@ import { CustMutationResultInterface } from './rpcaccess';
 import * as z from 'zod';
 import generateOTP, { generateOTPInterface } from '../../utils/otpGenerator';
 import { sendEmailOTP } from '../../utils/customMailDispatcher';
+import { generateMfaSchema } from '../schemas/users/generate.mfa.schema';
+import speakeasy from 'speakeasy';
+import { encrypt } from '../../utils/cryptoUtils';
+import QRCode  from 'qrcode';
+
 
 /**
  * @desc user level router for both public/untracked & protected/tracked procedures(query/mutations)
@@ -190,4 +195,81 @@ export const userRouter = router({
         });
 
     }),
+
+    /**@desc generates qr code for enabling mfa for user's account that effects account related settings update plan, delete acccount etc... */
+    generateQrForMfa: trackedProcedure
+    .input(generateMfaSchema)
+    .mutation(async({ctx,input}): Promise<CustMutationResultInterface | TRPCError> =>{
+        const { email } = input; 
+        if(ctx.userAttachedData.role !== 'USER'){
+            throw new TRPCError({
+                code: "UNAUTHORIZED",
+                message: `Unauhtorized`,
+            });
+        }
+        if(!email){
+            throw new TRPCError({
+                code: "BAD_REQUEST",
+                message: `Please make sure you provide account email!`
+            })
+        }
+        if(ctx.userAttachedData.mfa_isEnabled){
+            throw new TRPCError({
+                code: "FORBIDDEN",
+                message: `Account: ${email} has mfa already enabled!`
+            })
+        }
+
+        // generate a secret
+        const secret = speakeasy.generateSecret();
+
+        // encrypt the secret
+        const encryptedText = encrypt(secret.ascii, process.env.MFA_AUTH_SECRET as string);
+
+        const secretPD = Object.freeze({
+            iv: encryptedText.iv,
+            content: encryptedText.content
+        }); 
+
+        // store secret in db secret_mfa as iv,secret GEncrypted interface as json
+        await ctx.prisma?.user.update({
+            where: {
+                email: input.email
+            },
+            data: {
+                secret_mfa: secretPD
+            }
+        });
+
+        // custom otpauthurl
+        const otpAuthUrl = speakeasy.otpauthURL(Object.freeze({
+            secret: secret.ascii,
+            label: 'Keeper"s Account MFA',
+            issuer: 'keeper',
+            algorithm: 'sha512'
+        }));
+        
+        // create qr code img src url with custom otpauthurl
+        const img_src = await QRCode.toDataURL(otpAuthUrl);
+
+        if(!img_src){
+            throw new TRPCError({
+                code: 'INTERNAL_SERVER_ERROR',
+                message: `failed to generate qr code!`
+            })
+        }
+        
+        // send qr code data url back to client
+        return new Promise<CustMutationResultInterface | TRPCError>((resolve)=>{
+            resolve(Object.freeze({
+                message: `show this url in img tag to user`,
+                data: {
+                    show_url: img_src
+                }
+            }))
+        });
+
+    }),
+
+    // ---- here goes more user mutations/query procedures ----
 })

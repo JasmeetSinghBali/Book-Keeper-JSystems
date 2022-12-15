@@ -12,11 +12,12 @@ const EnableAccountMfaModal = () => {
     
     const { push, pathname} = useRouter();
     const { data: session, status} = useSession();
+    const userEmail = session?.user?.email;
     const { isOpen, onOpen, onClose } = useDisclosure();
     const [ mfaCode, SetMfaCode ] = useState('null');
     const [ removeError, SetRemoveError ] = useState(true);
-    const [ removeValidationError,SetRemoveValidationError] = useState(true);
-    
+    const [ removeValidationError,SetRemoveValidationError ] = useState(true);
+    const [ qrcodeUrl,SetQrCodeUrl ] = useState('');    
 
     const rpcTokenInZustand = useCurrentRpcToken.getState();
     const currentUserZustand: any = useCurrentUserInfo.getState();
@@ -35,20 +36,18 @@ const EnableAccountMfaModal = () => {
         console.log(mfaCode);
         console.log("sorted");
         
-        // 🎈 generate qr code to show to the user
-        // await fetchQrCodeMutation.mutate({email: userEmail, access_token: rpcTokenInZustand.token});
-        
-        // if(mfaCode === 'null' || mfaCode.length !== 6){
-        //     SetRemoveValidationError(false);
-        //     return;
-        // }
+        if(mfaCode === 'null' || mfaCode.length !== 6){
+            SetRemoveValidationError(false);
+            return;
+        }
 
         if(mfaCode !== 'null' || mfaCode.length === 6 ){
             SetRemoveValidationError(true);
         }
         return;
+        
         // // 🎈 make request to validate mfa code
-        // await trackedMutationProcedure.mutate({email: userEmail,phone:userPhone,emailCode: emailCode, access_token: rpcTokenInZustand.token});   
+        // await trackedMutationProcedure.mutate({email: userEmail,mfaCode: mfaCode, access_token: rpcTokenInZustand.token});   
         
         
         // if(trackedMutationProcedure.isError){
@@ -58,6 +57,15 @@ const EnableAccountMfaModal = () => {
         // SetRemoveError(true);
         // SetRemoveValidationError(true);
         // return;
+    }
+
+    /**@desc handles the opening of qr code modal and fetches qr code */
+    const handleOpenAuthMfa = async() => {
+        const result = await fetchQrCodeMutation.mutate({email: userEmail, access_token: rpcTokenInZustand.token});
+        SetQrCodeUrl(result.data.data.show_url);
+        console.log("=======qr code  url is now set, show this in img tag");
+        console.log(qrcodeUrl);
+        onOpen();
     }
 
     // 🎈 👇 uncomment this use Effect after done with enable mfa settings
@@ -91,8 +99,8 @@ const EnableAccountMfaModal = () => {
         <>
             <Tooltip label='Android: Microsoft Authenticator | Google Authenticator, IOS: Authy' hasArrow arrowSize={15} closeDelay={500} placement="right">
                 <IconButton
-                onClick={onOpen}
-                onMouseEnter={()=>{SetMfaCode('null')}} 
+                onClick={handleOpenAuthMfa}
+                onMouseEnter={ ()=>{ SetMfaCode('null'); } } 
                 icon={<AiFillEdit />}
                 fontSize="xs"
                 bgColor="gray.200"

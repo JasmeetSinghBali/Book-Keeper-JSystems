@@ -56,6 +56,8 @@ model User {
   phone         String?   @unique
   tokenVersion  Int?      @default(0)
   rpcAccess     Boolean   @default(false)
+  secret_mfa    Json?
+  mfa_isEnabled Boolean   @default(false)
 }
 
 model VerificationToken {
