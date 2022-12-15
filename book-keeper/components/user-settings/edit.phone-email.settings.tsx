@@ -2,7 +2,7 @@ import { Button, FormControl, FormLabel, IconButton, Input, Modal, ModalBody, Mo
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import { useState, useRef, useEffect } from 'react';
-import { AiFillCalendar, AiFillEdit, AiOutlineSync } from "react-icons/ai";
+import { AiFillEdit, AiOutlineSync } from "react-icons/ai";
 import validator from "validator";
 import { useCurrentUserInfo } from "../../store/current-user-info.store";
 import { useCurrentRpcToken } from "../../store/rpc-token-store";
@@ -66,10 +66,10 @@ const EditPhoneEmailModal = () => {
             SetUserPhone('null')
         }
         
-        console.log("=========phone and email to be sent store in useState=====")
-        console.log(userPhone);
-        console.log(userEmail);
-        console.log("======just before dispatching OTP=====");
+        // console.log("=========phone and email to be sent store in useState=====")
+        // console.log(userPhone);
+        // console.log(userEmail);
+        // console.log("======just before dispatching OTP=====");
         
         // dispatch email otp
         await rpcDispatchedEmail.mutate({
@@ -92,10 +92,10 @@ const EditPhoneEmailModal = () => {
         e.preventDefault();
         
         // show error according to mutation.isLoading or mutation.isError
-        console.log("=====Final data sent to mutate email/phone====");
-        console.log(emailCode);
-        console.log(userPhone);
-        console.log(userEmail);
+        // console.log("=====Final data sent to mutate email/phone====");
+        // console.log(emailCode);
+        // console.log(userPhone);
+        // console.log(userEmail);
         
         // send email,phone & OTP to verify&updateEmailPhone protected route
         await trackedMutationProcedure.mutate({email: userEmail,phone:userPhone,emailCode: emailCode, access_token: rpcTokenInZustand.token});
@@ -113,15 +113,17 @@ const EditPhoneEmailModal = () => {
 
     useEffect(()=>{
         if(trackedMutationProcedure.data){
-            // 🎈 update the zustand store with updated user data
-            console.log("User was updated and trpc server responded with this=======");
-            console.log(trackedMutationProcedure.data);
+            // console.log("User was updated and trpc server responded with this=======");
+            // console.log(trackedMutationProcedure.data);
+            // update the zustand store with updated user data
+            useCurrentUserInfo.setState(trackedMutationProcedure.data.data);
+            push('/user/dashboard');
         }
     },[trackedMutationProcedure.data])
 
     useEffect(()=>{
         if(!rpcDispatchedEmail.data || rpcDispatchedEmail.isError){
-            SetRemoveError(false);
+            push('/user/dashboard');
             return;
         }
     }, [rpcDispatchedEmail.data])
@@ -252,15 +254,15 @@ const EditPhoneEmailModal = () => {
                                     color="#fff"
                                     mr={3}
                                     type="submit"
-                                    disabled={trackedMutationProcedure.isLoading ? true : false}
+                                    disabled={rpcDispatchedEmail.isLoading ? true : false}
                                     >
                                         Update
                                     </Button>
+                                    <Alert display={rpcDispatchedEmail.isError ? 'flex' : 'none'} status='error'><AlertIcon/>Update failed! </Alert>
                                 </>
                                 
                             }
                             <Button onClick={onClose} _hover={{bg: "red.300"}}>Cancel</Button>
-                            <Alert display={trackedMutationProcedure.isError && !removeError ? 'flex' : 'none'} status='error'><AlertIcon/>Update failed! </Alert>
                         </ModalFooter>
 
                     </chakra.form>

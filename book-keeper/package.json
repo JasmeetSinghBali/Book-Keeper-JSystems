@@ -39,6 +39,7 @@
     "react-hook-form": "^7.39.2",
     "react-icons": "^4.6.0",
     "react-query": "^3.39.2",
+    "speakeasy": "^2.0.0",
     "validator": "^13.7.0",
     "zod": "^3.19.1",
     "zustand": "^4.1.4"
@@ -50,6 +51,7 @@
     "@types/nodemailer": "^6.4.6",
     "@types/react": "18.0.21",
     "@types/react-dom": "18.0.6",
+    "@types/speakeasy": "^2.0.7",
     "@types/validator": "^13.7.10",
     "eslint": "8.26.0",
     "eslint-config-next": "12.3.1",

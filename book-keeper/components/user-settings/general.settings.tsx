@@ -3,6 +3,7 @@ import React from 'react';
 import { AiFillCamera, AiFillEdit, AiOutlineAlert, AiOutlineUser } from 'react-icons/ai';
 import {motion} from 'framer-motion';
 import EditPhoneEmailModal from './edit.phone-email.settings';
+import EnableAccountMfaModal from './enablemfa.settings';
 
 const GeneralSettings = ({userStoreData}: any) => {
 
@@ -133,24 +134,14 @@ const GeneralSettings = ({userStoreData}: any) => {
                                     <Td  fontWeight="semibold" fontSize="sm" letterSpacing="wider" >Email & Phone</Td>
                                     <Td  fontWeight="semibold" fontSize="sm" letterSpacing="wider">Security</Td>
                                     <Td>
-                                        <EditPhoneEmailModal/>
+                                        <EditPhoneEmailModal />
                                     </Td>
                                     </Tr>
                                     <Tr>
                                     <Td  fontWeight="semibold" fontSize="sm" letterSpacing="wider">MFA</Td>
                                     <Td  fontWeight="semibold" fontSize="sm" letterSpacing="wider">Security</Td>
                                     <Td>
-                                        <Tooltip label='Android: Microsoft Authenticator | Google Authenticator, IOS: Authy' hasArrow arrowSize={15} closeDelay={500} placement="right">
-                                        <IconButton
-                                        //onClick={onOpen} 
-                                        icon={<AiFillEdit />}
-                                        fontSize="xs"
-                                        bgColor="gray.200"
-                                        borderRadius="100%"
-                                        aria-label={'EditUserBasicDetails'} 
-                                        _hover={{bg:"pink.200"}}
-                                        />
-                                        </Tooltip>
+                                        <EnableAccountMfaModal />
                                     </Td>
                                     </Tr>
                                     <Tr>

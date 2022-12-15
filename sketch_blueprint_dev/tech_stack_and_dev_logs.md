@@ -224,6 +224,8 @@ https://next-auth.js.org/configuration/options
 
 - [x] setup a rpc access route that is used just to determine wheather rpc access is allowed or not for a page by using stored zustand token if this protected/tracked call fails navigate user to dashboard , this should be in every main page so that repopulate/rotation of the token can be done with auto update in zustand store via dashoard fetch rpc token call
 
+- [ ] MFA setup, that will add extra layer of verification of feeding in the generateed authenticator app code when user wants to delete account or update account plan i.e account specific services.
+
 - [ ] wrap up and make sure each filter, update, add card, contact by user & change in settings or deleting user account (active: false dont actually delete user account completely) is sorted in reff to frontend end-to-end to backend trpc server call & setup.
 
 - [ ] clean up & remove the irrelevant schema or unused code
