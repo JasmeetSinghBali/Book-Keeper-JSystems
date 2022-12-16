@@ -13,6 +13,9 @@ import { generateMfaSchema } from '../schemas/users/generate.mfa.schema';
 import speakeasy from 'speakeasy';
 import { encrypt } from '../../utils/cryptoUtils';
 import QRCode  from 'qrcode';
+import { enableMfaSchema } from '../schemas/users/enable.mfa.schema';
+import isValidMfaCodes from '../../utils/validate.mfaCodes';
+import { validateMfaCodeSchema } from '../schemas/users/validate.mfacodes.schema';
 
 
 /**
@@ -46,7 +49,8 @@ export const userRouter = router({
                         image: ctx.userAttachedData.image,
                         role: ctx.userAttachedData.role,
                         plan: ctx.userAttachedData.plan,
-                        phone: ctx.userAttachedData.phone
+                        phone: ctx.userAttachedData.phone,
+                        mfa_isEnabled: ctx.userAttachedData.mfa_isEnabled
                     }
                 }))
             }) 
@@ -270,6 +274,121 @@ export const userRouter = router({
         });
 
     }),
+
+    /**@desc validates pin from authenticator app & enables user account mfa*/
+    enableAccountMfa: trackedProcedure
+    .input(enableMfaSchema)
+    .mutation(async({ctx,input}): Promise<CustMutationResultInterface | TRPCError> =>{
+        
+        if(ctx.userAttachedData.role !== 'USER'){
+            throw new TRPCError({
+                code: "UNAUTHORIZED",
+                message: `Unauhtorized`,
+            });
+        }
+
+        const { email, mfaCode } = input;
+        
+        if(!email || !mfaCode || mfaCode.length !==6){
+            throw new TRPCError({
+                code: 'BAD_REQUEST',
+                message: `make sure you pass account email & 6 digit mfa code user entered!`
+            });
+        }
+        
+        if(ctx.userAttachedData.mfa_isEnabled){
+            throw new TRPCError({
+                code: 'FORBIDDEN',
+                message: `${ctx.userAttachedData.email} account has already enabled mfa!`
+            })
+        }
+
+        const verifiedMFA = await isValidMfaCodes(mfaCode,ctx.userAttachedData.secret_mfa);
+        
+        if(!verifiedMFA){
+            throw new TRPCError({
+                code: `BAD_REQUEST`,
+                message: `failed to verify mfa code for user!`
+            })
+        }
+
+        const updatedUserMfa = await ctx.prisma?.user.update({
+            where: {
+                email: input.email
+            },
+            data: {
+                mfa_isEnabled: true
+            }
+        });
+
+        if(!updatedUserMfa){
+            throw new TRPCError({
+                code: `INTERNAL_SERVER_ERROR`,
+                message: `failed to enable Mfa for user: ${input.email}`
+            })
+        }
+
+        return new Promise<CustMutationResultInterface | TRPCError>((resolve)=>{
+            resolve(Object.freeze({
+                message: `userInfo: ${email}`,
+                data: {
+                    name: updatedUserMfa.name,
+                    email: updatedUserMfa.email,
+                    image: updatedUserMfa.image,
+                    role: updatedUserMfa.role,
+                    plan: updatedUserMfa.plan,
+                    phone: updatedUserMfa.phone,
+                    mfa_isEnabled: updatedUserMfa.mfa_isEnabled
+                }
+            }))
+        });
+
+    }),
+
+    /**@desc validates mfa codes , utilized for accessing account related actions like update plan, delete account */
+    validatemfaCodes: trackedProcedure
+    .input(validateMfaCodeSchema)
+    .mutation(async({ctx,input}): Promise<CustMutationResultInterface | TRPCError> =>{
+        
+        if(ctx.userAttachedData.role !== 'USER'){
+            throw new TRPCError({
+                code: "UNAUTHORIZED",
+                message: `Unauthorized`,
+            });
+        }
+
+        const {email,mfaCode} = input;
+
+        if(!email || !mfaCode || mfaCode.length !== 6){
+            throw new TRPCError({
+                code: "BAD_REQUEST",
+                message: `mfaCode & email must be provided`
+            })
+        }
+
+        const validateMFA = await isValidMfaCodes(mfaCode,ctx.userAttachedData.secret_mfa);
+
+        if(!validateMFA){
+            return new Promise<CustMutationResultInterface | TRPCError>((resolve)=>{
+                resolve(Object.freeze({
+                    message: `userInfo: ${email}`,
+                    data: {
+                        validated: false
+                    }
+                }))
+            });
+        }
+        return new Promise<CustMutationResultInterface | TRPCError>((resolve)=>{
+            resolve(Object.freeze({
+                message: `userInfo: ${email}`,
+                data: {
+                    validated: true
+                }
+            }))
+        });
+
+    }),
+    
 
     // ---- here goes more user mutations/query procedures ----
 })

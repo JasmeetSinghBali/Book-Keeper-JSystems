@@ -224,22 +224,19 @@ https://next-auth.js.org/configuration/options
 
 - [x] setup a rpc access route that is used just to determine wheather rpc access is allowed or not for a page by using stored zustand token if this protected/tracked call fails navigate user to dashboard , this should be in every main page so that repopulate/rotation of the token can be done with auto update in zustand store via dashoard fetch rpc token call
 
-- [ ] MFA setup, that will add extra layer of verification of feeding in the generateed authenticator app code when user wants to delete account or update account plan i.e account specific services.
+- [x] MFA setup, that will add extra layer of verification of feeding in the generateed authenticator app code when user wants to delete account or update account plan i.e account specific services.
+
+- [x] clean up & remove the irrelevant schema or unused code
+      throught project directory.
 
 - [ ] wrap up and make sure each filter, update, add card, contact by user & change in settings or deleting user account (active: false dont actually delete user account completely) is sorted in reff to frontend end-to-end to backend trpc server call & setup.
 
-- [ ] clean up & remove the irrelevant schema or unused code
-      throught project directory.
-
-- [ ] event-emitters setup for events emitted that handles the logging of IP, access points, device info & geolocation & storing into db from the trpc middleware requestTracker and store against relevant user in DB to show in settings account
+- [ ] event-emitters setup for EXTERNAL (email & phone notifications) & INTERNAL (events emitted that handles the logging of IP, access points, device info & geolocation & storing into db from the trpc middleware requestTracker and store against relevant user in DB to show in settings account)
 
 - [ ] [logging & error & performance reports](https://github.com/vercel/next.js/tree/canary/examples/with-sentry)
 
   [sentrynpm](https://www.npmjs.com/package/@sentry/nextjs)
   [sentrydocs](https://docs.sentry.io/platforms/javascript/guides/nextjs/)
-
-- [ ] add subscriptions setup for email/phone subscription setting feature KEEP IT MINIMAL
-      ref: https://trpc.io/docs/subscriptions
 
 - [ ] check responsiveness of each page in brave,edge specially brave.
 
@@ -249,15 +246,21 @@ https://next-auth.js.org/configuration/options
 
 - [ ] tailwind css + landing page premium sleak page
 
-- [ ] deploy this mvp as beta version release
-
-- [ ] 🎈 tasks yet to be expanded Phase -2 : Transaction Manager flow, incoming/outgoing funds manager, notion integ maybe new feature notion ai etc.....
+- [ ] deploy this mvp as beta stable version release
 
 ---
 
 > ## 🎈 To do 👇 Dev Logs @v2 [branch labels]: DatedFrom: yet to be decided
 
-> 1. pwa/alignment
+> 1. Transaction manager/Funds manager
+
+```bash
+
+- [ ] 🎈 tasks yet to be expanded Phase -2 : Transaction Manager flow, incoming/outgoing funds manager, notion integ maybe new feature notion ai etc.....
+
+```
+
+> 2. pwa/alignment
 
 google chrome developers
 ref: https://www.youtube.com/watch?v=sOq92prx00w
@@ -274,7 +277,23 @@ ref: https://www.youtube.com/watch?v=sOq92prx00w
 
 ---
 
-> ## 🎈 To do 👇 Dev Logs @v2.2 [branch labels]: DatedFrom: yet to be decided
+> ## 🎈 To do 👇 Dev Logs @v2.4 [branch labels]: DatedFrom: yet to be decided
+
+> 1. subscription integeration
+
+```bash
+- [ ] for enabling email subscription, https://trpc.io/docs/subscriptions
+```
+
+> 2. websocket setup for streaming text/string data from user notion account related to their finances and update their data automatically when they make updates
+
+```bash
+- [ ] https://trpc.io/docs/subscriptions#creating-a-websocket-server
+```
+
+---
+
+> ## 🎈 To do 👇 Dev Logs @v2.8 [branch labels]: DatedFrom: yet to be decided
 
 > 1. setup buttons on possible location like login,verify, pages where failure chances are high in developer note so that they can directly send me a email from a modal within the app label it as programatically BUG|Feedback keeper when this is sended to my email.
 
