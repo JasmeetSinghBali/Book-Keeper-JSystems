@@ -117,7 +117,8 @@ const EditPhoneEmailModal = () => {
             // console.log(trackedMutationProcedure.data);
             // update the zustand store with updated user data
             useCurrentUserInfo.setState(trackedMutationProcedure.data.data);
-            push('/user/dashboard');
+            onClose();
+            return;
         }
     },[trackedMutationProcedure.data])
 

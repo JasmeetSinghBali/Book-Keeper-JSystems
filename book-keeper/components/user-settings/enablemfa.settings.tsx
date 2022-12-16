@@ -27,7 +27,20 @@ const EnableAccountMfaModal = () => {
     const initialRef = useRef(null);
     const finalRef = useRef(null);
 
-    // 🎈 👇 under constructions
+    /**
+     * @desc handles the opening of qr code modal and fetches qr code 
+     * */
+    const handleOpenAuthMfa = async () => {
+
+        if(currentUserZustand?.user?.mfa_isEnabled){
+            return;
+        }
+
+        onOpen();
+        await fetchQrCodeMutation.mutate({ email: userEmail, access_token: rpcTokenInZustand.token });
+        return;
+    }
+
     // adjusts mfaCode value & make enableAccountMfa request to trpc server
     const handleAccountMfa = async (e: any): Promise<any> => {
 
@@ -43,29 +56,21 @@ const EnableAccountMfaModal = () => {
         if (mfaCode !== 'null' || mfaCode.length === 6) {
             SetRemoveValidationError(true);
         }
-        return;
 
-        // // 🎈 make request to validate mfa code
-        // await trackedMutationProcedure.mutate({email: userEmail,mfaCode: mfaCode, access_token: rpcTokenInZustand.token});   
+        // make request to validate mfa code
+        await trackedMutationProcedure.mutate({email: userEmail,mfaCode: mfaCode, access_token: rpcTokenInZustand.token});   
 
 
-        // if(trackedMutationProcedure.isError){
-        //     SetRemoveError(false);
-        //     return;
-        // }
-        // SetRemoveError(true);
-        // SetRemoveValidationError(true);
-        // return;
-    }
-
-    /**
-     * @desc handles the opening of qr code modal and fetches qr code 
-     * */
-    const handleOpenAuthMfa = async () => {
-        onOpen();
-        await fetchQrCodeMutation.mutate({ email: userEmail, access_token: rpcTokenInZustand.token });
+        if(trackedMutationProcedure.isError || !trackedMutationProcedure.data){
+            SetRemoveError(false);
+            return;
+        }
+        SetRemoveError(true);
+        SetRemoveValidationError(true);
+        onClose();
         return;
     }
+
 
     // 🎈 👇 uncomment this use Effect after done with enable mfa settings
     // useEffect(()=>{
@@ -96,7 +101,7 @@ const EnableAccountMfaModal = () => {
     return (
 
         <>
-            <Tooltip label='Android: Microsoft Authenticator | Google Authenticator, IOS: Authy' hasArrow arrowSize={15} closeDelay={500} placement="right">
+            <Tooltip label={currentUserZustand?.user?.mfa_isEnabled ? `MFA is already enabled, if you want to reset it contact jasmeetbali.dev.2021@gmail.com`: 'Android: Microsoft Authenticator | Google Authenticator, IOS: Authy'} hasArrow arrowSize={15} closeDelay={500} placement="right">
                 <IconButton
                     onClick={handleOpenAuthMfa}
                     onMouseEnter={() => { SetMfaCode('null'); }}
@@ -174,6 +179,10 @@ const EnableAccountMfaModal = () => {
                                 <Alert display={fetchQrCodeMutation.isError || trackedMutationProcedure.isError || !removeError ? 'flex' : 'none'} status='error'><AlertIcon />Failed to enable mfa, code verification failed! </Alert>
                                 <Alert display={!removeValidationError ? 'flex' : 'none'} status='error'><AlertIcon />Validation failed, make sure you enter 6 digit generated mfa code in your authenticator app! </Alert>
                                 <Alert display={!fetchQrCodeMutation.data ? 'flex' : 'none'} status='warning'><AlertIcon />Loading qr code generation...  if it fails to generate qr code  please refresh the page & try again or contact support if issue persists.</Alert>
+                                <Alert display={currentUserZustand?.user?.mfa_isEnabled ? 'flex' : 'none' } status='warning'>
+                                    <AlertIcon />
+                                    Seems your account has already enabled mfa, if you have lost access to MFA, please contact jasmeetbali.dev.2021@gmail.com to reset your account's MFA.
+                                </Alert>
                             </Stack>
 
                         </ModalBody>
