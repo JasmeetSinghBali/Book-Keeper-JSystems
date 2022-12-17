@@ -83,6 +83,7 @@ model Contact {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   name      String?
+  image     String?
   email     String   @unique
   phone     String   @unique
   cardtype  CardType

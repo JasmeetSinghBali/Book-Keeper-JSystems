@@ -19,12 +19,13 @@
 2. Backend
 
 - typescript
-- trpc
+- trpc [mutations & queries(abstractly based on react-query) procedures]
 - prisma "postgreSQL" [supabase](https://supabase.com/docs/guides/integrations/prisma) for cloud hosting the postgres instance with prisma
 
 Misc:
 
-- QR Code Based Authenticator
+- QR Code Based Authenticator for MFA
+- cloudinary (media[images/videos] cloud hosting) https://console.cloudinary.com/users/login
 
 ---
 
