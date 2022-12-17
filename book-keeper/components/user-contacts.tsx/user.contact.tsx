@@ -1,15 +1,75 @@
-import { useDisclosure, Link, Avatar, Divider, Flex, Heading, Icon, IconButton, Stack, Switch, Table, Tbody, Td, Text, Th, Thead, Tr, InputGroup, InputLeftElement, Input, Badge, Tooltip, Drawer, DrawerOverlay, DrawerContent, DrawerCloseButton, DrawerHeader, DrawerBody, Box, FormLabel, Select, DrawerFooter, Button } from "@chakra-ui/react";
+import { useDisclosure, Link, Avatar, Divider, Flex, Heading, Icon, IconButton, Stack, Switch, Table, Tbody, Td, Text, Th, Thead, Tr, InputGroup, InputLeftElement, Input, Badge, Tooltip, Drawer, DrawerOverlay, DrawerContent, DrawerCloseButton, DrawerHeader, DrawerBody, Box, FormLabel, Select, DrawerFooter, Button, chakra, FormControl, HStack, PinInput, PinInputField } from "@chakra-ui/react";
 import {motion} from 'framer-motion';
 import { AiFillCaretDown, AiFillCaretUp, AiOutlineContacts, AiOutlineEdit, AiOutlineFileSearch, AiOutlinePlus } from "react-icons/ai";
 import {useState} from 'react';
-import { GrTrash } from "react-icons/gr";
 import ContactListFilter from "./user.contact.filter";
 import ContactEditModal from "./user.contact.edit";
 import ContactDeleteModal from "./user.contact.delete.modal";
 
+
 const UserContactSection = () => {
+    
     const [view,changeView] = useState('hide');
     const { isOpen, onOpen, onClose } = useDisclosure();
+    const [contactName,SetContactName] = useState('null');
+    const [contactEmail,SetContactEmail] = useState('null');
+    const [contactPhone,SetContactPhone] = useState('null');
+    const [contactCardType,SetContactCardType] = useState('null');
+    const [contactCardNumber,SetContactCardNumber] = useState('null');
+    
+    
+    /**@desc 🎈 reset all contact values, opens up the new contact modal/drawer */
+    const handleNewContactModal = async(): Promise<any> => {
+        SetContactName('null');
+        onOpen();
+        return;
+    }
+
+    /**@desc 🎈 handling new contact's data ,make trpc server call to create a new contact */
+    const handleNewContactData = async(e: any): Promise<any> => {    
+        e.preventDefault();
+        // console.log(e.currentTarget);
+        
+        // Sort form data image & upload to cloudinary
+        const form = e.currentTarget;
+        const fileInput: any = Array.from(form.elements).find(
+            ({ id }: any) => id === 'contactimage'
+        );
+        // console.log(fileInput);
+        
+        let data:any;
+        if(fileInput.files){
+            // create form data with the image file to upload to cloudinary
+            const formData = new FormData();
+            // appends all files single or multiple with form data
+            for (const file of fileInput.files){
+                formData.append('file',file);
+            }
+            formData.append('upload_preset', process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET as string);
+            // upload the files to cloudinary via cloudinary api call
+            data = await fetch(`https://api.cloudinary.com/v1_1/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME as string}/image/upload`,{
+                method: 'POST',
+                body: formData
+            }).then(r=>r.json());
+            
+            console.log('response from cloudinary=====',data);
+        }
+        
+
+        // 🎈 Add validation check wheather data passed is valid before making mutation req to trpc server
+
+        // 🎈 send data.secure_url to trpc server as image for contact
+        console.log("data to send to trpc server=========");
+        console.log(data?.secure_url);
+        console.log(contactName);
+        console.log(contactEmail);
+        console.log(contactPhone);
+        console.log(contactCardType);
+        console.log(contactCardNumber);
+        
+        return;
+    }
+
     return (
         <>
             {/*User Contacts Section*/}
@@ -70,7 +130,7 @@ const UserContactSection = () => {
                             _hover={{bg:"#FBB6CE"}}
                             icon={<AiOutlinePlus />}
                             aria-label={'addnewcontact'}
-                            onClick={onOpen}
+                            onClick={handleNewContactModal}
                             ml={2}
                             mb={4}
                             bgColor="gray.200"
@@ -80,79 +140,100 @@ const UserContactSection = () => {
                         isOpen={isOpen}
                         placement='right'
                         onClose={onClose}
-                        size="sm"
+                        size="xs"
+                        preserveScrollBarGap={true}
                     >
                         <DrawerOverlay />
-                        <DrawerContent>
+                        <DrawerContent overflow={"scroll"}>
                         <DrawerCloseButton />
                         <DrawerHeader borderBottomWidth='1px'>
                             Add a new contact
                         </DrawerHeader>
 
-                        <DrawerBody>
-                            <Stack spacing='24px'>
-                            <Box>
-                                <Text fontWeight="semibold" mb={1}>Contact's Image</Text>
-                                <Input
-                                    type="file"
-                                    id='contactimage'
-
-                                />
+                        {/** 🎈 Add new Contact form section */}
+                        <chakra.form onSubmit={handleNewContactData}>
+                            <DrawerBody>                                    
+                                    <Stack spacing='24px'>
+                                        {/**🎈 image upload section*/}
+                                        <FormControl>
+                                            <Box>
+                                                <Text fontWeight="semibold" mb={1}>Contact's Image</Text>
+                                                <Stack mt={2} mb={2} direction='column'>
+                                                    <Input
+                                                        type="file"
+                                                        id='contactimage'
+                                                    />
+                                                </Stack>
+                                            </Box>
+                                            
+                                            <Box>
+                                                <FormLabel htmlFor='contactname'>Name</FormLabel>
+                                                <Input
+                                                id='contactname'
+                                                placeholder='Please enter contact name'
+                                                onInput={(e: any)=>SetContactName(e.target.value)}
+                                                />
+                                            </Box>
+                                            
+                                            <Box>
+                                                <FormLabel htmlFor='contactemail'>Email</FormLabel>
+                                                <Input
+                                                id='contactemail'
+                                                placeholder='Please enter contact email'
+                                                onInput={(e: any)=>SetContactEmail(e.target.value)}
+                                                />
+                                            </Box>
+                                            
+                                            <Box>
+                                                <FormLabel htmlFor='contactphone'>Phone</FormLabel>
+                                                <Input
+                                                id='contactphone'
+                                                placeholder='Please enter contact phone'
+                                                onInput={(e: any)=>SetContactPhone(e.target.value)}
+                                                />
+                                            </Box>
+                                            <Box>
+                                                <FormLabel htmlFor='cardtype'>Select Card Type</FormLabel>
+                                                <Select id='cardtype' onInput={(e: any)=>SetContactCardType(e.target.value)} defaultValue='segun'>
+                                                <option value='credit'>Credit</option>
+                                                <option value='debit'>Debit</option>
+                                                </Select>
+                                            </Box>
+                                            <Box>
+                                                <FormLabel htmlFor='cardNumber'>Card Number</FormLabel>
+                                                <PinInput mask onComplete={(value: any) => SetContactCardNumber(value)} >
+                                                    <PinInputField onClick={(_e: any) => { SetContactCardNumber('null') }} />
+                                                    <PinInputField />
+                                                    <PinInputField />
+                                                    <PinInputField />
+                                                    <PinInputField />
+                                                    <PinInputField />
+                                                    <PinInputField />
+                                                    <PinInputField />
+                                                    <PinInputField />
+                                                    <PinInputField />
+                                                    <PinInputField />
+                                                    <PinInputField />
+                                                    <PinInputField />
+                                                    <PinInputField />
+                                                    <PinInputField />
+                                                    <PinInputField />
+                                                </PinInput>
+                                            </Box>
                                 
-                            </Box>
-                            <Box>
-                                <FormLabel htmlFor='contactname'>Name</FormLabel>
-                                <Input
-                                id='contactname'
-                                placeholder='Please enter contact name'
-                                />
-                            </Box>
-                            <Box>
-                                <FormLabel htmlFor='contactemail'>Email</FormLabel>
-                                <Input
-                                id='contactemail'
-                                placeholder='Please enter contact email'
-                                />
-                            </Box>
-                            <Box>
-                                <FormLabel htmlFor='contactphone'>Phone</FormLabel>
-                                <Input
-                                id='contactphone'
-                                placeholder='Please enter contact phone'
-                                />
-                            </Box>
-                            <Box>
-                                <FormLabel htmlFor='cardtype'>Select Card Type</FormLabel>
-                                <Select id='cardtype' defaultValue='segun'>
-                                <option value='credit'>Credit</option>
-                                <option value='debit'>Debit</option>
-                                </Select>
-                            </Box>
-                            <Box>
-                                <FormLabel htmlFor='cardNumber'>Card Number</FormLabel>
-                                <Input
-                                id='cardNumber'
-                                placeholder='Please provide contact card number'
-                                type="password"
-                                />
-                            </Box>
-                            <Box>
-                                <FormLabel htmlFor='confirmcardNumber'>Confirm Card Number</FormLabel>
-                                <Input
-                                id='confirmcardNumber'
-                                placeholder='Please confirm contact card number'
-                                type="password"
-                                />
-                            </Box>
-                            </Stack>
-                        </DrawerBody>
+                                        </FormControl>
+                                        
+                                    
+                                    </Stack>
 
+                            </DrawerBody>
                         <DrawerFooter borderTopWidth='1px'>
                             <Button variant='outline' mr={3} onClick={onClose} _hover={{bg:"red.400"}}>
                                 Cancel
                             </Button>
-                            <Button colorScheme='teal'>Add 🎭</Button>
+                            <Button colorScheme='teal' type="submit">Add 🎭</Button>
                         </DrawerFooter>
+                        </chakra.form>
                         </DrawerContent>
                     </Drawer>
                 </Stack>
