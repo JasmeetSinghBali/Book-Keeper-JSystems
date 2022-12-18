@@ -11,4 +11,4 @@ export const updateEmailPhoneSchema = z.object({
 })
 
 
-export type ILogin = z.infer<typeof updateEmailPhoneSchema>;
+export type UpdateEmailPhoneSchema = z.infer<typeof updateEmailPhoneSchema>;

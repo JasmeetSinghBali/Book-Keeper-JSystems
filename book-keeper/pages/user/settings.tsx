@@ -16,20 +16,17 @@ export default function settings(){
     const { data: session, status } = useSession();
     const userEmail: any = session?.user?.email;
     const rpcAccessQuery: any = trpcClient.rpcAccess.checkRpcAccess.useQuery({email: userEmail}); 
+    if(!rpcAccessQuery.data){
+        push('/user/dashboard');
+    }
     
-    
-
-    // 🎈 uncomment this after settings section is sorted
     /**if no session show not signed in & redirect user to login page */
     // 📝 moved push to useEffect as server side push is not supported casues router instance error
-    // useEffect(()=>{
-    //     if(!session){
-    //         push('/user/login');
-    //     }
-    //     if(!rpcAccessQuery.data){
-    //         push('/user/dashboard');
-    //     }
-    // },[session]); 
+    useEffect(()=>{
+        if(!session){
+            push('/user/login');
+        }
+    },[]); 
     
     return(
         <>

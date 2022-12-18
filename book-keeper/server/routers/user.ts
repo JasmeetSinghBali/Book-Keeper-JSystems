@@ -4,7 +4,7 @@ import { router , trackedProcedure } from '../trpc';
 import { userInfoSchema } from '../schemas/users/userinfo.schema';
 import { updateEmailPhoneSchema } from '../schemas/users/update.phone-email.schema.ts';
 import validateOTP, { validationTOTPResultInterface } from '../../utils/otpValidator';
-import { User } from '@prisma/client';
+import { CardType, Contact, User } from '@prisma/client';
 import { CustMutationResultInterface } from './rpcaccess';
 import * as z from 'zod';
 import generateOTP, { generateOTPInterface } from '../../utils/otpGenerator';
@@ -16,6 +16,7 @@ import QRCode  from 'qrcode';
 import { enableMfaSchema } from '../schemas/users/enable.mfa.schema';
 import isValidMfaCodes from '../../utils/validate.mfaCodes';
 import { validateMfaCodeSchema } from '../schemas/users/validate.mfacodes.schema';
+import { addNewContactSchema } from '../schemas/users/add.contact.schema';
 
 
 /**
@@ -388,7 +389,53 @@ export const userRouter = router({
         });
 
     }),
-    
+
+    addNewContact: trackedProcedure
+    .input(addNewContactSchema)
+    .mutation(async({ctx,input}): Promise<CustMutationResultInterface | TRPCError> =>{
+        
+        if(ctx.userAttachedData.role !== 'USER'){
+            throw new TRPCError({
+                code: "UNAUTHORIZED",
+                message: `Unauthorized`,
+            });
+        }
+
+        const newContact = await ctx.prisma?.contact.create({
+            data: {
+                name:  input.name,     
+                image: input.image,   
+                email: input.email,  
+                phone: input.phone, 
+                cardtype: input.cardtype as CardType,
+                cardno: input.cardno,
+                userId: ctx.userAttachedData.id   
+            }
+        });
+
+        if(!newContact){
+            throw new TRPCError({
+                code: "INTERNAL_SERVER_ERROR",
+                message: `failed to add new contact!!`
+            })
+        }
+        
+        return new Promise<CustMutationResultInterface | TRPCError>((resolve)=>{
+            resolve(Object.freeze({
+                message: `New contact was successfully added by user-account: ${ctx.userAttachedData.email}`,
+                data: {
+                    name:  newContact.name,     
+                    image: newContact.image,   
+                    email: newContact.email,  
+                    phone: newContact.phone, 
+                    cardtype: newContact.cardtype as CardType,
+                    cardno: newContact.cardno,
+                    userId: ctx.userAttachedData.id
+                }
+            }))
+        });
+
+    }),
 
     // ---- here goes more user mutations/query procedures ----
 })

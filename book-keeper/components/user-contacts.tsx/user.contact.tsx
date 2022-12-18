@@ -1,31 +1,49 @@
-import { useDisclosure, Link, Avatar, Divider, Flex, Heading, Icon, IconButton, Stack, Switch, Table, Tbody, Td, Text, Th, Thead, Tr, InputGroup, InputLeftElement, Input, Badge, Tooltip, Drawer, DrawerOverlay, DrawerContent, DrawerCloseButton, DrawerHeader, DrawerBody, Box, FormLabel, Select, DrawerFooter, Button, chakra, FormControl, HStack, PinInput, PinInputField } from "@chakra-ui/react";
+import { useDisclosure, Link, Avatar, Divider, Flex, Heading, Icon, IconButton, Stack, Switch, Table, Tbody, Td, Text, Th, Thead, Tr, InputGroup, InputLeftElement, Input, Badge, Tooltip, Drawer, DrawerOverlay, DrawerContent, DrawerCloseButton, DrawerHeader, DrawerBody, Box, FormLabel, Select, DrawerFooter, Button, chakra, FormControl, HStack, PinInput, PinInputField, Alert, AlertIcon, RadioGroup, Radio } from "@chakra-ui/react";
 import {motion} from 'framer-motion';
 import { AiFillCaretDown, AiFillCaretUp, AiOutlineContacts, AiOutlineEdit, AiOutlineFileSearch, AiOutlinePlus } from "react-icons/ai";
 import {useState} from 'react';
 import ContactListFilter from "./user.contact.filter";
 import ContactEditModal from "./user.contact.edit";
 import ContactDeleteModal from "./user.contact.delete.modal";
-
+import validator from "validator";
+import { useCurrentUserInfo } from "../../store/current-user-info.store";
+import { useCurrentRpcToken } from "../../store/rpc-token-store";
+import { trpcClient } from "../../utils/Clientrpc";
 
 const UserContactSection = () => {
     
     const [view,changeView] = useState('hide');
     const { isOpen, onOpen, onClose } = useDisclosure();
-    const [contactName,SetContactName] = useState('null');
-    const [contactEmail,SetContactEmail] = useState('null');
-    const [contactPhone,SetContactPhone] = useState('null');
-    const [contactCardType,SetContactCardType] = useState('null');
-    const [contactCardNumber,SetContactCardNumber] = useState('null');
+    const [ contactImageSecureUrl, SetContactImageSecureUrl ] = useState('');
+    const [ contactName,SetContactName ] = useState('null');
+    const [ contactEmail,SetContactEmail ] = useState('null');
+    const [ contactPhone,SetContactPhone ] = useState('null');
+    const [ contactCardType,SetContactCardType ] = useState('null');
+    const [ contactCardNumber,SetContactCardNumber ] = useState('null');
+    const [ validationError,SetValidationError ] = useState(false);
+    const [ mutationProcessFailed,SetMutationProcessFailed ] = useState(false);
     
+    const rpcTokenInZustand = useCurrentRpcToken.getState();
+    const currentUserZustand: any = useCurrentUserInfo.getState();
+
+    const addNewContactMutation: any = trpcClient.user.addNewContact.useMutation();
     
-    /**@desc 🎈 reset all contact values, opens up the new contact modal/drawer */
+    /**@desc reset all contact values, opens up the new contact modal/drawer */
     const handleNewContactModal = async(): Promise<any> => {
+        SetContactImageSecureUrl('');
         SetContactName('null');
+        SetContactPhone('null');
+        SetContactEmail('null');
+        SetContactCardType('null');
+        SetContactCardNumber('null');
+        SetValidationError(false);
+        SetMutationProcessFailed(false);
         onOpen();
         return;
+    
     }
 
-    /**@desc 🎈 handling new contact's data ,make trpc server call to create a new contact */
+    /**@desc handling new contact's data ,make trpc server call to create a new contact */
     const handleNewContactData = async(e: any): Promise<any> => {    
         e.preventDefault();
         // console.log(e.currentTarget);
@@ -35,10 +53,11 @@ const UserContactSection = () => {
         const fileInput: any = Array.from(form.elements).find(
             ({ id }: any) => id === 'contactimage'
         );
+        // console.log(Array.from(form.elements));
         // console.log(fileInput);
         
         let data:any;
-        if(fileInput.files){
+        if(fileInput.files && contactImageSecureUrl.length === 0){
             // create form data with the image file to upload to cloudinary
             const formData = new FormData();
             // appends all files single or multiple with form data
@@ -52,21 +71,63 @@ const UserContactSection = () => {
                 body: formData
             }).then(r=>r.json());
             
-            console.log('response from cloudinary=====',data);
+            // console.log('response from cloudinary=====',data);
+            SetContactImageSecureUrl(data.secure_url);
         }
         
+        // console.log("data to send to trpc server=========");
+        // console.log(data?.secure_url);
+        // console.log(contactName);
+        // console.log(contactEmail);
+        // console.log(contactPhone);
+        // console.log(contactCardType);
+        // console.log(contactCardNumber);
 
-        // 🎈 Add validation check wheather data passed is valid before making mutation req to trpc server
-
-        // 🎈 send data.secure_url to trpc server as image for contact
-        console.log("data to send to trpc server=========");
-        console.log(data?.secure_url);
-        console.log(contactName);
-        console.log(contactEmail);
-        console.log(contactPhone);
-        console.log(contactCardType);
-        console.log(contactCardNumber);
+        // Add validation check wheather data passed is valid before making mutation req to trpc server
+        if(contactEmail === "null" || contactPhone === "null" || contactCardType === "null" || contactCardNumber.length !== 16){
+            // console.log("====null check failed")
+            SetValidationError(true);
+            return;
+        }
+        let possibleTypes: Array<string> = ["DEBIT","CREDIT"];
+        let isCardTypeValid = possibleTypes.find((elem: string)=>elem===contactCardType);
+        if(!isCardTypeValid){
+            // console.log("card type invalid =====")
+            SetValidationError(true);
+            return;
+        }
+        if(!validator.isEmail(contactEmail) || contactPhone.length < 10 ){
+            // console.log("failed email check adn phone number ====")
+            SetValidationError(true);
+            return;
+        }
+        if(contactCardType === "CREDIT" && !validator.isCreditCard(contactCardNumber)){
+            // console.log("credit card check failed")
+            SetValidationError(true);
+            return;
+        }
         
+        // add new contact
+        await addNewContactMutation.mutate(Object.freeze({
+            access_token: rpcTokenInZustand.token,
+            name: contactName,
+            image: data?.secure_url || 'no',
+            email: contactEmail,
+            phone: contactPhone,
+            cardtype: contactCardType,
+            cardno: contactCardNumber,
+        }));
+
+        if(!addNewContactMutation.data || addNewContactMutation.isError){
+            SetMutationProcessFailed(true);
+            return;
+        }
+        SetValidationError(false);
+        SetMutationProcessFailed(false);
+        if(addNewContactMutation.data){
+            onClose();
+            return;
+        }
         return;
     }
 
@@ -150,11 +211,11 @@ const UserContactSection = () => {
                             Add a new contact
                         </DrawerHeader>
 
-                        {/** 🎈 Add new Contact form section */}
+                        {/** Add new Contact form section */}
                         <chakra.form onSubmit={handleNewContactData}>
                             <DrawerBody>                                    
                                     <Stack spacing='24px'>
-                                        {/**🎈 image upload section*/}
+                                        {/**image upload section*/}
                                         <FormControl>
                                             <Box>
                                                 <Text fontWeight="semibold" mb={1}>Contact's Image</Text>
@@ -162,6 +223,7 @@ const UserContactSection = () => {
                                                     <Input
                                                         type="file"
                                                         id='contactimage'
+                                                        disabled={contactImageSecureUrl.length > 1 ? true : false}
                                                     />
                                                 </Stack>
                                             </Box>
@@ -194,10 +256,12 @@ const UserContactSection = () => {
                                             </Box>
                                             <Box>
                                                 <FormLabel htmlFor='cardtype'>Select Card Type</FormLabel>
-                                                <Select id='cardtype' onInput={(e: any)=>SetContactCardType(e.target.value)} defaultValue='segun'>
-                                                <option value='credit'>Credit</option>
-                                                <option value='debit'>Debit</option>
-                                                </Select>
+                                                <RadioGroup id='cardtype' onChange={SetContactCardType} value={contactCardType}>
+                                                    <Stack direction='row'>
+                                                        <Radio value='DEBIT'>DEBIT</Radio>
+                                                        <Radio value='CREDIT'>CREDIT</Radio>
+                                                    </Stack>
+                                                </RadioGroup>
                                             </Box>
                                             <Box>
                                                 <FormLabel htmlFor='cardNumber'>Card Number</FormLabel>
@@ -228,10 +292,14 @@ const UserContactSection = () => {
 
                             </DrawerBody>
                         <DrawerFooter borderTopWidth='1px'>
+                            <Stack mt={2} direction = 'column'>
+                                <Alert display={ addNewContactMutation.isError || !addNewContactMutation.data ? 'flex' : 'none'} status='error'><AlertIcon />Failed to add new contact! </Alert>
+                                <Alert display={ validationError ? 'flex' : 'none'} status='error'><AlertIcon />Validation failed ! make sure you enter correct details of the contact ! </Alert>
+                            </Stack>
                             <Button variant='outline' mr={3} onClick={onClose} _hover={{bg:"red.400"}}>
                                 Cancel
                             </Button>
-                            <Button colorScheme='teal' type="submit">Add 🎭</Button>
+                            <Button colorScheme='teal' type="submit" disabled={addNewContactMutation.isLoading ? true : false}>Add 🎭</Button>
                         </DrawerFooter>
                         </chakra.form>
                         </DrawerContent>
