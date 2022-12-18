@@ -9,8 +9,23 @@ import validator from "validator";
 import { useCurrentUserInfo } from "../../store/current-user-info.store";
 import { useCurrentRpcToken } from "../../store/rpc-token-store";
 import { trpcClient } from "../../utils/Clientrpc";
+import { QueryClient, QueryClientProvider } from "react-query";
+import { trpcClientQuery } from "../../utils/Clientrpcquery";
 
+const client = new QueryClient();
+
+/**@desc 📝 wrapper for the UserContactSectionContent, to wrap it with trpcClientQuery instance & QueryClient */
 const UserContactSection = () => {
+    return (
+        <trpcClientQuery.Provider client={trpcClient} queryClient={client} >
+            <QueryClientProvider client={client}>
+                <UserContactSectionContent />
+            </QueryClientProvider>
+        </trpcClientQuery.Provider>
+    )
+}
+
+const UserContactSectionContent = () => {
     
     const [view,changeView] = useState('hide');
     const { isOpen, onOpen, onClose } = useDisclosure();
@@ -26,6 +41,11 @@ const UserContactSection = () => {
     const rpcTokenInZustand = useCurrentRpcToken.getState();
     const currentUserZustand: any = useCurrentUserInfo.getState();
 
+    // 🎈 query fresh contact list from trpc server
+    const contactsFreshList: any = trpcClient.user.fetchFreshContactList.useQuery({
+        access_token: rpcTokenInZustand.token
+    })
+    
     const addNewContactMutation: any = trpcClient.user.addNewContact.useMutation();
     
     /**@desc reset all contact values, opens up the new contact modal/drawer */
@@ -108,15 +128,23 @@ const UserContactSection = () => {
         }
         
         // add new contact
-        await addNewContactMutation.mutate(Object.freeze({
-            access_token: rpcTokenInZustand.token,
-            name: contactName,
-            image: data?.secure_url || 'no',
-            email: contactEmail,
-            phone: contactPhone,
-            cardtype: contactCardType,
-            cardno: contactCardNumber,
-        }));
+        // 📝 with onSuccess , autfetch the contact list by making a new query request
+        await addNewContactMutation.mutate(
+            Object.freeze({
+                access_token: rpcTokenInZustand.token,
+                name: contactName,
+                image: data?.secure_url || 'no',
+                email: contactEmail,
+                phone: contactPhone,
+                cardtype: contactCardType,
+                cardno: contactCardNumber,
+            }),
+            {
+                onSuccess: () =>{
+                    client.invalidateQueries(["user.fetchFreshContactList"]);
+                }
+            }
+        );
 
         if(!addNewContactMutation.data || addNewContactMutation.isError){
             SetMutationProcessFailed(true);
@@ -132,6 +160,7 @@ const UserContactSection = () => {
     }
 
     return (
+        
         <>
             {/*User Contacts Section*/}
             <Flex
@@ -400,7 +429,7 @@ const UserContactSection = () => {
                     />
                     <Divider/>
                 </Flex>        
-            </Flex>
+            </Flex>  
         </>
     )
 }

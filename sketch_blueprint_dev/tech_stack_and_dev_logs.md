@@ -215,7 +215,7 @@ https://next-auth.js.org/configuration/options
 
 ```
 
-> 3. dev/trpc-flows
+> 3. dev/trpc-flows (reff: https://www.prisma.io/docs/concepts/components/prisma-client/relation-queries)
 
 - [x] getting user data and session data from db
 
