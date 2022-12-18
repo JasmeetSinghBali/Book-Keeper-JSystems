@@ -9,4 +9,4 @@ export const userInfoSchema = z.object({
     access_token: z.string().min(1)               
 })
 
-export type ISignUp = z.infer<typeof userInfoSchema>;
+export type UserInfoSchema = z.infer<typeof userInfoSchema>;

@@ -10,4 +10,4 @@ export const validateMfaCodeSchema = z.object({
 })
 
 
-export type ILogin = z.infer<typeof validateMfaCodeSchema>;
+export type validateMfaCodeSchema = z.infer<typeof validateMfaCodeSchema>;

@@ -71,22 +71,11 @@ const EnableAccountMfaModal = () => {
         return;
     }
 
-
-    // 🎈 👇 uncomment this use Effect after done with enable mfa settings
-    // useEffect(()=>{
-    //     if(session?.user?.email !== currentUserZustand.user.email){
-    //         push('/user/dashboard');
-    //         return;
-    //     }
-    //     return;
-    // },[])
-
-    // 🎈 👇 uncomment this use effect after done with enable mfa settings
-    // useEffect(()=>{
-    //     if(!fetchQrCodeMutation.data || fetchQrCodeMutation.isError){
-    //         push('/user/dashboard');
-    //     }
-    // },[fetchQrCodeMutation.data])
+    useEffect(()=>{
+        if(!fetchQrCodeMutation.data || fetchQrCodeMutation.isError){
+            SetRemoveError(false);
+        }
+    },[fetchQrCodeMutation.data])
 
     useEffect(() => {
         if (trackedMutationProcedure.data) {
@@ -94,7 +83,9 @@ const EnableAccountMfaModal = () => {
             // console.log(trackedMutationProcedure.data);
             // update the zustand store with updated user data
             useCurrentUserInfo.setState(trackedMutationProcedure.data.data);
-            push('/user/dashboard');
+            SetRemoveError(true);
+            SetRemoveValidationError(true);
+            onClose();
         }
     }, [trackedMutationProcedure.data])
 

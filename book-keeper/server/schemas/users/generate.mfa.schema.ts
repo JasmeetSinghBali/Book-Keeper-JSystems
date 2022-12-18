@@ -9,4 +9,4 @@ export const generateMfaSchema = z.object({
 })
 
 
-export type ILogin = z.infer<typeof generateMfaSchema>;
+export type GenerateMfaSchema = z.infer<typeof generateMfaSchema>;
