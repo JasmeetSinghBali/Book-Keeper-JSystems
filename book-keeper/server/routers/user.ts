@@ -5,7 +5,7 @@ import { userInfoSchema } from '../schemas/users/userinfo.schema';
 import { updateEmailPhoneSchema } from '../schemas/users/update.phone-email.schema.ts';
 import validateOTP, { validationTOTPResultInterface } from '../../utils/otpValidator';
 import { CardType, Contact, User } from '@prisma/client';
-import { CustMutationResultInterface } from './rpcaccess';
+import { CustMutationResultInterface, CustQueryResultInterface } from './rpcaccess';
 import * as z from 'zod';
 import generateOTP, { generateOTPInterface } from '../../utils/otpGenerator';
 import { sendEmailOTP } from '../../utils/customMailDispatcher';
@@ -390,6 +390,7 @@ export const userRouter = router({
 
     }),
 
+    /**@desc maps to user & adds new contact in DB */
     addNewContact: trackedProcedure
     .input(addNewContactSchema)
     .mutation(async({ctx,input}): Promise<CustMutationResultInterface | TRPCError> =>{
@@ -436,6 +437,44 @@ export const userRouter = router({
         });
 
     }),
+
+    // 🎈 fetch fresh contact list from DB
+    fetchFreshContactList: trackedProcedure
+    .input(z.object({
+        access_token: z.string().min(1)
+    }))
+    .query(async({ctx,input}): Promise<CustQueryResultInterface | TRPCError> =>{
+        if(ctx.userAttachedData.role !== 'USER'){
+            throw new TRPCError({
+                code: "UNAUTHORIZED",
+                message: `Unauthorized`,
+            });
+        }
+
+        /**
+         * @type relational queries
+         * @desc returns single user with id and its related/mapped all contacts 
+         * */
+        const userMappedContacts = await ctx.prisma?.user.findUnique({
+            where: {
+                id: ctx.userAttachedData.id
+            },
+            include: {
+                contacts: true,
+            }
+        });
+
+        return new Promise<CustQueryResultInterface | TRPCError>((resolve)=>{
+            resolve(Object.freeze({
+                success: true ,
+                message: `successfully fetched fresh contacts of user-account: ${ctx.userAttachedData.email}`,
+                data: {
+                    contact_list: userMappedContacts?.contacts
+                } 
+            }))
+        });
+
+    }),  
 
     // ---- here goes more user mutations/query procedures ----
 })
