@@ -74,7 +74,7 @@ export async function createContext(ctx: trpcNext.CreateNextContextOptions){
         }
         // console.log("=========logged token payload in scrape token payload function ==========");
         
-        console.log(accessToken)
+        // console.log(accessToken)
         
         const pd: any = await verifyJwt(
             accessToken,
