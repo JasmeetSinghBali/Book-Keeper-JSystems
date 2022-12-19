@@ -1,7 +1,7 @@
 import { useDisclosure, Link, Avatar, Divider, Flex, Heading, Icon, IconButton, Stack, Switch, Table, Tbody, Td, Text, Th, Thead, Tr, InputGroup, InputLeftElement, Input, Badge, Tooltip, Drawer, DrawerOverlay, DrawerContent, DrawerCloseButton, DrawerHeader, DrawerBody, Box, FormLabel, Select, DrawerFooter, Button, chakra, FormControl, HStack, PinInput, PinInputField, Alert, AlertIcon, RadioGroup, Radio } from "@chakra-ui/react";
 import {motion} from 'framer-motion';
 import { AiFillCaretDown, AiFillCaretUp, AiOutlineContacts, AiOutlineEdit, AiOutlineFileSearch, AiOutlinePlus } from "react-icons/ai";
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
 import ContactListFilter from "./user.contact.filter";
 import ContactEditModal from "./user.contact.edit";
 import ContactDeleteModal from "./user.contact.delete.modal";
@@ -9,23 +9,9 @@ import validator from "validator";
 import { useCurrentUserInfo } from "../../store/current-user-info.store";
 import { useCurrentRpcToken } from "../../store/rpc-token-store";
 import { trpcClient } from "../../utils/Clientrpc";
-import { QueryClient, QueryClientProvider } from "react-query";
-import { trpcClientQuery } from "../../utils/Clientrpcquery";
 
-const client = new QueryClient();
 
-/**@desc 📝 wrapper for the UserContactSectionContent, to wrap it with trpcClientQuery instance & QueryClient */
 const UserContactSection = () => {
-    return (
-        <trpcClientQuery.Provider client={trpcClient} queryClient={client} >
-            <QueryClientProvider client={client}>
-                <UserContactSectionContent />
-            </QueryClientProvider>
-        </trpcClientQuery.Provider>
-    )
-}
-
-const UserContactSectionContent = () => {
     
     const [view,changeView] = useState('hide');
     const { isOpen, onOpen, onClose } = useDisclosure();
@@ -37,11 +23,13 @@ const UserContactSectionContent = () => {
     const [ contactCardNumber,SetContactCardNumber ] = useState('null');
     const [ validationError,SetValidationError ] = useState(false);
     const [ mutationProcessFailed,SetMutationProcessFailed ] = useState(false);
+
+    const utils = trpcClient.useContext();
     
     const rpcTokenInZustand = useCurrentRpcToken.getState();
     const currentUserZustand: any = useCurrentUserInfo.getState();
 
-    // 🎈 query fresh contact list from trpc server
+    // query fresh contact list from trpc server
     const contactsFreshList: any = trpcClient.user.fetchFreshContactList.useQuery({
         access_token: rpcTokenInZustand.token
     })
@@ -50,6 +38,7 @@ const UserContactSectionContent = () => {
     
     /**@desc reset all contact values, opens up the new contact modal/drawer */
     const handleNewContactModal = async(): Promise<any> => {
+        
         SetContactImageSecureUrl('');
         SetContactName('null');
         SetContactPhone('null');
@@ -138,12 +127,7 @@ const UserContactSectionContent = () => {
                 phone: contactPhone,
                 cardtype: contactCardType,
                 cardno: contactCardNumber,
-            }),
-            {
-                onSuccess: () =>{
-                    client.invalidateQueries(["user.fetchFreshContactList"]);
-                }
-            }
+            })
         );
 
         if(!addNewContactMutation.data || addNewContactMutation.isError){
@@ -158,6 +142,16 @@ const UserContactSectionContent = () => {
         }
         return;
     }
+
+    useEffect(()=>{
+        //invalidate query to update contactsFreshList, after new contact was added
+        utils.user.fetchFreshContactList.invalidate({
+            access_token: rpcTokenInZustand.token
+        });
+    },[addNewContactMutation.data])
+
+    console.log("============fresh contact list from server ===");
+    console.log(contactsFreshList.data);
 
     return (
         

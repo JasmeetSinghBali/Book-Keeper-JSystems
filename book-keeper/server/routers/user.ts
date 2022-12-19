@@ -444,6 +444,8 @@ export const userRouter = router({
         access_token: z.string().min(1)
     }))
     .query(async({ctx,input}): Promise<CustQueryResultInterface | TRPCError> =>{
+        console.log("=====REACHED FETCH FRESH CONTACT LIST PROCEDURE QUERY=====")
+        
         if(ctx.userAttachedData.role !== 'USER'){
             throw new TRPCError({
                 code: "UNAUTHORIZED",
@@ -451,7 +453,9 @@ export const userRouter = router({
             });
         }
 
-        /**
+        
+
+        /** 🎈 add select, orderby desc created at, recent one first
          * @type relational queries
          * @desc returns single user with id and its related/mapped all contacts 
          * */

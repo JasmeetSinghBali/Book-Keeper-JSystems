@@ -54,16 +54,30 @@ export async function createContext(ctx: trpcNext.CreateNextContextOptions){
  *  */
  async function scrapeTokenPayload(req: any): Promise<Boolean | verifyJWTInterface> {
     try{
-        if(!req?.body['0']?.access_token){
+
+        let accessToken: string = '';
+
+        if(req.method === 'GET'){
+            const parsedQuery: any = JSON.parse(req.query.input);
+            accessToken = parsedQuery['0'].access_token;
+        }
+        
+        if(req.body && req.method === 'POST'){
+            accessToken = req?.body['0']?.access_token;
+        }
+
+        if(!accessToken || accessToken.length < 1){
+            console.log("Failed to parse access token from query or body....");
             return new Promise<Boolean | verifyJWTInterface>((resolve)=>{
                 resolve(false)
             });
         }
         // console.log("=========logged token payload in scrape token payload function ==========");
-        // console.log(req.body['0'].access_token);
-        const token: string = req?.body['0']?.access_token; 
+        
+        console.log(accessToken)
+        
         const pd: any = await verifyJwt(
-            token,
+            accessToken,
         );
         if(!pd){
             console.log("jwt verification failed");

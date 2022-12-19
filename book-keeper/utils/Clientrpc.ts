@@ -3,7 +3,6 @@ import { createTRPCNext } from '@trpc/next';
 import type { AppRouter } from '../server/routers/_app';
 
 
-
 // 📝 custom headers on trpc client procedures-> https://github.com/trpc/trpc/issues/2018
 // 📝 https://trpc.io/docs/v9/links#request-batching
 
@@ -27,7 +26,7 @@ function getBaseUrl() {
 
 
 export const trpcClient = createTRPCNext<AppRouter>({
-  config({ ctx }) {
+  config() {
     return {
       links: [
         httpBatchLink({
@@ -44,8 +43,9 @@ export const trpcClient = createTRPCNext<AppRouter>({
       queryClientConfig:{
         defaultOptions:{
           queries: {
-            refetchOnMount: false,
-            refetchOnWindowFocus: false
+            refetchOnMount: true,
+            refetchOnWindowFocus: true,
+            staleTime: 60000 // 60 sec or 1 min
           }
         }
       }
@@ -59,7 +59,7 @@ export const trpcClient = createTRPCNext<AppRouter>({
 // => { useQuery: ..., useMutation: ...}
 
 
-// 💭 helpers
+// 💭 helpers to split httpLink & httpBatchLink
 // splitLink({
 //   condition(op) {
 //     return op.context.skipBatch === true;
