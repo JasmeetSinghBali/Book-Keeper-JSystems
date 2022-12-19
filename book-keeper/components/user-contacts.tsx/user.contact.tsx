@@ -136,10 +136,7 @@ const UserContactSection = () => {
         }
         SetValidationError(false);
         SetMutationProcessFailed(false);
-        if(addNewContactMutation.data){
-            onClose();
-            return;
-        }
+        onClose();
         return;
     }
 
@@ -150,9 +147,14 @@ const UserContactSection = () => {
         });
     },[addNewContactMutation.data])
 
-    console.log("============fresh contact list from server ===");
-    console.log(contactsFreshList.data);
+    // console.log("============fresh contact list from server ===");
+    // console.log(contactsFreshList?.data?.data?.contact_list);
 
+    let newlyAddedContact: any = contactsFreshList?.data?.data?.contact_list[0];
+    // console.log(newlyAddedContact);
+
+    const contactsList: any = contactsFreshList?.data?.data?.contact_list;
+    
     return (
         
         <>
@@ -334,15 +336,14 @@ const UserContactSection = () => {
                 <Flex 
                     overflow='auto'
                 >
-                    {/** 🎈 make sure to make this dynamic */}
                     <Table variant="unstyled" ml={100}>
                         <Thead bgColor="purple.100" >
                             <Tr color="gray.500">
                                 <Th>Name</Th>
                                 <Th>Email</Th>
                                 <Th>Phone</Th>
-                                <Th>Card Type</Th>
-                                <Th>Card Number</Th>
+                                <Th>CardType</Th>
+                                <Th>CardNumber</Th>
                                 <Th></Th>
                             </Tr>
                         </Thead>
@@ -350,24 +351,25 @@ const UserContactSection = () => {
                         <Tr>
                             <Td>
                                 <Flex align="center">
-                                    <Avatar size={["sm","md","md","lg","lg"]} mr={2} src="john.jpeg"/>
+                                    <Avatar size={["sm","md","md","lg","lg"]} mr={2} src={newlyAddedContact ? newlyAddedContact?.image : "john.jpeg"}/>
                                     <Flex flexDir="column">
-                                        <Heading fontWeight="extrabold" fontSize={["sm","md","md","lg","lg"]} letterSpacing={["tighter","tight","tight","wider","wider"]}>Rohan Mittal</Heading>
+                                        <Heading fontWeight="extrabold" fontSize={["sm","md","md","lg","lg"]} letterSpacing={["tighter","tight","tight","wider","wider"]}>{newlyAddedContact ? newlyAddedContact.name: 'Unknown'}</Heading>
                                     </Flex>
                                 </Flex>
                             </Td>
                             <Td fontWeight="semibold">
-                                mittal.rohan@gmail.com                                
+                                {newlyAddedContact ? newlyAddedContact.email : "Unknown@x"}                                
                             </Td>
                             <Td fontWeight="semibold">
-                                +919872245500
+                                {newlyAddedContact ? newlyAddedContact.phone: "+Unknown"}
                             </Td>
                             <Td>
-                                <Badge colorScheme="green">Debit</Badge>
+                                <Badge colorScheme={newlyAddedContact?.cardtype==="DEBIT" ? "green" : "orange"}>{newlyAddedContact ? newlyAddedContact?.cardtype : "Unknown"}</Badge>
                             </Td>
                             <Td fontWeight="semibold">
-                                1983 **** **** ****
+                                {newlyAddedContact ? newlyAddedContact.cardno : "Unknown"}
                             </Td>
+                            {/*🎈 pass the id of this contact so that this contact id can be edited,deleted*/}
                             <Td>
                                 <ContactEditModal />
                                 <ContactDeleteModal />
@@ -376,32 +378,68 @@ const UserContactSection = () => {
                         {
                             view === 'show' &&
                             <>
-                                <Tr>
-                                    <Td>
-                                        <Flex align="center">
-                                            <Avatar size={["sm","md","md","lg","lg"]} mr={2} src="john.jpeg"/>
-                                            <Flex flexDir="column">
-                                                <Heading fontWeight="extrabold" fontSize={["sm","md","md","lg","lg"]} letterSpacing={["tighter","tight","tight","wider","wider"]}>Rohan Mittal</Heading>
+                                {
+                                    contactsList && contactsList.length > 1 ? contactsList.map((contact: any)=>{
+                                        if(contact.id !== contactsList[0].id){
+                                            return (
+                                                <Tr key={contact?.id}>
+                                                    <Td>
+                                                        <Flex align="center">
+                                                            <Avatar size={["sm","md","md","lg","lg"]} mr={2} src={contact ? contact?.image : "john.jpeg"}/>
+                                                            <Flex flexDir="column">
+                                                                <Heading fontWeight="extrabold" fontSize={["sm","md","md","lg","lg"]} letterSpacing={["tighter","tight","tight","wider","wider"]}>{contact.name}</Heading>
+                                                            </Flex>
+                                                        </Flex>
+                                                    </Td>
+                                                    <Td fontWeight="semibold">
+                                                        {contact?.email}                                
+                                                    </Td>
+                                                    <Td fontWeight="semibold">
+                                                        {contact?.phone}
+                                                    </Td>
+                                                    <Td>
+                                                        <Badge colorScheme={contact?.cardtype === "CREDIT" ? "orange" : "green"}>{contact?.cardtype}</Badge>
+                                                    </Td>
+                                                    <Td fontWeight="semibold">
+                                                        {contact?.cardno}
+                                                    </Td>
+                                                    {/** 🎈 send the contact id to edit/delete modal for operations */}
+                                                    <Td>
+                                                        <ContactEditModal />
+                                                        <ContactDeleteModal />
+                                                    </Td>
+                                                </Tr>
+                                            );
+                                        }
+                                        })
+                                    :
+                                    <Tr>
+                                        <Td>
+                                            <Flex align="center">
+                                                <Avatar size={["sm","md","md","lg","lg"]} mr={2} src="john.jpeg"/>
+                                                <Flex flexDir="column">
+                                                    <Heading fontWeight="extrabold" fontSize={["sm","md","md","lg","lg"]} letterSpacing={["tighter","tight","tight","wider","wider"]}>unknown</Heading>
+                                                </Flex>
                                             </Flex>
-                                        </Flex>
-                                    </Td>
-                                    <Td fontWeight="semibold">
-                                        mittal.rohan@gmail.com                                
-                                    </Td>
-                                    <Td fontWeight="semibold">
-                                        +919872245500
-                                    </Td>
-                                    <Td>
-                                        <Badge colorScheme="orange">Credit</Badge>
-                                    </Td>
-                                    <Td fontWeight="semibold">
-                                        1838 **** **** ****
-                                    </Td>
-                                    <Td>
-                                        <ContactEditModal />
-                                        <ContactDeleteModal />
-                                    </Td>
-                                </Tr>       
+                                        </Td>
+                                        <Td fontWeight="semibold">
+                                            unknown@xxail                                
+                                        </Td>
+                                        <Td fontWeight="semibold">
+                                            +unknown
+                                        </Td>
+                                        <Td>
+                                            <Badge colorScheme="orange">unknown</Badge>
+                                        </Td>
+                                        <Td fontWeight="semibold">
+                                            unknown
+                                        </Td>
+                                        <Td>
+                                            <ContactEditModal />
+                                            <ContactDeleteModal />
+                                        </Td>
+                                    </Tr>
+                                }       
                             </>
                         }
                         </Tbody>

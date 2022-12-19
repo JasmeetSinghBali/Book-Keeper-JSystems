@@ -438,7 +438,7 @@ export const userRouter = router({
 
     }),
 
-    // 🎈 fetch fresh contact list from DB
+    // fetches fresh contact list from DB in most recent orderby
     fetchFreshContactList: trackedProcedure
     .input(z.object({
         access_token: z.string().min(1)
@@ -455,7 +455,9 @@ export const userRouter = router({
 
         
 
-        /** 🎈 add select, orderby desc created at, recent one first
+        /**
+         * reff: https://www.prisma.io/docs/concepts/components/prisma-client/filtering-and-sorting
+         * reff: https://www.prisma.io/docs/concepts/components/prisma-client/relation-queries
          * @type relational queries
          * @desc returns single user with id and its related/mapped all contacts 
          * */
@@ -463,9 +465,23 @@ export const userRouter = router({
             where: {
                 id: ctx.userAttachedData.id
             },
-            include: {
-                contacts: true,
-            }
+            select: {
+                email: true,
+                contacts: {
+                    orderBy: {
+                        createdAt: 'desc'
+                    },
+                    select: {
+                        id: true,
+                        name: true,
+                        image: true,
+                        email: true,
+                        phone: true,
+                        cardtype: true,
+                        cardno: true,
+                    },
+                },
+            },
         });
 
         return new Promise<CustQueryResultInterface | TRPCError>((resolve)=>{
