@@ -16,7 +16,8 @@ import QRCode  from 'qrcode';
 import { enableMfaSchema } from '../schemas/users/enable.mfa.schema';
 import isValidMfaCodes from '../../utils/validate.mfaCodes';
 import { validateMfaCodeSchema } from '../schemas/users/validate.mfacodes.schema';
-import { addNewContactSchema } from '../schemas/users/add.contact.schema';
+import { addNewContactSchema } from '../schemas/contacts/add.contact.schema';
+import { editContactSchema } from '../schemas/contacts/edit.contact.schema';
 
 
 /**
@@ -438,7 +439,7 @@ export const userRouter = router({
 
     }),
 
-    // fetches fresh contact list from DB in most recent orderby
+    /**@desc fetches fresh contact list from DB in most recent orderby*/
     fetchFreshContactList: trackedProcedure
     .input(z.object({
         access_token: z.string().min(1)
@@ -494,7 +495,125 @@ export const userRouter = router({
             }))
         });
 
+    }),
+    
+    /**@desc edit contact via id mutation */
+    editUserContact: trackedProcedure
+    .input(editContactSchema)
+    .mutation(async({ctx,input}): Promise<CustMutationResultInterface | TRPCError> =>{
+        
+        if(ctx.userAttachedData.role !== 'USER'){
+            throw new TRPCError({
+                code: "UNAUTHORIZED",
+                message: `Unauthorized`,
+            });
+        }
+
+        if(!input.id){
+            throw new TRPCError({
+                code: "BAD_REQUEST",
+                message: `make sure to provide contact id to update!`
+            })
+        }
+
+        // fetch current contact details
+        const currentContactDetails = await ctx.prisma?.contact.findFirst({
+            where: {
+                id: input.id
+            }
+        });
+
+        if(!currentContactDetails){
+            throw new TRPCError({
+                code: "NOT_FOUND",
+                message: `contact: ${input.id} was not found!!`
+            })
+        }
+        
+        const updatePD: {name:string|undefined|null,image:string|undefined|null,email:string|undefined|null,phone:string|undefined|null,cardtype: string|undefined|null,cardno: string|undefined|null} = Object.freeze({
+            
+            name: input.name === 'null' || !input.name ? currentContactDetails?.name : input.name,
+            image: input.image === 'null' || !input.image ? currentContactDetails?.image : input.image,
+            email: input.email === 'null' || !input.email ? currentContactDetails?.email : input.email,
+            phone: input.phone === 'null' || !input.phone ? currentContactDetails?.phone : input.phone,
+            cardtype: input.cardtype === 'null' || !input.cardtype ? currentContactDetails?.cardtype : input.cardtype,
+            cardno: input.cardno === 'null' || !input.cardno ? currentContactDetails?.cardno : input.cardno
+        
+        });
+        
+
+        const updatedContact = await ctx.prisma?.contact.update({
+            
+            where: {
+                id: input.id
+            },
+
+            data: {
+                name :  updatePD.name,     
+                image :  updatePD.image,   
+                email :   updatePD.email as string, 
+                phone :    updatePD.phone as string,
+                cardtype :  updatePD.cardtype as CardType,
+                cardno :    updatePD.cardno as string
+            }
+
+        }); 
+
+        if(!updatedContact){
+            throw new TRPCError({
+                code: "INTERNAL_SERVER_ERROR",
+                message: `failed to update contact : ${input.id}`
+            })
+        }
+
+        return new Promise<CustMutationResultInterface | TRPCError>((resolve)=>{
+            resolve(Object.freeze({
+                message: `Successfully updated user: ${ctx.userAttachedData.email} contact: ${input.id}`,
+                data: {
+                    updated_contact: updatedContact                    
+                }
+            }))
+        });
+
     }),  
 
+    /**@desc delete user's contact by id*/
+    deleteUserContact: trackedProcedure
+    .input(z.object({
+        id: z.string().min(1),
+        access_token: z.string().min(1)
+    }))
+    .mutation(async( {ctx,input} ): Promise<CustMutationResultInterface | TRPCError> =>{
+        
+        if(ctx.userAttachedData.role !== 'USER'){
+            throw new TRPCError({
+                code: "UNAUTHORIZED",
+                message: `Unauthorized`,
+            });
+        }
+
+        const removedContact = await ctx.prisma?.contact.delete({
+            where: {
+                id: input.id
+            }
+        });
+
+        if(!removedContact){
+            throw new TRPCError({
+                code: "INTERNAL_SERVER_ERROR",
+                message: `failed to remove contact!`
+            })
+        }
+
+        return new Promise<CustMutationResultInterface | TRPCError>((resolve)=>{
+            resolve(Object.freeze({
+                message: `Contact was successfully removed!!`,
+                data: {
+                    success: true,
+                    message: `contact: ${input.id} was removed successfully, the action can't be undone`
+                }
+            }))
+        });
+    }),
     // ---- here goes more user mutations/query procedures ----
 })
