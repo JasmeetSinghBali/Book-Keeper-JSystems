@@ -445,7 +445,6 @@ export const userRouter = router({
         access_token: z.string().min(1)
     }))
     .query(async({ctx,input}): Promise<CustQueryResultInterface | TRPCError> =>{
-        console.log("=====REACHED FETCH FRESH CONTACT LIST PROCEDURE QUERY=====")
         
         if(ctx.userAttachedData.role !== 'USER'){
             throw new TRPCError({
@@ -502,6 +501,7 @@ export const userRouter = router({
     .input(editContactSchema)
     .mutation(async({ctx,input}): Promise<CustMutationResultInterface | TRPCError> =>{
         
+        console.log("===========reached UPDATE USER CONTACT MUTATION=========")
         if(ctx.userAttachedData.role !== 'USER'){
             throw new TRPCError({
                 code: "UNAUTHORIZED",

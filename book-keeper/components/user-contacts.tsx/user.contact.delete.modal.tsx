@@ -3,9 +3,10 @@ import { Button, ButtonGroup, IconButton, Popover, PopoverArrow, PopoverBody, Po
 import { GrTrash } from "react-icons/gr";
 
 
-const ContactDeleteModal = () => {
+const ContactDeleteModal = ({...contactDeleteID}) => {
     const { isOpen, onToggle, onClose } = useDisclosure();    
-    
+    console.log("contact ID to be deleted ========")
+    console.log(contactDeleteID);
     return(
         <>
             {/**Contact List Filter On Basis of Email, Phone, Card Number */}
