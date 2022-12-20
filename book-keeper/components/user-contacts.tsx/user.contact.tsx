@@ -318,7 +318,7 @@ const UserContactSection = () => {
                             </DrawerBody>
                         <DrawerFooter borderTopWidth='1px'>
                             <Stack mt={2} direction = 'column'>
-                                <Alert display={ addNewContactMutation.isError || !addNewContactMutation.data ? 'flex' : 'none'} status='error'><AlertIcon />Failed to add new contact! </Alert>
+                                <Alert display={ addNewContactMutation.isError || !addNewContactMutation.data ? 'flex' : 'none'} status='info'><AlertIcon />double check input's! </Alert>
                                 <Alert display={ validationError ? 'flex' : 'none'} status='error'><AlertIcon />Validation failed ! make sure you enter correct details of the contact ! </Alert>
                             </Stack>
                             <Button variant='outline' mr={3} onClick={onClose} _hover={{bg:"red.400"}}>
@@ -369,10 +369,10 @@ const UserContactSection = () => {
                             <Td fontWeight="semibold">
                                 {newlyAddedContact ? newlyAddedContact.cardno : "Unknown"}
                             </Td>
-                            {/*🎈 pass the id of this contact so that this contact id can be edited,deleted*/}
+                            {/*pass the id & current details of this contact so that this contact id can be edited,deleted*/}
                             <Td>
-                                <ContactEditModal />
-                                <ContactDeleteModal />
+                                <ContactEditModal contactEditID={newlyAddedContact ? newlyAddedContact : {} }/>
+                                <ContactDeleteModal contactDeleteID={newlyAddedContact ? newlyAddedContact : {}}/>
                             </Td>
                         </Tr>
                         {
@@ -403,10 +403,10 @@ const UserContactSection = () => {
                                                     <Td fontWeight="semibold">
                                                         {contact?.cardno}
                                                     </Td>
-                                                    {/** 🎈 send the contact id to edit/delete modal for operations */}
+                                                    {/** send the contact id & contact data to edit/delete modal for operations */}
                                                     <Td>
-                                                        <ContactEditModal />
-                                                        <ContactDeleteModal />
+                                                        <ContactEditModal contactEditID={contact ? contact : {} }/>
+                                                        <ContactDeleteModal contactDeleteID={contact ? contact : {}}/>
                                                     </Td>
                                                 </Tr>
                                             );
