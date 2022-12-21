@@ -180,7 +180,7 @@ const ContactEditModal = ({...contactEditID}) => {
                             <FormLabel htmlFor='contactname'>Name</FormLabel>
                             <Input
                             id='contactname'
-                            placeholder={contactEditID ? contactEditID.contactEditID.name : 'Please enter contact name'}
+                            placeholder={contactEditID ? contactEditID?.contactEditID?.name : 'Please enter contact name'}
                             onInput={(e: any)=>SetContactName(e.target.value)}
                             />
                         </Box>
@@ -188,7 +188,7 @@ const ContactEditModal = ({...contactEditID}) => {
                             <FormLabel htmlFor='contactemail'>Email</FormLabel>
                             <Input
                             id='contactemail'
-                            placeholder={contactEditID ? contactEditID.contactEditID.email : 'Please enter contact email'}
+                            placeholder={contactEditID ? contactEditID?.contactEditID?.email : 'Please enter contact email'}
                             onInput={(e: any)=>SetContactEmail(e.target.value)}
                             />
                         </Box>
@@ -196,7 +196,7 @@ const ContactEditModal = ({...contactEditID}) => {
                             <FormLabel htmlFor='contactphone'>Phone</FormLabel>
                             <Input
                             id='contactphone'
-                            placeholder={contactEditID ? contactEditID.contactEditID.phone : 'Please enter contact phone'}
+                            placeholder={contactEditID ? contactEditID?.contactEditID?.phone : 'Please enter contact phone'}
                             onInput={(e: any)=>SetContactPhone(e.target.value)}
                             />
                         </Box>

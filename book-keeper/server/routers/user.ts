@@ -642,16 +642,18 @@ export const userRouter = router({
         } 
 
         let searchResult: any ;
-
+        
         // email
         if(input.search_on === 'email'){
             searchResult = await ctx.prisma?.contact.findMany({
                 where: {
-                    userId: ctx.userAttachedData.id,
                     email: {
                         startsWith: input.search_query
+                    },
+                    user: {
+                        id: ctx.userAttachedData.id,   
                     }
-                }
+                },
             });
         }
 
@@ -659,9 +661,11 @@ export const userRouter = router({
         if(input.search_on === 'phone'){
             searchResult = await ctx.prisma?.contact.findMany({
                 where: {
-                    userId: ctx.userAttachedData.id,
                     phone: {
                         startsWith: input.search_query
+                    },
+                    user: {
+                        id: ctx.userAttachedData.id
                     }
                 }
             })
@@ -674,9 +678,6 @@ export const userRouter = router({
                 message: "not found"
             })
         }
-
-        console.log("=====AT text-search startsWith=====");
-        console.log(searchResult);
 
         return new Promise<CustQueryResultInterface | TRPCError>((resolve)=>{
             resolve(Object.freeze({

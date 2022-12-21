@@ -232,7 +232,7 @@ https://next-auth.js.org/configuration/options
 
 reff: https://www.prisma.io/docs/concepts/components/prisma-client/filtering-and-sorting
 
-- [ ] add a refresh button in frontend contact adjacent to + icon that makes the filterChoice use state false and invalidate/refetch freshContactList query , only when filterChoice is true then show the filter result a/c to searched keyword
+- [x] filter/search email/phone text search dynamic
 
 - [ ] wrap up and make sure each filter, update, add card, contact by user & change in settings or deleting user account (active: false dont actually delete user account completely) is sorted in reff to frontend end-to-end to backend trpc server call & setup.
 

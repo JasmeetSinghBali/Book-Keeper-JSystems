@@ -1,8 +1,7 @@
 import { useDisclosure, Link, Avatar, Divider, Flex, Heading, Icon, IconButton, Stack, Switch, Table, Tbody, Td, Text, Th, Thead, Tr, InputGroup, InputLeftElement, Input, Badge, Tooltip, Drawer, DrawerOverlay, DrawerContent, DrawerCloseButton, DrawerHeader, DrawerBody, Box, FormLabel, Select, DrawerFooter, Button, chakra, FormControl, HStack, PinInput, PinInputField, Alert, AlertIcon, RadioGroup, Radio } from "@chakra-ui/react";
 import {motion} from 'framer-motion';
-import { AiFillCaretDown, AiFillCaretUp, AiOutlineContacts, AiOutlineEdit, AiOutlineFileSearch, AiOutlinePlus } from "react-icons/ai";
+import { AiFillCaretDown, AiFillCaretUp, AiOutlineContacts, AiOutlineEdit, AiOutlineFileSearch, AiOutlineFileSync, AiOutlinePlus, AiOutlineSearch } from "react-icons/ai";
 import {useEffect, useState} from 'react';
-import ContactListFilter from "./user.contact.filter";
 import ContactEditModal from "./user.contact.edit";
 import ContactDeleteModal from "./user.contact.delete.modal";
 import validator from "validator";
@@ -23,7 +22,8 @@ const UserContactSection = () => {
     const [ contactCardNumber,SetContactCardNumber ] = useState('null');
     const [ validationError,SetValidationError ] = useState(false);
     const [ mutationProcessFailed,SetMutationProcessFailed ] = useState(false);
-    const [ ftSearchQuery, SetFTSearchQuery ] = useState('');
+    const [ ftSearchQuery, SetFTSearchQuery ] = useState('nullify');
+    const [ ftSearchOn, SetFTSearchOn ] = useState('nullify');
     const [ ftSearchActionEnabled,SetFTSearchActionEnabled ] = useState(false);
 
     const utils = trpcClient.useContext();
@@ -39,14 +39,15 @@ const UserContactSection = () => {
     // query contact list on ftsearch init
     const contactsFTSearchList: any = trpcClient.user.ftextSearchContactList.useQuery({
         access_token: rpcTokenInZustand.token,
-        search_on: 'email',
-        search_query: 'cont'
+        search_on: ftSearchOn,
+        search_query: ftSearchQuery
     });
     
     const addNewContactMutation: any = trpcClient.user.addNewContact.useMutation();
     
     /**@desc reset all contact values, opens up the new contact modal/drawer */
     const handleNewContactModal = async(): Promise<any> => {
+        
         SetFTSearchActionEnabled(false);
         SetContactImageSecureUrl('');
         SetContactName('null');
@@ -149,50 +150,23 @@ const UserContactSection = () => {
         return;
     }
 
-    /**@desc 🎈 text-search-startsWith email,phone  */
-    const handleFTSearch = async()=>{
-        
-        // 🎈 check and validate wheather the Input is valid email,phone, and set the search_on
-        if(!ftSearchQuery){
-            return;
-        }
-
-        let searchOn: string = '';
-        let validSFTPhoneQuery: boolean = false;
-        
-        const validSFTEmailQuery: boolean = await validator.isEmail(ftSearchQuery);
-        validSFTPhoneQuery = validator.isMobilePhone(ftSearchQuery);
-
-        if(!validSFTEmailQuery && !validSFTPhoneQuery){
-            return;
-        }
-        if(validSFTEmailQuery && !validSFTPhoneQuery){
-            searchOn = 'email';
-        }
-        if(validSFTPhoneQuery && !validSFTEmailQuery){
-            searchOn = 'phone';
-        }
-         
-
-        // 🎈 then make a search query
-        await utils.user.ftextSearchContactList.invalidate({
-            access_token: rpcTokenInZustand.token,
-            search_on: searchOn,
-            search_query: ftSearchQuery 
-        })
+    /** handle text-search email/phone */
+    const handleFTSearch = async(e: any): Promise<any> => {
+        e.preventDefault();
+        SetFTSearchActionEnabled(true);
         return;
     }
 
     useEffect(()=>{
+        if(ftSearchActionEnabled){
+            return;
+        }
         //invalidate query to update contactsFreshList, after new contact was added
         utils.user.fetchFreshContactList.invalidate({
             access_token: rpcTokenInZustand.token
         });
-    },[addNewContactMutation.data])
-
-    useEffect(()=>{
-        SetFTSearchActionEnabled(true);
-    },[contactsFTSearchList.data])
+        return;
+    },[addNewContactMutation.data,ftSearchActionEnabled])
 
 
     // console.log("============fresh contact list from server ===");
@@ -203,11 +177,10 @@ const UserContactSection = () => {
 
     const contactsList: any = contactsFreshList?.data?.data?.contact_list;
     
-    if(ftSearchActionEnabled){
-        console.log("========Full text search result from server ==========");
-        console.log(contactsFTSearchList.data);
-    }
+    // console.log("=====Text-search results====");
+    // console.log(contactsFTSearchList.data);
 
+    
     return (
         
         <>
@@ -256,20 +229,38 @@ const UserContactSection = () => {
                 {/**Action/Interactive section */}
                 <Stack direction='row' p={2} ml={100} mt={[-2,-5,-10,-10,-10]} display="flex">
                     <Flex alignContent="center">
-                        <InputGroup bgColor="#fff" mb={4} border="none" borderColor="#1A202C" borderRadius="10px" mr={2}>
-                            <InputLeftElement pointerEvents="none" children={<AiOutlineFileSearch color="#1A202C"/>} />
-                            <Input 
-                                type="text" 
-                                placeholder="search by email,phone or cardnumber [full-text-search]"
-                                borderRadius="15px"
-                                onInput={(e: any)=> SetFTSearchQuery(e.target.value)}
+                        <chakra.form onSubmit={handleFTSearch}>
+                            <InputGroup bgColor="#fff" mb={4} border="none" borderColor="#1A202C" borderRadius="10px" mr={2}>
+                                <InputLeftElement pointerEvents="none" children={<AiOutlineFileSearch color="#1A202C"/>} />
+                                <Input 
+                                    type="text" 
+                                    placeholder="search by email,phone or cardnumber [full-text-search]"
+                                    borderRadius="15px"
+                                    onInput={(e: any)=> { SetFTSearchQuery(e.target.value); }}
+                                />
+                            </InputGroup>
+                        </chakra.form>
+                        <RadioGroup defaultValue='2'>
+                            <Stack ml={2} spacing={0.5} direction='column'>
+                                <Radio size={"sm"} onClick={()=>SetFTSearchOn('email')} colorScheme='green' value='1'>
+                                  Email
+                                </Radio>
+                                <Radio size={"sm"} onClick={()=>SetFTSearchOn('phone')} colorScheme='cyan' value='2'>
+                                  Phone
+                                </Radio>
+                            </Stack>
+                        </RadioGroup>
+                        <Tooltip hasArrow label='perform text-search' bg='#fff' color='black' placement="top">
+                            <IconButton
+                                _hover={{bg:"#FBB6CE"}}
+                                icon={<AiOutlineSearch />}
+                                aria-label={'textSearchStartsWith'}
+                                ml={1}
+                                mb={4}
+                                bgColor="gray.200"
+                                type="submit"
                             />
-                            {/**🎈 have a button here that handles the calling of text-search startsWith email,phone */}
-                        </InputGroup>
-
-                        {/**@desc resets the contact list, invalidate/refetch the complete contact list associated to current user  */}
-                        <ContactListFilter />
-                        
+                        </Tooltip>
                     </Flex>
                     <Tooltip hasArrow label='Add a new contact to your contact list.' bg='#fff' color='black' placement="right">
                         <IconButton
@@ -408,6 +399,40 @@ const UserContactSection = () => {
                             </Tr>
                         </Thead>
                         <Tbody>
+                        {
+                        
+                        contactsFTSearchList?.data?.data?.ftsearch_result.length === 1 ?
+                        <Tr>
+                            <Td>
+                                <Flex align="center">
+                                    <Avatar size={["sm","md","md","lg","lg"]} mr={2} src={contactsFTSearchList?.data?.data?.ftsearch_result[0].image}/>
+                                    <Flex flexDir="column">
+                                        <Heading fontWeight="extrabold" fontSize={["sm","md","md","lg","lg"]} letterSpacing={["tighter","tight","tight","wider","wider"]}>{contactsFTSearchList?.data?.data?.ftsearch_result[0].name}</Heading>
+                                    </Flex>
+                                </Flex>
+                            </Td>
+                            <Td fontWeight="semibold">
+                                {contactsFTSearchList?.data?.data?.ftsearch_result[0].email}                                
+                            </Td>
+                            <Td fontWeight="semibold">
+                                {contactsFTSearchList?.data?.data?.ftsearch_result[0].phone}
+                            </Td>
+                            <Td>
+                                <Badge colorScheme={contactsFTSearchList?.data?.data?.ftsearch_result[0].cardtype==="DEBIT" ? "green" : "orange"}>{contactsFTSearchList?.data?.data?.ftsearch_result[0].cardtype}</Badge>
+                            </Td>
+                            <Td fontWeight="semibold">
+                                {contactsFTSearchList?.data?.data?.ftsearch_result[0].cardno}
+                            </Td>
+                            {/*pass the id & current details of this contact so that this contact id can be edited,deleted*/}
+                            <Td>
+                                <ContactEditModal contactEditID={contactsFTSearchList.data ? contactsFTSearchList?.data?.data?.ftsearch_result[0]: {} }/>
+                                <ContactDeleteModal contactDeleteID={contactsFTSearchList.data ? contactsFTSearchList?.data?.data?.ftsearch_result[0] : {}}/>
+                            </Td>
+                        </Tr>
+
+                        
+                        :
+
                         <Tr>
                             <Td>
                                 <Flex align="center">
@@ -435,11 +460,12 @@ const UserContactSection = () => {
                                 <ContactDeleteModal contactDeleteID={newlyAddedContact ? newlyAddedContact : {}}/>
                             </Td>
                         </Tr>
+                        }
                         {
                             view === 'show' &&
                             <>
                                 {
-                                    contactsList && contactsList.length > 1 ? contactsList.map((contact: any)=>{
+                                    contactsList && contactsList.length > 1 && contactsFTSearchList?.data?.data?.ftsearch_result.length < 1 ? contactsList.map((contact: any)=>{
                                         if(contact.id !== contactsList[0].id){
                                             return (
                                                 <Tr key={contact?.id}>
@@ -473,6 +499,45 @@ const UserContactSection = () => {
                                         }
                                         })
                                     :
+
+                                    contactsFTSearchList?.data?.data?.ftsearch_result.length > 1 ?
+                                    contactsFTSearchList?.data?.data?.ftsearch_result.map((contact: any)=>{
+                                    if(contact.id !== contactsFTSearchList?.data?.data?.ftsearch_result[0].id){
+                                        return (
+                                            <Tr key={contact?.id}>
+                                                <Td>
+                                                    <Flex align="center">
+                                                        <Avatar size={["sm","md","md","lg","lg"]} mr={2} src={contact ? contact?.image : "john.jpeg"}/>
+                                                        <Flex flexDir="column">
+                                                            <Heading fontWeight="extrabold" fontSize={["sm","md","md","lg","lg"]} letterSpacing={["tighter","tight","tight","wider","wider"]}>{contact.name}</Heading>
+                                                        </Flex>
+                                                    </Flex>
+                                                </Td>
+                                                <Td fontWeight="semibold">
+                                                    {contact?.email}                                
+                                                </Td>
+                                                <Td fontWeight="semibold">
+                                                    {contact?.phone}
+                                                </Td>
+                                                <Td>
+                                                    <Badge colorScheme={contact?.cardtype === "CREDIT" ? "orange" : "green"}>{contact?.cardtype}</Badge>
+                                                </Td>
+                                                <Td fontWeight="semibold">
+                                                    {contact?.cardno}
+                                                </Td>
+                                                {/** send the contact id & contact data to edit/delete modal for operations */}
+                                                <Td>
+                                                    <ContactEditModal contactEditID={contact ? contact : {} }/>
+                                                    <ContactDeleteModal contactDeleteID={contact ? contact : {}}/>
+                                                </Td>
+                                            </Tr>
+                                        )
+                                    }
+                                            
+                                    })
+                                    
+                                    :
+                                    
                                     <Tr>
                                         <Td>
                                             <Flex align="center">
@@ -495,8 +560,6 @@ const UserContactSection = () => {
                                             unknown
                                         </Td>
                                         <Td>
-                                            <ContactEditModal />
-                                            <ContactDeleteModal />
                                         </Td>
                                     </Tr>
                                 }       
