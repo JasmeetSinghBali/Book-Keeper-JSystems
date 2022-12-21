@@ -23,6 +23,8 @@ const UserContactSection = () => {
     const [ contactCardNumber,SetContactCardNumber ] = useState('null');
     const [ validationError,SetValidationError ] = useState(false);
     const [ mutationProcessFailed,SetMutationProcessFailed ] = useState(false);
+    const [ ftSearchQuery, SetFTSearchQuery ] = useState('');
+    const [ ftSearchActionEnabled,SetFTSearchActionEnabled ] = useState(false);
 
     const utils = trpcClient.useContext();
     
@@ -33,12 +35,19 @@ const UserContactSection = () => {
     const contactsFreshList: any = trpcClient.user.fetchFreshContactList.useQuery({
         access_token: rpcTokenInZustand.token
     })
+
+    // query contact list on ftsearch init
+    const contactsFTSearchList: any = trpcClient.user.ftextSearchContactList.useQuery({
+        access_token: rpcTokenInZustand.token,
+        search_on: 'email',
+        search_query: 'cont'
+    });
     
     const addNewContactMutation: any = trpcClient.user.addNewContact.useMutation();
     
     /**@desc reset all contact values, opens up the new contact modal/drawer */
     const handleNewContactModal = async(): Promise<any> => {
-        
+        SetFTSearchActionEnabled(false);
         SetContactImageSecureUrl('');
         SetContactName('null');
         SetContactPhone('null');
@@ -140,12 +149,51 @@ const UserContactSection = () => {
         return;
     }
 
+    /**@desc 🎈 text-search-startsWith email,phone  */
+    const handleFTSearch = async()=>{
+        
+        // 🎈 check and validate wheather the Input is valid email,phone, and set the search_on
+        if(!ftSearchQuery){
+            return;
+        }
+
+        let searchOn: string = '';
+        let validSFTPhoneQuery: boolean = false;
+        
+        const validSFTEmailQuery: boolean = await validator.isEmail(ftSearchQuery);
+        validSFTPhoneQuery = validator.isMobilePhone(ftSearchQuery);
+
+        if(!validSFTEmailQuery && !validSFTPhoneQuery){
+            return;
+        }
+        if(validSFTEmailQuery && !validSFTPhoneQuery){
+            searchOn = 'email';
+        }
+        if(validSFTPhoneQuery && !validSFTEmailQuery){
+            searchOn = 'phone';
+        }
+         
+
+        // 🎈 then make a search query
+        await utils.user.ftextSearchContactList.invalidate({
+            access_token: rpcTokenInZustand.token,
+            search_on: searchOn,
+            search_query: ftSearchQuery 
+        })
+        return;
+    }
+
     useEffect(()=>{
         //invalidate query to update contactsFreshList, after new contact was added
         utils.user.fetchFreshContactList.invalidate({
             access_token: rpcTokenInZustand.token
         });
     },[addNewContactMutation.data])
+
+    useEffect(()=>{
+        SetFTSearchActionEnabled(true);
+    },[contactsFTSearchList.data])
+
 
     // console.log("============fresh contact list from server ===");
     // console.log(contactsFreshList?.data?.data?.contact_list);
@@ -155,6 +203,11 @@ const UserContactSection = () => {
 
     const contactsList: any = contactsFreshList?.data?.data?.contact_list;
     
+    if(ftSearchActionEnabled){
+        console.log("========Full text search result from server ==========");
+        console.log(contactsFTSearchList.data);
+    }
+
     return (
         
         <>
@@ -205,9 +258,16 @@ const UserContactSection = () => {
                     <Flex alignContent="center">
                         <InputGroup bgColor="#fff" mb={4} border="none" borderColor="#1A202C" borderRadius="10px" mr={2}>
                             <InputLeftElement pointerEvents="none" children={<AiOutlineFileSearch color="#1A202C"/>} />
-                            <Input type="text" placeholder="Search by email, phone." borderRadius="15px"/>
+                            <Input 
+                                type="text" 
+                                placeholder="search by email,phone or cardnumber [full-text-search]"
+                                borderRadius="15px"
+                                onInput={(e: any)=> SetFTSearchQuery(e.target.value)}
+                            />
+                            {/**🎈 have a button here that handles the calling of text-search startsWith email,phone */}
                         </InputGroup>
-                        
+
+                        {/**@desc resets the contact list, invalidate/refetch the complete contact list associated to current user  */}
                         <ContactListFilter />
                         
                     </Flex>

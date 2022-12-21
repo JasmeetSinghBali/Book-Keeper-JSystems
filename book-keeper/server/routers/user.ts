@@ -615,5 +615,79 @@ export const userRouter = router({
             }))
         });
     }),
+
+    /**@desc 🎈 filter text-search-startsWith contact list on basis of field email,phone  */
+    ftextSearchContactList: trackedProcedure
+    .input(z.object({
+        access_token: z.string().min(1),
+        search_on: z.string().min(5),
+        search_query: z.string().min(3)
+    }))
+    .query(async({ctx,input}): Promise<CustQueryResultInterface | TRPCError> =>{
+        if(ctx.userAttachedData.role !== 'USER'){
+            throw new TRPCError({
+                code: "UNAUTHORIZED",
+                message: "unauthorized"
+            })
+        }
+
+        // check search_on is email | phone | cardnumber
+        const possibleSearchOn: Array<string> = ["email","phone"];
+        const validSearchOn = possibleSearchOn.indexOf(input.search_on);
+        if(validSearchOn === -1){
+            throw new TRPCError({
+                code: "BAD_REQUEST",
+                message: `allowed values for search_on are email|phone , currentSearchOn: ${input.search_on}`
+            });
+        } 
+
+        let searchResult: any ;
+
+        // email
+        if(input.search_on === 'email'){
+            searchResult = await ctx.prisma?.contact.findMany({
+                where: {
+                    userId: ctx.userAttachedData.id,
+                    email: {
+                        startsWith: input.search_query
+                    }
+                }
+            });
+        }
+
+        // phone
+        if(input.search_on === 'phone'){
+            searchResult = await ctx.prisma?.contact.findMany({
+                where: {
+                    userId: ctx.userAttachedData.id,
+                    phone: {
+                        startsWith: input.search_query
+                    }
+                }
+            })
+        }
+        
+
+        if(!searchResult){
+            throw new TRPCError({
+                code: "NOT_FOUND",
+                message: "not found"
+            })
+        }
+
+        console.log("=====AT text-search startsWith=====");
+        console.log(searchResult);
+
+        return new Promise<CustQueryResultInterface | TRPCError>((resolve)=>{
+            resolve(Object.freeze({
+                success: true,
+                message: `successfully performed full text search on contacts with searchTerm: ${input.search_query} inRelation: ${input.search_on}`,
+                data: {
+                    ftsearch_result: searchResult
+                }
+            }))
+        });
+    }),  
+
     // ---- here goes more user mutations/query procedures ----
 })

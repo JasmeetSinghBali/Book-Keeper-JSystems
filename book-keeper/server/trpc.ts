@@ -28,7 +28,7 @@ const t = initTRPC.context<Context>().create();
 
   /** Check: 2 check for attached jwt verified payload*/
   if(ctx.authorizedpass === null || !ctx.authorizedpass){
-    console.log("============CULPRIT========");
+    console.log("============Failed JWT CHECK========");
     console.log(ctx.authorizedpass);
     throw new TRPCError({
       code: 'UNAUTHORIZED',
