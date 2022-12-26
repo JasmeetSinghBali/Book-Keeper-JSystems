@@ -1,4 +1,4 @@
-import React,{ useState } from 'react';
+import React,{ useEffect, useState } from 'react';
 import { 
     Flex,
     Heading,
@@ -34,10 +34,24 @@ import {
 } from 'react-icons/fi'
 import NotificationSection from './notification.dashboard';
 import {motion} from 'framer-motion';
+import { trpcClient } from '../../utils/Clientrpc';
+import { useCurrentRpcToken } from '../../store/rpc-token-store';
 
 const SearchNotificationSection = () =>{
+    
     const [card,selectCard] = useState(1);
     const { isOpen, onOpen, onClose } = useDisclosure();
+    
+    const utils = trpcClient.useContext();
+    const rpcTokenInZustand = useCurrentRpcToken.getState();
+
+    
+    const contactsFreshList: any = trpcClient.user.fetchFreshContactList.useQuery({
+        access_token: rpcTokenInZustand.token
+    })
+
+    // console.log(contactsFreshList?.data?.data?.contact_list);
+
     return (
         <>
             {/*📝 Search part + Card Slider part + credit/debit Total Funds related to all cards + [For Future Versions] Add new contact + Dispatch/Send funds Section */}
@@ -74,7 +88,89 @@ const SearchNotificationSection = () =>{
                         }
                     },
                 }}>
+                    <Flex flexDirection="row">
                     <Heading letterSpacing="tighter" fontWeight="bold" display="inline-flex" fontSize="xl" >My Cards</Heading>
+                        <Button onClick={onOpen} leftIcon={<FiPlus />} size="xs" ml={2} colorScheme="teal" bgColor="gray.300">Add</Button>
+                        <Drawer
+                            isOpen={isOpen}
+                            placement='right'
+                            onClose={onClose}
+                            size="sm"
+                        >
+                            <DrawerOverlay />
+                            <DrawerContent>
+                            <DrawerCloseButton />
+                            <DrawerHeader borderBottomWidth='1px'>
+                                Add a new card
+                            </DrawerHeader>
+
+                            <DrawerBody>
+                                <Stack spacing='24px'>
+                                <Box>
+                                    <Text fontWeight="semibold" mb={1}>Contact's Image</Text>
+                                    <Input
+                                        type="file"
+                                        id='contactimage'
+
+                                    />
+                                    
+                                </Box>
+                                <Box>
+                                    <FormLabel htmlFor='contactname'>Name</FormLabel>
+                                    <Input
+                                    id='contactname'
+                                    placeholder='Please enter contact name'
+                                    />
+                                </Box>
+                                <Box>
+                                    <FormLabel htmlFor='contactemail'>Email</FormLabel>
+                                    <Input
+                                    id='contactemail'
+                                    placeholder='Please enter contact email'
+                                    />
+                                </Box>
+                                <Box>
+                                    <FormLabel htmlFor='contactphone'>Phone</FormLabel>
+                                    <Input
+                                    id='contactphone'
+                                    placeholder='Please enter contact phone'
+                                    />
+                                </Box>
+                                <Box>
+                                    <FormLabel htmlFor='cardtype'>Select Card Type</FormLabel>
+                                    <Select id='cardtype' defaultValue='segun'>
+                                    <option value='credit'>Credit</option>
+                                    <option value='debit'>Debit</option>
+                                    </Select>
+                                </Box>
+                                <Box>
+                                    <FormLabel htmlFor='cardNumber'>Card Number</FormLabel>
+                                    <Input
+                                    id='cardNumber'
+                                    placeholder='Please provide contact card number'
+                                    type="password"
+                                    />
+                                </Box>
+                                <Box>
+                                    <FormLabel htmlFor='confirmcardNumber'>Confirm Card Number</FormLabel>
+                                    <Input
+                                    id='confirmcardNumber'
+                                    placeholder='Please confirm contact card number'
+                                    type="password"
+                                    />
+                                </Box>
+                                </Stack>
+                            </DrawerBody>
+
+                            <DrawerFooter borderTopWidth='1px'>
+                                <Button variant='outline' mr={3} onClick={onClose} _hover={{bg:"red.400"}}>
+                                    Cancel
+                                </Button>
+                                <Button colorScheme='teal'>Add 🎭</Button>
+                            </DrawerFooter>
+                            </DrawerContent>
+                        </Drawer>
+                    </Flex>
                 </motion.div>
                 {/**Card Sliding Selector 🎈 make sure to make this dynamic , also limit each user to 3 cards only via backend logic */}
                 {card === 1 &&
@@ -225,95 +321,27 @@ const SearchNotificationSection = () =>{
                     <Heading letterSpacing="tighter" fontWeight="bold" display="inline-flex" fontSize="xl" my={4}>Send money to</Heading>
                 </motion.div>
                 <Flex>
-                    <AvatarGroup size="md" max={4}>
-                        {/*🎈 loop over all the images of curent user contacts avatars */}
-                        <Avatar src="avatar-2.jpg"/>
-                        <Avatar src="avatar-2.jpg"/>
-                        <Avatar src="avatar-2.jpg"/>
-                        <Avatar src="avatar-2.jpg"/>
-                        <Avatar src="avatar-2.jpg"/>
-                        <Avatar src="avatar-2.jpg"/>
-                    </AvatarGroup>
-                    <Button onClick={onOpen} leftIcon={<FiPlus />} size="md" ml={2} colorScheme="teal" bgColor="gray.300">🎭</Button>
-                    <Drawer
-                        isOpen={isOpen}
-                        placement='right'
-                        onClose={onClose}
-                        size="sm"
-                    >
-                        <DrawerOverlay />
-                        <DrawerContent>
-                        <DrawerCloseButton />
-                        <DrawerHeader borderBottomWidth='1px'>
-                            Add a new contact
-                        </DrawerHeader>
-
-                        <DrawerBody>
-                            <Stack spacing='24px'>
-                            <Box>
-                                <Text fontWeight="semibold" mb={1}>Contact's Image</Text>
-                                <Input
-                                    type="file"
-                                    id='contactimage'
-
-                                />
-                                
-                            </Box>
-                            <Box>
-                                <FormLabel htmlFor='contactname'>Name</FormLabel>
-                                <Input
-                                id='contactname'
-                                placeholder='Please enter contact name'
-                                />
-                            </Box>
-                            <Box>
-                                <FormLabel htmlFor='contactemail'>Email</FormLabel>
-                                <Input
-                                id='contactemail'
-                                placeholder='Please enter contact email'
-                                />
-                            </Box>
-                            <Box>
-                                <FormLabel htmlFor='contactphone'>Phone</FormLabel>
-                                <Input
-                                id='contactphone'
-                                placeholder='Please enter contact phone'
-                                />
-                            </Box>
-                            <Box>
-                                <FormLabel htmlFor='cardtype'>Select Card Type</FormLabel>
-                                <Select id='cardtype' defaultValue='segun'>
-                                <option value='credit'>Credit</option>
-                                <option value='debit'>Debit</option>
-                                </Select>
-                            </Box>
-                            <Box>
-                                <FormLabel htmlFor='cardNumber'>Card Number</FormLabel>
-                                <Input
-                                id='cardNumber'
-                                placeholder='Please provide contact card number'
-                                type="password"
-                                />
-                            </Box>
-                            <Box>
-                                <FormLabel htmlFor='confirmcardNumber'>Confirm Card Number</FormLabel>
-                                <Input
-                                id='confirmcardNumber'
-                                placeholder='Please confirm contact card number'
-                                type="password"
-                                />
-                            </Box>
-                            </Stack>
-                        </DrawerBody>
-
-                        <DrawerFooter borderTopWidth='1px'>
-                            <Button variant='outline' mr={3} onClick={onClose} _hover={{bg:"red.400"}}>
-                                Cancel
-                            </Button>
-                            <Button colorScheme='teal'>Add 🎭</Button>
-                        </DrawerFooter>
-                        </DrawerContent>
-                    </Drawer>
+                <AvatarGroup size="md" max={3}>
+                    {/*🎈 loop over all the images of curent user contacts avatars */}
+                    { contactsFreshList.data ? 
+                        
+                        contactsFreshList?.data?.data?.contact_list.map((cont: any)=>{
+                            
+                            return (<Avatar src={cont?.image?.length !== 0 ? cont.image : "avatar-2.jpg"}/>)    
+                        })
+                        
+                        :
+                        
+                        <>
+                            <Avatar src="avatar-2.jpg"/>
+                            <Avatar src="avatar-2.jpg"/>
+                            <Avatar src="avatar-2.jpg"/>
+                            <Avatar src="avatar-2.jpg"/>
+                            <Avatar src="avatar-2.jpg"/>
+                            <Avatar src="avatar-2.jpg"/>
+                        </>
+                    }
+                </AvatarGroup>    
                 </Flex>
                 <Text color="gray" mt={10} mb={2}>Card Number</Text>
                 <InputGroup>

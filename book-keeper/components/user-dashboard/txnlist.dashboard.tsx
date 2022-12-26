@@ -22,9 +22,16 @@ import { motion } from 'framer-motion';
 import AnimatedCharacter from '../common/animations/animate.character';
 import ChartRanger  from './chart.dashboard.filter';
 import TxnListFilter from './txnlist.dashboard.filter';
+import { useCurrentUserInfo } from '../../store/current-user-info.store';
 
 const TxnList = () => {
+
     const [view,changeView] = useState('hide');
+
+    const currentUserZustand: any = useCurrentUserInfo.getState();
+
+    // console.log(currentUserZustand.user)
+
     return(
         <>
             {/*Chart + Latest Transaction List Section*/}
@@ -49,7 +56,7 @@ const TxnList = () => {
                         }
                     },
                  }}>
-                    <Heading fontWeight="normal" mb={1} mt={1} fontSize="xl" letterSpacing="tighter"> Welcome back, <Flex fontWeight="bold" display="inline-flex" fontSize="xl">Jasmeet</Flex></Heading>
+                    <Heading fontWeight="normal" mb={1} mt={1} fontSize="xl" letterSpacing="tighter"> Welcome back, <Flex fontWeight="bold" display="inline-flex" fontSize="xl">{currentUserZustand?.user?.name !== null ? currentUserZustand?.user?.name : currentUserZustand?.user?.email.split("@")[0]}</Flex></Heading>
                  </motion.div>
                 <Flex
                     justifyContent="space-between"
