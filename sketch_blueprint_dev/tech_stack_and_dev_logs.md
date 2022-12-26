@@ -232,7 +232,7 @@ https://next-auth.js.org/configuration/options
 
 reff: https://www.prisma.io/docs/concepts/components/prisma-client/filtering-and-sorting
 
-- [x] filter/search email/phone text search dynamic
+- [x] filter/search email/phone text search dynamic contact list page
 
 - [ ] wrap up and make sure each filter, update, add card, contact by user & change in settings or deleting user account (active: false dont actually delete user account completely) is sorted in reff to frontend end-to-end to backend trpc server call & setup.
 
