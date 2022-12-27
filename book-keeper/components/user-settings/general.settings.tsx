@@ -1,9 +1,10 @@
-import { Avatar, Flex, Icon, IconButton, Text, Divider, Heading, TableContainer, Table, Thead, Tr, Th, Tbody, Td, Tfoot, Switch, Tooltip } from '@chakra-ui/react';
+import { Avatar, Flex, Icon, IconButton, Text, Divider, Heading, TableContainer, Table, Thead, Tr, Th, Tbody, Td, Tfoot, Switch, Tooltip  } from '@chakra-ui/react';
 import React from 'react';
 import { AiFillCamera, AiFillEdit, AiOutlineAlert, AiOutlineUser } from 'react-icons/ai';
 import {motion} from 'framer-motion';
 import EditPhoneEmailModal from './edit.phone-email.settings';
 import EnableAccountMfaModal from './enablemfa.settings';
+import EditDisplayPictureModal from './edit.dp.settings';
 
 const GeneralSettings = ({userStoreData}: any) => {
 
@@ -61,17 +62,7 @@ const GeneralSettings = ({userStoreData}: any) => {
                         h={["33%","27%","23%","20%","16%"]}
                         
                     >
-                        {/*🎈 make this dynamic a/c to current User Image */}
-                        <IconButton
-                            //onClick={onOpen} 
-                            icon={<AiFillCamera />}
-                            fontSize={["medium","medium","medium","large","x-large"]}
-                            bgColor="gray.200"
-                            borderRadius="100%"
-                            // p="10px"
-                            aria-label={'ChangePhoto'} 
-                            _hover={{bg:"pink.200"}}
-                        />            
+                        <EditDisplayPictureModal />
                         <Flex
                             flexDir="column"
                         >
@@ -82,7 +73,7 @@ const GeneralSettings = ({userStoreData}: any) => {
                          ml={1}
                          mt={5}
                         >
-                            {/*🎈 Make This Dynamic User Data make sure to show the username & Email in upper case*/}
+                            {/*Make This Dynamic User Data make sure to show the username & Email in upper case*/}
                             <Text fontSize={["sm","sm","md","md","md"]} color={!userStoreData?.email ? 'gray.400' : 'black'} fontWeight="semibold" letterSpacing="tight" >Email: {userStoreData?.email ? userStoreData?.email : `🚫` }</Text>
                             <Text fontSize={["sm","sm","md","md","md"]} color={!userStoreData?.phone ? 'gray.400' : 'black'} fontWeight="semibold" letterSpacing="tight" >Phone: {userStoreData?.phone === null || !userStoreData?.phone ? `🚫` : userStoreData?.phone }</Text>
                         </Flex>
