@@ -690,5 +690,52 @@ export const userRouter = router({
         });
     }),  
 
+    /**@desc edit user display picture mutation */
+    updateUserDP: trackedProcedure
+    .input(z.object({
+        access_token: z.string().min(1),
+        image: z.string().min(1)
+      }),)
+    .mutation(async({ctx,input}): Promise<CustMutationResultInterface | TRPCError> =>{
+        
+        if(ctx.userAttachedData.role !== 'USER'){
+            throw new TRPCError({
+                code: "UNAUTHORIZED",
+                message: `Unauthorized`,
+            });
+        }
+
+        const updatedUserData = await ctx.prisma?.user.update({
+            where: {
+                id: ctx.userAttachedData.id 
+            },
+            data: {
+                image :  input.image,   
+            }
+        }); 
+
+        if(!updatedUserData){
+            throw new TRPCError({
+                code: "INTERNAL_SERVER_ERROR",
+                message: `failed to update user display picture`
+            })
+        }
+
+        return new Promise<CustMutationResultInterface | TRPCError>((resolve)=>{
+            resolve(Object.freeze({
+                message: `Successfully updated user display picture: ${ctx.userAttachedData.email} `,
+                data: {
+                    name: updatedUserData.name,
+                    email: updatedUserData.email,
+                    image: updatedUserData.image,
+                    role: updatedUserData.role,
+                    plan: updatedUserData.plan,
+                    phone: updatedUserData.phone,
+                    mfa_isEnabled: updatedUserData.mfa_isEnabled                    
+                }
+            }))
+        });
+
+    }),
     // ---- here goes more user mutations/query procedures ----
 })
