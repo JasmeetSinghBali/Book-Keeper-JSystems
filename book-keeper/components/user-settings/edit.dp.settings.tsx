@@ -72,8 +72,6 @@ const EditDisplayPictureModal = () => {
 
     return (
         <>
-            {/*🎈 shift this to a seprate component , 
-                allow user to upload/edit profile image*/}
             <IconButton
                 onClick={onOpen} 
                 icon={<AiFillCamera />}
