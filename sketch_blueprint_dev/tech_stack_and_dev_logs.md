@@ -234,9 +234,10 @@ reff: https://www.prisma.io/docs/concepts/components/prisma-client/filtering-and
 
 - [x] filter/search email/phone text search dynamic contact list page
 
-- [ ] wrap up and make sure each filter, update, add contact by user & change in settings or deleting user account (active: false dont actually delete user account completely) is sorted in reff to frontend end-to-end to backend trpc server call & setup.
+- [x] wrap up and make sure each filter, update, add contact by user & change in settings or deleting user account (active: false dont actually delete user account completely) is sorted in reff to frontend end-to-end to backend trpc server call & setup.
 
-- [ ] have a sessionedRoute that checks for the validity of jwt token stored in zustand
+- [ ] uncomment the use effect redirects, that are commented out & test,
+      have a sessionedRoute that checks for the validity of jwt token stored in zustand
       if its not valid the redirect user to dashboard to load up and refresh the token from trpc server into zustand store automatically, have this mutation called in parent pages only and apply the redirection their just exclude dashboard page
 
 - [ ] event-emitters setup for EXTERNAL (email & phone notifications) & INTERNAL (events emitted that handles the logging of IP, access points, device info & geolocation & storing into db from the trpc middleware requestTracker and store against relevant user in DB to show in settings account)

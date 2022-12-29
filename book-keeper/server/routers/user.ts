@@ -737,5 +737,46 @@ export const userRouter = router({
         });
 
     }),
+
+    /**@desc  Delete user account(make inactive only in case this was accident deletion or breach their is at least room for recovery of data, actual deletion of account will be in admin control) mutation */
+    deleteUserAccount: trackedProcedure
+    .input(z.object({
+        access_token: z.string().min(1)
+      }),)
+    .mutation(async({ctx,input}): Promise<CustMutationResultInterface | TRPCError> =>{
+        
+        if(ctx.userAttachedData.role !== 'USER'){
+            throw new TRPCError({
+                code: "UNAUTHORIZED",
+                message: `Unauthorized`,
+            });
+        }
+
+        const userDisabled = await ctx.prisma?.user.update({
+            where: {
+                id: ctx.userAttachedData.id 
+            },
+            data: {
+                active :  false,   
+            }
+        }); 
+
+        if(userDisabled?.active || !userDisabled){
+            throw new TRPCError({
+                code: "INTERNAL_SERVER_ERROR",
+                message: `failed to delete user account, contact support!`
+            })
+        }
+
+        return new Promise<CustMutationResultInterface | TRPCError>((resolve)=>{
+            resolve(Object.freeze({
+                message: `Successfully deleted user account: ${ctx.userAttachedData.email} `,
+                data: {
+                    email: userDisabled?.email,
+                }
+            }))
+        });
+
+    }),
     // ---- here goes more user mutations/query procedures ----
 })
