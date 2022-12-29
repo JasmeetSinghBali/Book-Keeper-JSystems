@@ -18,13 +18,13 @@ const EditDisplayPictureModal = () => {
     const editUserImageMutation: any = trpcClient.user.updateUserDP.useMutation();
 
     /** 
-     * 🎈 under construction
+     * 
      * @desc handles image from form, make request to upload to cloduinary and update the dp for user in DB mutation call
      * also updates user data in zustand store
      * */
     const handleUpdateProfileImage = async(e: any) => {
         e.preventDefault();
-        console.log("sorted===");
+        // console.log("sorted===");
 
         // Sort form data image & upload to cloudinary
         const form = e.currentTarget;

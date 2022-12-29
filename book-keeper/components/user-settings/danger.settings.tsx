@@ -1,10 +1,45 @@
-import { Badge, Button, Divider, Flex, Grid, GridItem, Heading, Icon, Link, Tag, TagLabel, TagLeftIcon, Text } from '@chakra-ui/react';
-import React from 'react';
+import { AlertDialog, AlertDialogBody, AlertDialogContent, AlertDialogFooter, AlertDialogHeader, AlertDialogOverlay, Badge, Button, Divider, Flex, Grid, GridItem, Heading, Icon, Link, Tag, TagLabel, TagLeftIcon, Text, useDisclosure } from '@chakra-ui/react';
+import React, { useEffect, useState } from 'react';
 import { AiFillBug, AiFillInfoCircle, AiOutlineIdcard, AiOutlineUpCircle, AiOutlineWarning, AiTwotoneThunderbolt } from 'react-icons/ai';
 import { motion } from 'framer-motion'
 import AnimatedCharacter from '../common/animations/animate.character';
+import { useCurrentRpcToken } from '../../store/rpc-token-store';
+import { trpcClient } from '../../utils/Clientrpc';
+import { useRouter } from 'next/router';
+import { signOut } from 'next-auth/react';
 
 const DangerSettings = ({userStoreData}: any) => {
+    
+    const { push } = useRouter();
+    const { isOpen, onOpen, onClose } = useDisclosure();
+    const cancelRef = React.useRef();
+
+    const [ mutationFailed, SetMutationFailed ] = useState(false);
+    const [ deletionAccountSuccess, SetDeletionAccountSuccess ] = useState(false);
+    const rpcTokenInZustand = useCurrentRpcToken.getState();
+
+    const deleteUserMutation: any = trpcClient.user.deleteUserAccount.useMutation();
+
+    /*
+    @desc responsible for deleting user account, calls mutation on trpc server*/
+    const handleAccountDeletion = async()=>{
+        try{
+            await deleteUserMutation.mutate(Object.freeze({
+                access_token: rpcTokenInZustand.token
+            }));
+            SetMutationFailed(false);
+            SetDeletionAccountSuccess(true);
+            onClose();
+            // logout user current session & redirect user to login page
+            const redirection: any = await signOut({redirect: false, callbackUrl:'/user/login'});
+            push(redirection.url);
+        }catch(err: any){
+            SetMutationFailed(true);
+            console.log(err);
+            return;    
+        }
+    }
+
     return (
         <>
             <Flex
@@ -52,7 +87,7 @@ const DangerSettings = ({userStoreData}: any) => {
                         </motion.div>
                     </Flex>
 
-                    {/*CurrentPlan, IP & Last Accessed date logs Section*/}
+                    {/* 🎈 CurrentPlan, IP & Last Accessed date logs Section*/}
                     <Grid
                         h='200px'
                         templateRows='repeat(2, 1fr)'
@@ -150,8 +185,8 @@ const DangerSettings = ({userStoreData}: any) => {
                         display="flex"
                         mt={2}
                     >
-                        {/* Report bugs section*/}
-                        <motion.button key="deletemyaccount" className="card" whileHover={{
+                        {/* 🎈 Report bugs section*/}
+                        <motion.button key="reportappbug" className="card" whileHover={{
                             position: 'relative',
                             zIndex: 1,
                             background: 'white',
@@ -195,13 +230,39 @@ const DangerSettings = ({userStoreData}: any) => {
                             },
                         }}>
                             <Button
-                            //onClick={}
+                            onClick={onOpen}
                             _hover={{bg: "red"}}
                             >
                                 <Icon as={AiOutlineWarning} fontSize={["xs","sm","sm","md","md"]} mt={0} mr={2}></Icon>
                                 Delete My Account
                             </Button>
                         </motion.button>
+                        <AlertDialog
+                            isOpen={isOpen}
+                            leastDestructiveRef={cancelRef as any}
+                            onClose={onClose}
+                        >
+                            <AlertDialogOverlay>
+                            <AlertDialogContent>
+                                <AlertDialogHeader fontSize='lg' fontWeight='bold'>
+                                Remove My Account
+                                </AlertDialogHeader>
+
+                                <AlertDialogBody>
+                                Are you sure? You can't undo this action afterwards.
+                                </AlertDialogBody>
+
+                                <AlertDialogFooter>
+                                <Button ref={cancelRef as any} onClick={onClose}>
+                                    Cancel
+                                </Button>
+                                <Button disabled={deleteUserMutation.isLoading ? true : false} colorScheme='red' onClick={handleAccountDeletion} ml={3}>
+                                    Delete
+                                </Button>
+                                </AlertDialogFooter>
+                            </AlertDialogContent>
+                            </AlertDialogOverlay>
+                        </AlertDialog>
                     </Flex>
                 </Flex>
             </Flex>
