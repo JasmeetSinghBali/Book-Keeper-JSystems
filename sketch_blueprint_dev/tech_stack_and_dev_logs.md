@@ -236,6 +236,8 @@ reff: https://www.prisma.io/docs/concepts/components/prisma-client/filtering-and
 
 - [x] wrap up and make sure each filter, update, add contact by user & change in settings or deleting user account (active: false dont actually delete user account completely) is sorted in reff to frontend end-to-end to backend trpc server call & setup.
 
+- [ ] add mfa check for deleting account, if mfa enabled have dynamic pin section popped up in the delete modal alert , also check authentication code when hitting the delete mutation in backend if mfa is enabled, check mfaEnabled both frontend(UI) and backend.
+
 - [ ] uncomment the use effect redirects, that are commented out & test,
       have a sessionedRoute that checks for the validity of jwt token stored in zustand
       if its not valid the redirect user to dashboard to load up and refresh the token from trpc server into zustand store automatically, have this mutation called in parent pages only and apply the redirection their just exclude dashboard page

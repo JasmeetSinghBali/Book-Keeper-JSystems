@@ -741,7 +741,8 @@ export const userRouter = router({
     /**@desc  Delete user account(make inactive only in case this was accident deletion or breach their is at least room for recovery of data, actual deletion of account will be in admin control) mutation */
     deleteUserAccount: trackedProcedure
     .input(z.object({
-        access_token: z.string().min(1)
+        access_token: z.string().min(1),
+        mfa_code: z.string().optional()
       }),)
     .mutation(async({ctx,input}): Promise<CustMutationResultInterface | TRPCError> =>{
         
@@ -750,6 +751,24 @@ export const userRouter = router({
                 code: "UNAUTHORIZED",
                 message: `Unauthorized`,
             });
+        }
+
+        // In case mfa is enabled check mfa code existance & verification only then proceed else return with error
+        if(ctx.userAttachedData.mfa_isEnabled){
+            if(!input.mfa_code || input.mfa_code.length !== 6 ){
+                throw new TRPCError({
+                    code: "FORBIDDEN",
+                    message: `Mfa authentication code is missing`
+                })
+            }
+            const validateMFA = await isValidMfaCodes(input.mfa_code,ctx.userAttachedData.secret_mfa);
+
+            if(!validateMFA){
+                throw new TRPCError({
+                    code: "UNAUTHORIZED",
+                    message: `Unauthorized, failed to authenticate mfa, action cannot be processed!`
+                })
+            }
         }
 
         const userDisabled = await ctx.prisma?.user.update({
