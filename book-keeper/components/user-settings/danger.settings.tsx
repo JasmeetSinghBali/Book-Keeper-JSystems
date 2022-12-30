@@ -1,4 +1,4 @@
-import { AlertDialog, AlertDialogBody, AlertDialogContent, AlertDialogFooter, AlertDialogHeader, AlertDialogOverlay, Badge, Button, Divider, Flex, Grid, GridItem, Heading, Icon, Link, Tag, TagLabel, TagLeftIcon, Text, useDisclosure } from '@chakra-ui/react';
+import { AlertDialog, AlertDialogBody, AlertDialogContent, AlertDialogFooter, AlertDialogHeader, AlertDialogOverlay, Badge, Box, Button, Divider, Flex, Grid, GridItem, Heading, Icon, Link, PinInput, PinInputField, Tag, TagLabel, TagLeftIcon, Text, useDisclosure } from '@chakra-ui/react';
 import React, { useEffect, useState } from 'react';
 import { AiFillBug, AiFillInfoCircle, AiOutlineIdcard, AiOutlineUpCircle, AiOutlineWarning, AiTwotoneThunderbolt } from 'react-icons/ai';
 import { motion } from 'framer-motion'
@@ -249,6 +249,19 @@ const DangerSettings = ({userStoreData}: any) => {
                                 </AlertDialogHeader>
 
                                 <AlertDialogBody>
+                                {
+                                    🎈
+                                }
+                                <Box>
+                                    <PinInput mask onComplete={(value: any) => SetMfaCode(value)} >
+                                        <PinInputField onClick={(_e: any) => { SetMfaCode('null') }} />
+                                        <PinInputField />
+                                        <PinInputField />
+                                        <PinInputField />
+                                        <PinInputField />
+                                        <PinInputField />
+                                    </PinInput>
+                                </Box>
                                 Are you sure? You can't undo this action afterwards.
                                 </AlertDialogBody>
 
