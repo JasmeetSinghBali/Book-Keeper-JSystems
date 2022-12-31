@@ -36,9 +36,10 @@ const DangerSettings = ({userStoreData}: any) => {
                     mfa_code: mfaCode
                 }
             }
-            
-            mutPD = {
-                access_token: rpcTokenInZustand.token
+            if(!currentUserDataZustand?.user?.mfa_isEnabled){
+                mutPD = {
+                    access_token: rpcTokenInZustand.token
+                }
             }
 
             await deleteUserMutation.mutate(Object.freeze(mutPD));
@@ -279,6 +280,7 @@ const DangerSettings = ({userStoreData}: any) => {
                                 </Box>
                                 }
                                 Are you sure? You can't undo this action afterwards.
+                                {currentUserDataZustand?.user?.mfa_isEnabled && 'Please provide authenticator code to successfully complete this action'}
                                 </AlertDialogBody>
 
                                 <AlertDialogFooter>
