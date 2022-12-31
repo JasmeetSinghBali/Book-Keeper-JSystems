@@ -6,6 +6,7 @@ import Navbar from '../../components/common/navbar';
 import { useRouter } from 'next/router';
 import { useSession } from 'next-auth/react';
 import { trpcClient } from '../../utils/Clientrpc';
+import { useCurrentRpcToken } from '../../store/rpc-token-store';
 
 
 export default function invoices(){
@@ -15,12 +16,20 @@ export default function invoices(){
     const userEmail: any = session?.user?.email;
     const rpcAccessQuery: any = trpcClient.rpcAccess.checkRpcAccess.useQuery({email: userEmail});
 
+    const rpcTokenInZustand =  useCurrentRpcToken.getState(); 
+    const checkRpcTokenValidity: any = trpcClient.rpcAccess.checkRpcTokenValidity.useQuery({
+        rpc_token: rpcTokenInZustand.token
+    });
+
     // 📝 moved push to useEffect as server side push is not supported casues router instance error
     useEffect(()=>{
         if(!session){
             push('/user/login');
         }
         if(!rpcAccessQuery.data){
+            push('/user/dashboard');
+        }
+        if(!checkRpcTokenValidity.data || !checkRpcTokenValidity?.data?.data?.valid){
             push('/user/dashboard');
         }
     },[]); 

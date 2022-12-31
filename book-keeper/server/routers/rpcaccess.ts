@@ -6,7 +6,7 @@ import generateOTP, { generateOTPInterface } from '../../utils/otpGenerator';
 import { sendEmailOTP } from '../../utils/customMailDispatcher';
 import validateOTP, { validationTOTPResultInterface } from '../../utils/otpValidator';
 import { encrypt, GEncryptedKey } from '../../utils/cryptoUtils';
-import { accessTokenPayload, signJwt } from '../../utils/jwtUtils';
+import { accessTokenPayload, signJwt, verifyJwt } from '../../utils/jwtUtils';
 import { User } from '@prisma/client';
 
 
@@ -237,5 +237,51 @@ export const rpcServerAccessRouter = router({
         }))
       });
     }),
+
+    /** @desc- check current user jwt token validity on initial pageload, utilized in token rotation */
+    checkRpcTokenValidity: sessionedProcedure
+    .input(
+      z.object({
+        rpc_token: z.string().min(1),
+      }),
+    )
+    .query(async({ctx,input}) : Promise< CustQueryResultInterface | TRPCError > => {
+      if(!ctx.session){
+        throw new TRPCError({
+          code: "FORBIDDEN",
+          message: `request was rejected.`,
+        });
+      }
+      
+      if(!ctx.userAttachedData.rpcAccess){
+        throw new TRPCError({
+          code: "FORBIDDEN",
+          message: `request was rejected.`,
+        });
+      }
+
+      // check rpcTokenValidity
+      const pd: any = await verifyJwt(input.rpc_token);
+      if(!pd){
+        console.log("jwt verification failed, rpc access session route");
+        throw new TRPCError({
+          code: "UNAUTHORIZED",
+          message: "rpc token validity expired!"
+        });
+      }
+
+      return new Promise<CustQueryResultInterface | TRPCError>((resolve)=>{
+        resolve(Object.freeze({
+          success: true,
+          message: `rpc token validity is still good!`,
+          data: {
+            valid: true
+          }
+        }))
+      });
+
+    }),
+
+    // here goes next mutation & query
     
 })
