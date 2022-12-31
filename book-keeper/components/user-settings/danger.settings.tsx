@@ -7,6 +7,7 @@ import { useCurrentRpcToken } from '../../store/rpc-token-store';
 import { trpcClient } from '../../utils/Clientrpc';
 import { useRouter } from 'next/router';
 import { signOut } from 'next-auth/react';
+import { useCurrentUserInfo } from '../../store/current-user-info.store';
 
 const DangerSettings = ({userStoreData}: any) => {
     
@@ -16,7 +17,10 @@ const DangerSettings = ({userStoreData}: any) => {
 
     const [ mutationFailed, SetMutationFailed ] = useState(false);
     const [ deletionAccountSuccess, SetDeletionAccountSuccess ] = useState(false);
+    const [ mfaCode , SetMfaCode] = useState('null');
     const rpcTokenInZustand = useCurrentRpcToken.getState();
+
+    const currentUserDataZustand: any = useCurrentUserInfo.getState();
 
     const deleteUserMutation: any = trpcClient.user.deleteUserAccount.useMutation();
 
@@ -24,9 +28,21 @@ const DangerSettings = ({userStoreData}: any) => {
     @desc responsible for deleting user account, calls mutation on trpc server*/
     const handleAccountDeletion = async()=>{
         try{
-            await deleteUserMutation.mutate(Object.freeze({
+            let mutPD: any;
+            
+            if(currentUserDataZustand?.user?.mfa_isEnabled){
+                mutPD = {
+                    access_token: rpcTokenInZustand.token,
+                    mfa_code: mfaCode
+                }
+            }
+            
+            mutPD = {
                 access_token: rpcTokenInZustand.token
-            }));
+            }
+
+            await deleteUserMutation.mutate(Object.freeze(mutPD));
+            
             SetMutationFailed(false);
             SetDeletionAccountSuccess(true);
             onClose();
@@ -250,8 +266,7 @@ const DangerSettings = ({userStoreData}: any) => {
 
                                 <AlertDialogBody>
                                 {
-                                    🎈
-                                }
+                                    currentUserDataZustand?.user?.mfa_isEnabled && 
                                 <Box>
                                     <PinInput mask onComplete={(value: any) => SetMfaCode(value)} >
                                         <PinInputField onClick={(_e: any) => { SetMfaCode('null') }} />
@@ -262,6 +277,7 @@ const DangerSettings = ({userStoreData}: any) => {
                                         <PinInputField />
                                     </PinInput>
                                 </Box>
+                                }
                                 Are you sure? You can't undo this action afterwards.
                                 </AlertDialogBody>
 
