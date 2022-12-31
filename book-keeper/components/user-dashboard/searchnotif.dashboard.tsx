@@ -322,7 +322,7 @@ const SearchNotificationSection = () =>{
                 </motion.div>
                 <Flex>
                 <AvatarGroup size="md" max={3}>
-                    {/*🎈 loop over all the images of curent user contacts avatars */}
+                    {/*loop over all the images of curent user contacts avatars */}
                     { contactsFreshList.data ? 
                         
                         contactsFreshList?.data?.data?.contact_list.map((cont: any)=>{

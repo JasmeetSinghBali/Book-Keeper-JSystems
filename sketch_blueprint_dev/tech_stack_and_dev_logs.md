@@ -238,9 +238,9 @@ reff: https://www.prisma.io/docs/concepts/components/prisma-client/filtering-and
 
 - [x] add mfa check for deleting account, if mfa enabled have dynamic pin section popped up in the delete modal alert , also check authentication code when hitting the delete mutation in backend if mfa is enabled, check mfaEnabled both frontend(UI) and backend.
 
-- [ ] uncomment the use effect redirects, that are commented out & test,
-      have a sessionedRoute that checks for the validity of jwt token stored in zustand
-      if its not valid the redirect user to dashboard to load up and refresh the token from trpc server into zustand store automatically, have this mutation called in parent pages only and apply the redirection their just exclude dashboard page
+- [x] uncomment the use effect redirects, that are commented out & test,
+      [TOKEN ROTATION] have a sessionedRoute that checks for the validity of jwt token stored in zustand
+      if its not valid the redirect user to dashboard to load up and refresh the token from trpc server into zustand store automatically, have this mutation called in parent pages settings,invoices,contacts only and apply the redirection their just exclude dashboard page
 
 - [ ] event-emitters setup for EXTERNAL (email & phone notifications) & INTERNAL (events emitted that handles the logging of IP, access points, device info & geolocation & storing into db from the trpc middleware requestTracker and store against relevant user in DB to show in settings account)
 
