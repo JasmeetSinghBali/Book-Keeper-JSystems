@@ -786,7 +786,6 @@ export const userRouter = router({
                 message: `failed to delete user account, contact support!`
             })
         }
-
         return new Promise<CustMutationResultInterface | TRPCError>((resolve)=>{
             resolve(Object.freeze({
                 message: `Successfully deleted user account: ${ctx.userAttachedData.email} `,
