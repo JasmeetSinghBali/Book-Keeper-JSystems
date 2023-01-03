@@ -26,6 +26,7 @@ Misc:
 
 - QR Code Based Authenticator for MFA
 - cloudinary (media[images/videos] cloud hosting) https://console.cloudinary.com/users/login
+- for geolocation & reverse geocoding https://www.bigdatacloud.com/
 
 ---
 
@@ -242,7 +243,7 @@ reff: https://www.prisma.io/docs/concepts/components/prisma-client/filtering-and
       [TOKEN ROTATION] have a sessionedRoute that checks for the validity of jwt token stored in zustand
       if its not valid the redirect user to dashboard to load up and refresh the token from trpc server into zustand store automatically, have this mutation called in parent pages settings,invoices,contacts only and apply the redirection their just exclude dashboard page
 
-- [ ] event-emitters setup for EXTERNAL (email & phone notifications) & INTERNAL (events emitted that handles the logging of IP, access points, device info & geolocation & storing into db from the trpc middleware requestTracker and store against relevant user in DB to show in settings account)
+- [ ] reusable fingerprint method for INTERNAL (that handles the logging of IP, access points, device info & geolocation from the trpc middleware sessionTracker only, and then store against relevant user in DB to show in settings account) & event-emitters setup EXTERNAL (email & phone notifications) for subscription reff:https://trpc.io/docs/v9/subscriptions
 
 - [ ] report bug in app email sending feature, sending email to my email when anyone write emails to me via handlebars and trpc server send email procedure exposed to users report bug in settings section
 

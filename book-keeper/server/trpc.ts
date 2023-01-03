@@ -1,6 +1,7 @@
 /**@desc Instantiate the trpc server & export common  router & procedure as publicProcedure & trackedProcedure */
 
 import { TRPCError, initTRPC } from '@trpc/server';
+import fpClient, { fingerprintPD } from '../utils/fingerprintClient';
 import { Context } from './context';
 
 
@@ -12,7 +13,7 @@ import { Context } from './context';
 const t = initTRPC.context<Context>().create();
 
 /**
- * 🎈 not yet completed
+ * 
  * @desc middleware that tracks incoming requests to trpc server from trpc client
  * @functions check session,jwt verified payload,log IP's/accesspoints/deviceinfo & geolocation
  **/
@@ -63,9 +64,8 @@ const t = initTRPC.context<Context>().create();
     })
   }
 
-  // Check: 4 🎈 tracks incoming request and log IP's , access points & device info, geolocation
+  
   console.log("----HIT MADE THROUGH TRACKED PROCEDURE----")
-  // 💭 here events via event-emitters setup can be emitted that handles the logging of IP, access points, device info & geolocation & storing into db 
 
   return next({
     ctx: {
@@ -104,6 +104,31 @@ const sessionTracker = t.middleware(async( { next, ctx } )=>{
       code: "FORBIDDEN",
       message: `account: ${userExists.email} is disabled/inactive, please contact support`
     })
+  }
+  
+  // extracts ip from request and generate fingerprintPD & update user db
+  const clientIP = ctx.req?.headers['x-forwarded-for'] || ctx.req?.socket.remoteAddress || undefined; 
+  const fpResult = await fpClient(clientIP as string);
+
+  if(!fpResult){
+    console.log(`failed to fingerprint client : ${ctx.session.user.email}`);
+  }
+
+  if(fpResult){
+    await ctx.prisma.fingerprint.upsert({
+      where: {
+        userId: userExists.id
+      },
+      update: {
+        fptPD: fpResult
+      },
+      create: {
+        fptPD : fpResult,
+        userId: userExists.id,
+      }
+    })
+  
+    console.log(`success , fingerprint for client: ${ctx.session.user.email} was updated`);
   }
   return next({
     ctx: {
