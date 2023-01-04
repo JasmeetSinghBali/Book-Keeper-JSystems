@@ -32,7 +32,8 @@ export default function invoices(){
         if(!checkRpcTokenValidity.data || !checkRpcTokenValidity?.data?.data?.valid){
             push('/user/dashboard');
         }
-    },[]); 
+    },[]);
+
     return(
         <>
             <Flex

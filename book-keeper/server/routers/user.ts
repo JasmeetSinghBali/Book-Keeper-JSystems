@@ -1,6 +1,6 @@
 /**@desc User Routes */
 import { TRPCError, } from '@trpc/server';
-import { router , trackedProcedure } from '../trpc';
+import { router , sessionedProcedure, trackedProcedure } from '../trpc';
 import { userInfoSchema } from '../schemas/users/userinfo.schema';
 import { updateEmailPhoneSchema } from '../schemas/users/update.phone-email.schema.ts';
 import validateOTP, { validationTOTPResultInterface } from '../../utils/otpValidator';
@@ -18,6 +18,8 @@ import isValidMfaCodes from '../../utils/validate.mfaCodes';
 import { validateMfaCodeSchema } from '../schemas/users/validate.mfacodes.schema';
 import { addNewContactSchema } from '../schemas/contacts/add.contact.schema';
 import { editContactSchema } from '../schemas/contacts/edit.contact.schema';
+import { observable } from '@trpc/server/observable';
+import globalEmitter from '../../utils/globalEE';
 
 
 /**
@@ -796,5 +798,29 @@ export const userRouter = router({
         });
 
     }),
-    // ---- here goes more user mutations/query procedures ----
+    
+    /**
+     * 🎈
+     * @desc enables email subscription
+     * @used in account related email subscriptions i.e when new package is available, package update by user & account deletion
+     * */
+    activateEmailSubs: trackedProcedure
+        .input(
+            z.object({
+                access_token: z.string().min(1),
+            }),
+        )
+        .mutation(async ({ ctx, input }) => {
+            
+            if(ctx.userAttachedData.role !== 'USER'){
+                throw new TRPCError({
+                    code: "UNAUTHORIZED",
+                    message: `Unauthorized`,
+                });
+            }
+
+            // activate email subs
+            
+        }),
+    // ---- here goes more user mutations/query/subscriptions procedures ----
 })

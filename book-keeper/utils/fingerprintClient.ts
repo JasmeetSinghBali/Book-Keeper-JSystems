@@ -50,7 +50,7 @@ const fpClient = async(clientIP: string): Promise<Boolean | fingerprintPD > => {
             })
         });
     }catch(err: any){
-        console.log(err);
+        // console.log(err);
         return new Promise<Boolean | fingerprintPD>((resolve)=>{
             resolve(false)
         });

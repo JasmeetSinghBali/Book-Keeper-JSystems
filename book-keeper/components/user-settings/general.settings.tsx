@@ -5,12 +5,34 @@ import {motion} from 'framer-motion';
 import EditPhoneEmailModal from './edit.phone-email.settings';
 import EnableAccountMfaModal from './enablemfa.settings';
 import EditDisplayPictureModal from './edit.dp.settings';
+import { useCurrentRpcToken } from '../../store/rpc-token-store';
+import { trpcClient } from '../../utils/Clientrpc';
 
 const GeneralSettings = ({userStoreData}: any) => {
 
     console.log("Inside general settings section");
     console.log(userStoreData);
-    
+
+    const rpcTokenInZustand =  useCurrentRpcToken.getState();
+    const activateEmailSubs: any = trpcClient.user.activateEmailSubs.useMutation();
+
+    /** 
+     * @desc activates email subs handle SWITCH for user- account deletion, package update, new package available
+     * */
+    const handleActivateEmailSubs = async()=>{
+        try{
+            await activateEmailSubs.mutate(
+                {
+                    access_token: rpcTokenInZustand.token,
+                }
+            );
+            return;
+        }catch(err: any){
+            console.log(err);
+            return;
+        }
+    }
+
     return (
         <>
             <Flex
@@ -161,8 +183,9 @@ const GeneralSettings = ({userStoreData}: any) => {
                                     <Td  fontWeight="semibold" fontSize="sm" letterSpacing="wider">Email-Subscription</Td>
                                     <Td  fontWeight="semibold" fontSize="sm" letterSpacing="wider">Subscriptions</Td>
                                     <Td>
-                                        <Switch 
-                                        //onClick={} 
+                                        <Switch
+                                        onChange={handleActivateEmailSubs} 
+                                        // onClick={} 
                                         colorScheme="pink"
                                         borderColor="gray.200">
                                         </Switch>
