@@ -245,7 +245,7 @@ reff: https://www.prisma.io/docs/concepts/components/prisma-client/filtering-and
 
 - [x] reusable fingerprint method for INTERNAL (that handles the logging of IP, access points, device info & geolocation from the trpc middleware sessionTracker only, and then store against relevant user in DB to show in settings account) &
 
-- [ ] email subscription enabled will new dispatched email named email subscription to user account on new package availability, account package update, deletion of account on user personal mail.
+- [x] email subscription enabled will new dispatched email named email subscription to user account on new package availability, account package update, deletion of account on user personal mail.
 
 - [ ] report bug in app email sending feature, sending email to my email when anyone write emails to me via handlebars and trpc server send email procedure exposed to users report bug in settings section
 

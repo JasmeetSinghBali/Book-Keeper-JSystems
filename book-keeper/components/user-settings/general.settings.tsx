@@ -7,14 +7,16 @@ import EnableAccountMfaModal from './enablemfa.settings';
 import EditDisplayPictureModal from './edit.dp.settings';
 import { useCurrentRpcToken } from '../../store/rpc-token-store';
 import { trpcClient } from '../../utils/Clientrpc';
+import { useCurrentUserInfo } from '../../store/current-user-info.store';
 
 const GeneralSettings = ({userStoreData}: any) => {
 
     console.log("Inside general settings section");
     console.log(userStoreData);
 
+    const currentUserDataZustand: any = useCurrentUserInfo.getState();
     const rpcTokenInZustand =  useCurrentRpcToken.getState();
-    const activateEmailSubs: any = trpcClient.user.activateEmailSubs.useMutation();
+    const activateEmailSubs: any = trpcClient.user.switchEmailSubs.useMutation();
 
     /** 
      * @desc activates email subs handle SWITCH for user- account deletion, package update, new package available
@@ -184,8 +186,8 @@ const GeneralSettings = ({userStoreData}: any) => {
                                     <Td  fontWeight="semibold" fontSize="sm" letterSpacing="wider">Subscriptions</Td>
                                     <Td>
                                         <Switch
-                                        onChange={handleActivateEmailSubs} 
-                                        // onClick={} 
+                                        onChange={handleActivateEmailSubs}
+                                        defaultChecked={currentUserDataZustand.user.emailSubActive ? true : false}  
                                         colorScheme="pink"
                                         borderColor="gray.200">
                                         </Switch>

@@ -8,7 +8,7 @@ import { CardType, Contact, User } from '@prisma/client';
 import { CustMutationResultInterface, CustQueryResultInterface } from './rpcaccess';
 import * as z from 'zod';
 import generateOTP, { generateOTPInterface } from '../../utils/otpGenerator';
-import { sendEmailOTP } from '../../utils/customMailDispatcher';
+import { sendEmailOTP, sendEmailSubsMail } from '../../utils/customMailDispatcher';
 import { generateMfaSchema } from '../schemas/users/generate.mfa.schema';
 import speakeasy from 'speakeasy';
 import { encrypt } from '../../utils/cryptoUtils';
@@ -54,7 +54,9 @@ export const userRouter = router({
                         role: ctx.userAttachedData.role,
                         plan: ctx.userAttachedData.plan,
                         phone: ctx.userAttachedData.phone,
-                        mfa_isEnabled: ctx.userAttachedData.mfa_isEnabled
+                        mfa_isEnabled: ctx.userAttachedData.mfa_isEnabled,
+                        fingerprint: ctx.userAttachedData.fingerprint,
+                        emailSubActive: ctx.userAttachedData.emailSubActive
                     }
                 }))
             }) 
@@ -788,6 +790,17 @@ export const userRouter = router({
                 message: `failed to delete user account, contact support!`
             })
         }
+
+        // if emailSubActive then dispatch email subscription template with message that user was deleted successfully to user email
+        if(ctx.userAttachedData.emailSubActive){
+            
+            const emailDispatched: Boolean = await sendEmailSubsMail(ctx.userAttachedData.email, `Account: ${ctx.userAttachedData.email} was removed successfully!` );
+      
+            if(!emailDispatched){
+                console.log("failed to dispatch email-subscription to user's account for account-removal")
+            }
+        }
+
         return new Promise<CustMutationResultInterface | TRPCError>((resolve)=>{
             resolve(Object.freeze({
                 message: `Successfully deleted user account: ${ctx.userAttachedData.email} `,
@@ -800,11 +813,11 @@ export const userRouter = router({
     }),
     
     /**
-     * 🎈
-     * @desc enables email subscription
+     * 
+     * @desc enables/disables email subscription
      * @used in account related email subscriptions i.e when new package is available, package update by user & account deletion
      * */
-    activateEmailSubs: trackedProcedure
+    switchEmailSubs: trackedProcedure
         .input(
             z.object({
                 access_token: z.string().min(1),
@@ -819,8 +832,25 @@ export const userRouter = router({
                 });
             }
 
-            // activate email subs
+            // activate/deavtivate email subs
+            await ctx.prisma?.user.update({
+                where: {
+                    id: ctx.userAttachedData.id
+                },
+                data: {
+                    emailSubActive: !ctx.userAttachedData.emailSubActive
+                }
+            })
             
+            return new Promise<CustMutationResultInterface | TRPCError>((resolve)=>{
+                resolve(Object.freeze({
+                    message: `Successfully ${ctx.userAttachedData.emailSubActive ? 'disabled' : 'enabled'} email subscription for user account: ${ctx.userAttachedData.email} `,
+                    data: {
+                        email: ctx.userAttachedData.email,
+                    }
+                }))
+            });
+
         }),
     // ---- here goes more user mutations/query/subscriptions procedures ----
 })
