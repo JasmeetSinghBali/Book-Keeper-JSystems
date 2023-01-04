@@ -79,3 +79,36 @@ export const sendEmailOTP = async (user_email: string, otp: string) : Promise<Bo
     });
   }
 };
+
+/**@desc sends email subscription event with relevant info to user's email*/
+export const sendEmailSubsMail = async (user_email: string, subPD: string) : Promise<Boolean>=> {
+  try {
+    const emailSubsTemplate = readFileSync(path.join(templateDir, 'Subsc-custom-email.html'), {
+      encoding: 'utf8',
+    });
+    const emailTemplate = Handlebars.compile(emailSubsTemplate);
+    const mailSent: any = await mailTransporter.sendMail({
+      from: `"📚 Keeper." ${process.env.EMAIL_FROM as string}`,
+      to: user_email,
+      subject: '📝 Email Subscription || Keeper',
+      html: emailTemplate({
+        base_url: process.env.NEXTAUTH_URL as string,
+        subsc_pd: subPD,
+        support_email: process.env.EMAIL_FROM as string,
+      }),
+    });
+    if(!mailSent){
+      return new Promise<Boolean>((resolve)=>{
+        resolve(false);
+      });
+    }
+    return new Promise<Boolean>((resolve)=>{
+      resolve(true);
+    });
+  } catch (error) {
+    console.log(`❌ Unable to send subscription email to the user (${user_email})`);
+    return new Promise<Boolean>((resolve)=>{
+      resolve(false);
+    });
+  }
+};

@@ -41,24 +41,25 @@ model Session {
 }
 
 model User {
-  id            String       @id @default(cuid())
-  name          String?
-  email         String?      @unique
-  emailVerified DateTime?
-  image         String?
-  accounts      Account[]
-  sessions      Session[]
-  cards         Card[]
-  contacts      Contact[]
-  role          Role         @default(USER)
-  plan          Plan         @default(COMMUNITY)
-  active        Boolean      @default(true)
-  phone         String?      @unique
-  tokenVersion  Int?         @default(0)
-  rpcAccess     Boolean      @default(false)
-  secret_mfa    Json?
-  mfa_isEnabled Boolean      @default(false)
-  fingerprint   Fingerprint?
+  id             String       @id @default(cuid())
+  name           String?
+  email          String?      @unique
+  emailVerified  DateTime?
+  image          String?
+  accounts       Account[]
+  sessions       Session[]
+  cards          Card[]
+  contacts       Contact[]
+  role           Role         @default(USER)
+  plan           Plan         @default(COMMUNITY)
+  active         Boolean      @default(true)
+  phone          String?      @unique
+  tokenVersion   Int?         @default(0)
+  rpcAccess      Boolean      @default(false)
+  secret_mfa     Json?
+  mfa_isEnabled  Boolean      @default(false)
+  fingerprint    Fingerprint?
+  emailSubActive Boolean      @default(false)
 }
 
 model VerificationToken {
