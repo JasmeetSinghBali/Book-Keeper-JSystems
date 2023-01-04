@@ -115,15 +115,15 @@ const sessionTracker = t.middleware(async( { next, ctx } )=>{
   }
 
   if(fpResult){
-    await ctx.prisma.fingerprint.upsert({
+    await ctx.prisma?.fingerprint.upsert({
       where: {
         userId: userExists.id
       },
       update: {
-        fptPD: fpResult
+        fptPD: fpResult as any
       },
       create: {
-        fptPD : fpResult,
+        fptPD : fpResult as any,
         userId: userExists.id,
       }
     })

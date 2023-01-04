@@ -243,7 +243,9 @@ reff: https://www.prisma.io/docs/concepts/components/prisma-client/filtering-and
       [TOKEN ROTATION] have a sessionedRoute that checks for the validity of jwt token stored in zustand
       if its not valid the redirect user to dashboard to load up and refresh the token from trpc server into zustand store automatically, have this mutation called in parent pages settings,invoices,contacts only and apply the redirection their just exclude dashboard page
 
-- [ ] reusable fingerprint method for INTERNAL (that handles the logging of IP, access points, device info & geolocation from the trpc middleware sessionTracker only, and then store against relevant user in DB to show in settings account) & event-emitters setup EXTERNAL (email & phone notifications) for subscription reff:https://trpc.io/docs/v9/subscriptions
+- [x] reusable fingerprint method for INTERNAL (that handles the logging of IP, access points, device info & geolocation from the trpc middleware sessionTracker only, and then store against relevant user in DB to show in settings account) &
+
+- [ ] email subscription enabled will new dispatched email named email subscription to user account on new package availability, account package update, deletion of account on user personal mail.
 
 - [ ] report bug in app email sending feature, sending email to my email when anyone write emails to me via handlebars and trpc server send email procedure exposed to users report bug in settings section
 
@@ -299,15 +301,9 @@ ref: https://www.youtube.com/watch?v=sOq92prx00w
 
 ---
 
-> ## 🎈 To do 👇 Dev Logs @v2.4 [branch labels]: DatedFrom: yet to be decided
+> ## 🎈 To do 👇 Dev Logs @v2.2 [branch labels]: DatedFrom: yet to be decided
 
-> 1. subscription integeration
-
-```bash
-- [ ] for enabling email subscription, https://trpc.io/docs/subscriptions
-```
-
-> 2. websocket setup for streaming text/string data from user notion account related to their finances and update their data automatically when they make updates
+> websocket setup for streaming text/string data from user notion account related to their finances and update their data automatically when they make updates, for notifications from server to client
 
 ```bash
 - [ ] https://trpc.io/docs/subscriptions#creating-a-websocket-server
@@ -315,7 +311,7 @@ ref: https://www.youtube.com/watch?v=sOq92prx00w
 
 ---
 
-> ## 🎈 To do 👇 Dev Logs @v2.8 [branch labels]: DatedFrom: yet to be decided
+> ## 🎈 To do 👇 Dev Logs @v2.6 [branch labels]: DatedFrom: yet to be decided
 
 > 1. setup buttons on possible location like login,verify, pages where failure chances are high in developer note so that they can directly send me a email from a modal within the app label it as programatically BUG|Feedback keeper when this is sended to my email.
 
