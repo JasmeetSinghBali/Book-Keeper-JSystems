@@ -8,6 +8,7 @@ import { trpcClient } from '../../utils/Clientrpc';
 import { useRouter } from 'next/router';
 import { signOut } from 'next-auth/react';
 import { useCurrentUserInfo } from '../../store/current-user-info.store';
+import ReportBugSettings from './reportBug.settings';
 
 const DangerSettings = ({userStoreData}: any) => {
     
@@ -213,13 +214,7 @@ const DangerSettings = ({userStoreData}: any) => {
                                 duration: .2,
                             },
                         }}>
-                            <Button
-                            //onClick={}
-                            _hover={{bg: "goldenrod"}}
-                            >
-                                <Icon as={AiFillBug} fontSize={["xs","sm","sm","md","md"]} mt={0} mr={2}></Icon>
-                                Report A Bug
-                            </Button>
+                            <ReportBugSettings />
                         </motion.button>
                     </Flex>
                     {/* Delete Account Section*/}

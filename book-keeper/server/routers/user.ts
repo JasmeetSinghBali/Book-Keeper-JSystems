@@ -8,7 +8,7 @@ import { CardType, Contact, User } from '@prisma/client';
 import { CustMutationResultInterface, CustQueryResultInterface } from './rpcaccess';
 import * as z from 'zod';
 import generateOTP, { generateOTPInterface } from '../../utils/otpGenerator';
-import { sendEmailOTP, sendEmailSubsMail } from '../../utils/customMailDispatcher';
+import { sendBugReportMail, sendEmailOTP, sendEmailSubsMail } from '../../utils/customMailDispatcher';
 import { generateMfaSchema } from '../schemas/users/generate.mfa.schema';
 import speakeasy from 'speakeasy';
 import { encrypt } from '../../utils/cryptoUtils';
@@ -850,7 +850,47 @@ export const userRouter = router({
                     }
                 }))
             });
+    }),
 
-        }),
+    /**
+     * 
+     * @desc dispatches email to support/dev team with bug report from user
+     * */
+    sendBugReport: trackedProcedure
+        .input(
+            z.object({
+                access_token: z.string().min(1),
+                bug_report: z.string().min(1)
+            }),
+        )
+        .mutation(async ({ ctx, input }) => {
+            
+            if(ctx.userAttachedData.role !== 'USER'){
+                throw new TRPCError({
+                    code: "UNAUTHORIZED",
+                    message: `Unauthorized`,
+                });
+            }
+
+            const emailDispatched: Boolean = await sendBugReportMail(ctx.userAttachedData.email, input.bug_report );
+      
+            if(!emailDispatched){
+                console.log("failed to dispatch bug report email to support/dev team at keeper.")
+                throw new TRPCError({
+                    code: "INTERNAL_SERVER_ERROR",
+                    message: "Failed to report bug to support/dev team, our mail servers are down! please try again later."
+                });
+            }
+        
+            return new Promise<CustMutationResultInterface | TRPCError>((resolve)=>{
+                resolve(Object.freeze({
+                    message: `Successfully submitted bug report to support/dev team`,
+                    data: {
+                        success: true,
+                    }
+                }))
+            });
+    }),
+
     // ---- here goes more user mutations/query/subscriptions procedures ----
 })

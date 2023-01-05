@@ -49,27 +49,32 @@ yarn create next-app --typescript
     "@emotion/styled": "^11.10.4",
     "@hookform/resolvers": "^2.9.10",
     "@next-auth/prisma-adapter": "^1.0.5",
-    "@prisma/client": "^4.7.0",
+    "@prisma/client": "^4.8.0",
     "@tanstack/react-query": "^4.14.3",
     "@trpc/client": "^10.0.0-proxy-beta.26",
-    "@trpc/next": "^10.0.0-proxy-beta.26",
+    "@trpc/next": "^10.4.3",
     "@trpc/react": "^9.27.4",
     "@trpc/react-query": "^10.0.0-proxy-beta.26",
     "@trpc/server": "^10.0.0-proxy-beta.26",
+    "axios": "^1.2.2",
     "bcryptjs": "^2.4.3",
     "chart.js": "^3.9.1",
     "framer-motion": "^7.6.2",
     "handlebars": "^4.7.7",
-    "jsonwebtoken": "^8.5.1",
-    "next": "12.3.1",
+    "jsonwebtoken": "^9.0.0",
+    "next": "^13.1.1",
     "next-auth": "^4.17.0",
     "nodemailer": "^6.8.0",
-    "react": "18.2.0",
+    "otplib": "^12.0.1",
+    "qrcode": "^1.5.1",
+    "react": "^18.2.0",
     "react-chartjs-2": "^4.3.1",
-    "react-dom": "18.2.0",
+    "react-dom": "^18.2.0",
     "react-hook-form": "^7.39.2",
     "react-icons": "^4.6.0",
     "react-query": "^3.39.2",
+    "speakeasy": "^2.0.0",
+    "validator": "^13.7.0",
     "zod": "^3.19.1",
     "zustand": "^4.1.4"
   }
@@ -247,7 +252,7 @@ reff: https://www.prisma.io/docs/concepts/components/prisma-client/filtering-and
 
 - [x] email subscription enabled will new dispatched email named email subscription to user account on new package availability, account package update, deletion of account on user personal mail.
 
-- [ ] report bug in app email sending feature, sending email to my email when anyone write emails to me via handlebars and trpc server send email procedure exposed to users report bug in settings section
+- [x] report bug in app email sending feature, sending email to my email when anyone write emails to me via handlebars and trpc server send email procedure exposed to users report bug in settings section
 
 - [ ] DB monitoring setup opentelimetry tracing https://www.prisma.io/docs/concepts/components/prisma-client/opentelemetry-tracing
 
