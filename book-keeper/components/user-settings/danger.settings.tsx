@@ -120,10 +120,10 @@ const DangerSettings = ({userStoreData}: any) => {
                                 flexDir="column"
                                 mt={4}
                             >
-                                {/* 🎈 make TagLabels Dynamic a/c to user info */}
+                                {/* 🎈 To be tested at prod/mvp/live & future make updates for plan activation date and validUntil */}
                                 <Tag mb={2} size={["sm","sm","md","md","md"]} key="md" variant='solid' colorScheme='pink'>
                                     <TagLeftIcon as={AiFillInfoCircle} />
-                                    <TagLabel>Plan:     Premium</TagLabel>
+                                    <TagLabel>Plan:     {currentUserDataZustand ? currentUserDataZustand?.user?.plan : 'Unknown'}</TagLabel>
                                 </Tag>
                                 <Tag mb={2} size={["sm","sm","md","md","md"]} key="md" variant='solid' colorScheme='pink'>
                                     <TagLeftIcon as={AiFillInfoCircle} />
@@ -131,11 +131,11 @@ const DangerSettings = ({userStoreData}: any) => {
                                 </Tag>
                                 <Tag mb={2} size={["sm","sm","md","md","md"]} key="md" variant='solid' colorScheme='pink'>
                                     <TagLeftIcon as={AiFillInfoCircle} />
-                                    <TagLabel>Activated-On:     Apr 12 `2022</TagLabel>
+                                    <TagLabel>Activated-On:     Jan 01 `2023</TagLabel>
                                 </Tag>
                                 <Tag mb={2} size={["sm","sm","md","md","md"]} key="md" variant='solid' colorScheme='pink'>
                                     <TagLeftIcon as={AiFillInfoCircle} />
-                                    <TagLabel>Valid-Until:      Apr 12 `2023</TagLabel>
+                                    <TagLabel>Valid-Until:      Jan 01 `2024</TagLabel>
                                 </Tag>
                                 
                             </Flex>
@@ -147,22 +147,22 @@ const DangerSettings = ({userStoreData}: any) => {
                                 flexDir="column"
                                 mt={4}
                             >
-                                {/* 🎈 make TagLabels Dynamic a/c to user info */}
+                                {/* 🎈 To be tested at prod/mvp/live */}
                                 <Tag mb={2} size={["sm","sm","md","md","md"]} key="md" variant='solid' colorScheme='pink'>
                                     <TagLeftIcon as={AiFillInfoCircle} />
-                                    <TagLabel>IP Address:     127.0.0.1</TagLabel>
+                                    <TagLabel>IP Address:     { currentUserDataZustand?.user?.fingerprint?.fptPD ? currentUserDataZustand?.user?.fingerprint?.fptPD.ip : 'Unknown'}</TagLabel>
                                 </Tag>
                                 <Tag mb={2} size={["sm","sm","md","md","md"]} key="md" variant='solid' colorScheme='pink'>
                                     <TagLeftIcon as={AiFillInfoCircle} />
-                                    <TagLabel>Country:     Mars</TagLabel>
+                                    <TagLabel>Country:     {currentUserDataZustand?.user?.fingerprint?.fptPD ? currentUserDataZustand?.user?.fingerprint?.fptPD?.country :'Unknown'}</TagLabel>
                                 </Tag>
                                 <Tag mb={2} size={["sm","sm","md","md","md"]} key="md" variant='solid' colorScheme='pink'>
                                     <TagLeftIcon as={AiFillInfoCircle} />
-                                    <TagLabel>Login-date:     Sept 13 `2022</TagLabel>
+                                    <TagLabel>Location:     {currentUserDataZustand?.user?.fingerprint?.fptPD ? currentUserDataZustand?.user?.fingerprint?.fptPD?.location : 'unknown'}</TagLabel>
                                 </Tag>
                                 <Tag mb={2} size={["sm","sm","md","md","md"]} key="md" variant='solid' colorScheme='pink'>
                                     <TagLeftIcon as={AiFillInfoCircle} />
-                                    <TagLabel>Login-time:      16:48 [IST]</TagLabel>
+                                    <TagLabel>Login-time:      {currentUserDataZustand?.user?.fingerprint?.fptPD ? currentUserDataZustand?.user?.fingerprint?.fptPD?.lastUpdated: 'unknown' }</TagLabel>
                                 </Tag>   
                             </Flex>
                         </GridItem>
