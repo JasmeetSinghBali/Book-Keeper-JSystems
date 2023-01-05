@@ -112,3 +112,35 @@ export const sendEmailSubsMail = async (user_email: string, subPD: string) : Pro
     });
   }
 };
+
+/**@desc sends bug report submitted by user to support/dev mail*/
+export const sendBugReportMail = async (user_email: string, reportPD: string) : Promise<Boolean>=> {
+  try {
+    const emailReportTemplate = readFileSync(path.join(templateDir, 'Bug-report-email.html'), {
+      encoding: 'utf8',
+    });
+    const emailTemplate = Handlebars.compile(emailReportTemplate);
+    const mailSent: any = await mailTransporter.sendMail({
+      from: `"📚 Keeper." ${process.env.EMAIL_FROM as string}`,
+      to: process.env.EMAIL_FROM as string,
+      subject: `🎈 Bug Report [by- ${user_email}] || Keeper`,
+      html: emailTemplate({
+        base_url: process.env.NEXTAUTH_URL as string,
+        bugreport: reportPD,
+      }),
+    });
+    if(!mailSent){
+      return new Promise<Boolean>((resolve)=>{
+        resolve(false);
+      });
+    }
+    return new Promise<Boolean>((resolve)=>{
+      resolve(true);
+    });
+  } catch (error) {
+    console.log(`❌ Unable to send bug report to support/dev team`);
+    return new Promise<Boolean>((resolve)=>{
+      resolve(false);
+    });
+  }
+};
