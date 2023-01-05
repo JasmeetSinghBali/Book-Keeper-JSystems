@@ -254,7 +254,7 @@ reff: https://www.prisma.io/docs/concepts/components/prisma-client/filtering-and
 
 - [x] report bug in app email sending feature, sending email to my email when anyone write emails to me via handlebars and trpc server send email procedure exposed to users report bug in settings section
 
-- [ ] DB monitoring setup opentelimetry tracing https://www.prisma.io/docs/concepts/components/prisma-client/opentelemetry-tracing
+- [ ] DB monitoring setup open-telimetry tracing https://www.prisma.io/docs/concepts/components/prisma-client/opentelemetry-tracing
 
 - [ ] DB monitoring setup metrics https://www.prisma.io/docs/concepts/components/prisma-client/metrics
 
