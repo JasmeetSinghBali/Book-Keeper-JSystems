@@ -281,7 +281,7 @@ reff: https://www.prisma.io/docs/concepts/components/prisma-client/filtering-and
 
 ```bash
 
-- [ ] 🎈 tasks yet to be expanded Phase -2 : Transaction Manager flow, incoming/outgoing funds manager, notion integ maybe new feature notion ai etc.....
+- [ ] 🎈 tasks yet to be expanded Phase -2 : Transaction Manager flow, incoming/outgoing funds manager, notion integ maybe new feature notion ai etc..... NOTE- at database level use this approach to process transaction related flows where DB is involved ✨ ref: https://www.prisma.io/docs/concepts/components/prisma-client/transactions
 
 - [ ] 🧩 user add request to issue new credit/debit keeper card with default/initial payment, the request is processed by admin and the card is funded with initial balance
 

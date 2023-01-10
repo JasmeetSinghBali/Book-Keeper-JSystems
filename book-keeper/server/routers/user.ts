@@ -1,6 +1,6 @@
 /**@desc User Routes */
 import { TRPCError, } from '@trpc/server';
-import { router , sessionedProcedure, trackedProcedure } from '../trpc';
+import { opentelemetrytracer, router , sessionedProcedure, trackedProcedure } from '../trpc';
 import { userInfoSchema } from '../schemas/users/userinfo.schema';
 import { updateEmailPhoneSchema } from '../schemas/users/update.phone-email.schema.ts';
 import validateOTP, { validationTOTPResultInterface } from '../../utils/otpValidator';
@@ -106,103 +106,122 @@ export const userRouter = router({
     updateEmailPhone: trackedProcedure
     .input(updateEmailPhoneSchema)
     .mutation(async({ctx,input}): Promise<CustMutationResultInterface | TRPCError> =>{
-        const { email, phone, emailCode } = input;
-        console.log("reached update email phone route");
-        if(ctx.userAttachedData.role !== 'USER'){
-            throw new TRPCError({
-                code: "UNAUTHORIZED",
-                message: `Unauhtorized`,
-            });
-        }
-        if(!email || !phone || !emailCode){
-            throw new TRPCError({
-                code: "BAD_REQUEST",
-                message: `Please make sure you provide email,phone,emailCode!`
-            })
-        }
-        if(email === 'null' && phone === 'null'){
-            throw new TRPCError({
-                code: "BAD_REQUEST",
-                message: `Please make sure at least email or phone is provided!`
-            })
-        }
-        // check OTP
-        const validationResult:validationTOTPResultInterface = await validateOTP(emailCode);
-
-        if(!validationResult.isValid){
-            throw new TRPCError({
-            code: "BAD_REQUEST",
-            message: `Invalid OTP was supplied`
-            })
-        }
-
-        if(!validationResult.isVerified){
-            throw new TRPCError({
-            code: "BAD_REQUEST",
-            message: `Incorrect/Expired OTP was supplied`
-            })
-        }
-        // update user's email and phone
-        let updatedUser: User | any = undefined;
-
-        // Case1: Only update user phone
-        if(email === 'null' && phone !== 'null'){
-            updatedUser = await ctx.prisma?.user.update({
-                where: {
-                    email: ctx.userAttachedData.email
-                },
-                data: {
-                    phone: input.phone
-                }
-            });
-        }
-
-        // Case2: Only update user email
-        if(email !== 'null' && phone === 'null'){
-            updatedUser = await ctx.prisma?.user.update({
-                where: {
-                    id: ctx.userAttachedData.id
-                },
-                data: {
-                    email: input.email
-                }
-            })
-        }
-
-        // Case3: Update both email & phone
-        if(email !== 'null' && phone !== 'null'){
-            updatedUser = await ctx.prisma?.user.update({
-                where: {
-                    id: ctx.userAttachedData.id
-                },
-                data: {
-                    email: input.email,
-                    phone: input.phone
-                }
-            });
-        }
-
-        if(!updatedUser){
-            throw new TRPCError({
-              code: "INTERNAL_SERVER_ERROR",
-              message: `failed to update email/phone of the user: ${ctx.userAttachedData.email}`
-            });
-          }
         
-        // return success with updated user data to populate in zustand store and sync data
-        return new Promise<CustMutationResultInterface | TRPCError>((resolve)=>{
-            resolve(Object.freeze({
-                message: `userInfo: ${email} email/phone was successfully updated`,
-                data: {
-                    name: updatedUser.name,
-                    email: updatedUser.email,
-                    image: updatedUser.image,
-                    role: updatedUser.role,
-                    plan: updatedUser.plan,
-                    phone: updatedUser.phone
+        await opentelemetrytracer.startActiveSpan("updateEmailPhone-span", async (requestSpan)=> {
+            
+            try{
+
+                const { email, phone, emailCode } = input;
+                console.log("reached update email phone route");
+                if(ctx.userAttachedData.role !== 'USER'){
+                    throw new TRPCError({
+                        code: "UNAUTHORIZED",
+                        message: `Unauhtorized`,
+                    });
                 }
-            }))
-        });
+                if(!email || !phone || !emailCode){
+                    throw new TRPCError({
+                        code: "BAD_REQUEST",
+                        message: `Please make sure you provide email,phone,emailCode!`
+                    })
+                }
+                if(email === 'null' && phone === 'null'){
+                    throw new TRPCError({
+                        code: "BAD_REQUEST",
+                        message: `Please make sure at least email or phone is provided!`
+                    })
+                }
+                // check OTP
+                const validationResult:validationTOTPResultInterface = await validateOTP(emailCode);
+
+                if(!validationResult.isValid){
+                    throw new TRPCError({
+                    code: "BAD_REQUEST",
+                    message: `Invalid OTP was supplied`
+                    })
+                }
+
+                if(!validationResult.isVerified){
+                    throw new TRPCError({
+                    code: "BAD_REQUEST",
+                    message: `Incorrect/Expired OTP was supplied`
+                    })
+                }
+                // update user's email and phone
+                let updatedUser: User | any = undefined;
+
+                // Case1: Only update user phone
+                if(email === 'null' && phone !== 'null'){
+                    updatedUser = await ctx.prisma?.user.update({
+                        where: {
+                            email: ctx.userAttachedData.email
+                        },
+                        data: {
+                            phone: input.phone
+                        }
+                    });
+                }
+
+                // Case2: Only update user email
+                if(email !== 'null' && phone === 'null'){
+                    updatedUser = await ctx.prisma?.user.update({
+                        where: {
+                            id: ctx.userAttachedData.id
+                        },
+                        data: {
+                            email: input.email
+                        }
+                    })
+                }
+
+                // Case3: Update both email & phone
+                if(email !== 'null' && phone !== 'null'){
+                    updatedUser = await ctx.prisma?.user.update({
+                        where: {
+                            id: ctx.userAttachedData.id
+                        },
+                        data: {
+                            email: input.email,
+                            phone: input.phone
+                        }
+                    });
+                }
+
+                if(!updatedUser){
+                    requestSpan.setAttribute("http.status",500);
+                    throw new TRPCError({
+                    code: "INTERNAL_SERVER_ERROR",
+                    message: `failed to update email/phone of the user: ${ctx.userAttachedData.email}`
+                    });
+                }
+                
+                requestSpan.setAttribute("http.status",200);
+                // return success with updated user data to populate in zustand store and sync data
+                return new Promise<CustMutationResultInterface | TRPCError>((resolve)=>{
+                    resolve(Object.freeze({
+                        message: `userInfo: ${email} email/phone was successfully updated`,
+                        data: {
+                            name: updatedUser.name,
+                            email: updatedUser.email,
+                            image: updatedUser.image,
+                            role: updatedUser.role,
+                            plan: updatedUser.plan,
+                            phone: updatedUser.phone
+                        }
+                    }))
+                });
+            }catch(err: any){
+                console.log(err);
+                requestSpan.setAttribute("http.status",500);
+                throw new TRPCError({
+                    code: "INTERNAL_SERVER_ERROR",
+                    message: `failed to update email/phone of the user: ${ctx.userAttachedData.email}`
+                });
+            } finally {
+                requestSpan.end();
+            }
+    
+        })
 
     }),
 
