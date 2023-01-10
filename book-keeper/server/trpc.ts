@@ -1,3 +1,7 @@
+/**@desc initialize opentelemetry tracer and export global tracer object */
+import initializeTracing from '../utils/opentelemetry.tracing';
+export const opentelemetrytracer = initializeTracing("book-keeper");
+
 /**@desc Instantiate the trpc server & export common  router & procedure as publicProcedure & trackedProcedure */
 
 import { TRPCError, initTRPC } from '@trpc/server';
