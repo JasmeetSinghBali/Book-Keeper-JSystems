@@ -178,8 +178,8 @@ const SearchNotificationSection = () =>{
                         borderRadius="25px"
                         mt={4}
                         w="100%"
-                        h="200px"
-                        bgGradient="linear(to-t, #F687B3, #29259A)"
+                        h={["300px","300px","1000px","1000px","1000px"]}
+                        bgGradient="linear(to-t, #00B58D, #29259A)"
                     >
                         <Flex p="1em" color="#fff" flexDir="column" h="100%" justify="space-between">
                             <Flex justify="space-between" w="100%" align="flex-start">
@@ -214,7 +214,7 @@ const SearchNotificationSection = () =>{
                         borderRadius="25px"
                         mt={4}
                         w="100%"
-                        h="200px"
+                        h={["300px","300px","1000px","1000px","1000px"]}
                         bgGradient="linear(to-t, #F687B3, #29259A)"
                     >
                         <Flex p="1em" color="#fff" flexDir="column" h="100%" justify="space-between">
@@ -250,8 +250,8 @@ const SearchNotificationSection = () =>{
                         borderRadius="25px"
                         mt={4}
                         w="100%"
-                        h="200px"
-                        bgGradient="linear(to-t, #F687B3, #29259A)"
+                        h={["300px","300px","1000px","1000px","1000px"]}
+                        bgGradient="linear(to-t, #F6AD55, #29259A)"
                     >
                         <Flex p="1em" color="#fff" flexDir="column" h="100%" justify="space-between">
                             <Flex justify="space-between" w="100%" align="flex-start">
@@ -284,8 +284,8 @@ const SearchNotificationSection = () =>{
                 {/* selected card will be highlighted in selector bar just below card section*/}
                 <Flex justifyContent="center" mt={2}>
                     <Button bgColor={card === 1? '#4FD1C5' : 'gray.300' } onClick={()=> selectCard(1)} size="xs" ms={1} />
-                    <Button bgColor={card === 2? '#4FD1C5' : 'gray.300' } onClick={()=> selectCard(2)} size="xs" ms={1}/>
-                    <Button bgColor={card === 3? '#4FD1C5' : 'gray.300' } onClick={()=> selectCard(3)} size="xs" ms={1}/>
+                    <Button bgColor={card === 2? '#F687B3' : 'gray.300' } onClick={()=> selectCard(2)} size="xs" ms={1}/>
+                    <Button bgColor={card === 3? '#F6AD55' : 'gray.300' } onClick={()=> selectCard(3)} size="xs" ms={1}/>
                 </Flex>
                 
                 {/*Overall Cards Meta Info Section- Accumalated Card balance, spent amount on cards, refilled amount in cards*/}
