@@ -274,7 +274,7 @@ reff: https://www.prisma.io/docs/concepts/components/prisma-client/filtering-and
 
 - [x] ✨ add dockerized jaegar for visualizing traces for future use-cases
 
-- [ ] [logging & error & performance reports](https://github.com/vercel/next.js/tree/canary/examples/with-sentry)
+- [ ] [logging / errors & performance reports](https://github.com/vercel/next.js/tree/canary/examples/with-sentry)
 
   [sentrynpm](https://www.npmjs.com/package/@sentry/nextjs)
   [sentrydocs](https://docs.sentry.io/platforms/javascript/guides/nextjs/)
@@ -283,7 +283,7 @@ reff: https://www.prisma.io/docs/concepts/components/prisma-client/filtering-and
 
 - [ ] cleanup, wrapup, update readme, feature section, test all flows, remove console statements, add common header in each code file with Author: Jasmeet Singh Bali
 
-- [ ] update all http codes and all related to trpc according to these rpc standards ref: https://trpc.io/docs/rpc
+update all http codes and all related to trpc according to these rpc standards ref: https://trpc.io/docs/rpc
 
 - [ ] tailwind css + landing page premium sleak page
 
@@ -303,7 +303,7 @@ reff: https://www.prisma.io/docs/concepts/components/prisma-client/filtering-and
 
 - [ ] 🧩 user can recharge the card, user can have at max 5 keeper card, user can send funds to other contacts keeper card only, also contact must be registered on the system for the send money to work
 
-- - [ ] add playwright for end-to-end testing reff: https://playwright.dev/docs/intro,
+- [ ] add playwright for end-to-end testing reff: https://playwright.dev/docs/intro,
 try reff: NOTE THIS IS NOT ACCURATE https://github.com/trpc/examples-next-prisma-starter/blob/main/playwright.config.ts, 🎈  try setting up github actions also reff: https://docs.github.com/en/billing/managing-billing-for-github-actions/about-billing-for-github-actions
 ✨reff: https://kontent.ai/blog/next-js-playwright-tests-github-action/
 
@@ -328,16 +328,21 @@ ref: https://www.youtube.com/watch?v=sOq92prx00w
 
 > ## 🎈 To do 👇 Dev Logs @v2.2 [branch labels]: DatedFrom: yet to be decided
 
-> websocket setup for streaming text/string data from user notion account related to their finances and update their data automatically when they make updates, for notifications from server to client
-
 ```bash
-- [ ] https://trpc.io/docs/subscriptions#creating-a-websocket-server
+
+- [ ] websocket setup for streaming text/string data from user notion account related to their finances and update their data automatically when they make updates, for notifications from server to client
+
+reff: https://trpc.io/docs/subscriptions#creating-a-websocket-server
+
 ```
 
 ---
 
 > ## 🎈 To do 👇 Dev Logs @v2.6 [branch labels]: DatedFrom: yet to be decided
 
-> 1. setup buttons on possible location like login,verify, pages where failure chances are high in developer note so that they can directly send me a email from a modal within the app label it as programatically BUG|Feedback keeper when this is sended to my email.
+```bash
+- [ ] setup buttons on possible location like login,verify, pages where failure chances are high in developer note so that they can directly send me a email from a modal within the app label it as programatically BUG|Feedback keeper when this is sended to my email.
 
-> 2. add cypress for predefined core/basic automation test journeys https://docs.cypress.io/guides/getting-started/installing-cypress#Advanced-Installation
+- [ ] add cypress for predefined core/basic automation test journeys https://docs.cypress.io/guides/getting-started/installing-cypress#Advanced-Installation
+
+```
