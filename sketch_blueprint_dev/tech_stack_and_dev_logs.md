@@ -274,7 +274,7 @@ reff: https://www.prisma.io/docs/concepts/components/prisma-client/filtering-and
 
 - [x] ✨ add dockerized jaegar for visualizing traces for future use-cases
 
-- [ ] [logging / errors & performance reports](https://github.com/vercel/next.js/tree/canary/examples/with-sentry)
+- [🎈] [logging / errors & performance reports](https://github.com/vercel/next.js/tree/canary/examples/with-sentry)
 
   [sentrynpm](https://www.npmjs.com/package/@sentry/nextjs)
   [sentrydocs](https://docs.sentry.io/platforms/javascript/guides/nextjs/)
@@ -288,10 +288,16 @@ update all http codes and all related to trpc according to these rpc standards r
 - [ ] tailwind css + landing page premium sleak page
 
 - [ ] deploy this mvp as beta stable version release
+      🎈 vercel integ for prod env sentry
+      ref: https://docs.sentry.io/product/integrations/deployment/vercel/
 
 ---
 
 > ## 🎈 To do 👇 Dev Logs @v2 [branch labels]: DatedFrom: yet to be decided
+
+- [ ] add playwright for end-to-end testing reff: https://playwright.dev/docs/intro,
+      try reff: NOTE THIS IS NOT ACCURATE https://github.com/trpc/examples-next-prisma-starter/blob/main/playwright.config.ts, 🎈 try setting up github actions also reff: https://docs.github.com/en/billing/managing-billing-for-github-actions/about-billing-for-github-actions
+      ✨reff: https://kontent.ai/blog/next-js-playwright-tests-github-action/
 
 > 1. Transaction manager/Funds manager
 
@@ -303,9 +309,6 @@ update all http codes and all related to trpc according to these rpc standards r
 
 - [ ] 🧩 user can recharge the card, user can have at max 5 keeper card, user can send funds to other contacts keeper card only, also contact must be registered on the system for the send money to work
 
-- [ ] add playwright for end-to-end testing reff: https://playwright.dev/docs/intro,
-try reff: NOTE THIS IS NOT ACCURATE https://github.com/trpc/examples-next-prisma-starter/blob/main/playwright.config.ts, 🎈  try setting up github actions also reff: https://docs.github.com/en/billing/managing-billing-for-github-actions/about-billing-for-github-actions
-✨reff: https://kontent.ai/blog/next-js-playwright-tests-github-action/
 
 ```
 
