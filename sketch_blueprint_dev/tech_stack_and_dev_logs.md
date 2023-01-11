@@ -274,7 +274,7 @@ reff: https://www.prisma.io/docs/concepts/components/prisma-client/filtering-and
 
 - [x] ✨ add dockerized jaegar for visualizing traces for future use-cases
 
-- [ ] [logging / errors & performance reports](https://github.com/vercel/next.js/tree/canary/examples/with-sentry)
+- [🎈] [logging / errors & performance reports](https://github.com/vercel/next.js/tree/canary/examples/with-sentry)
 
   [sentrynpm](https://www.npmjs.com/package/@sentry/nextjs)
   [sentrydocs](https://docs.sentry.io/platforms/javascript/guides/nextjs/)
