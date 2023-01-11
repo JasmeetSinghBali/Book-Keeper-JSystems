@@ -177,7 +177,7 @@ yarn create next-app --typescript
 
 ---
 
-> ## 🎈 To do 👇 Dev Logs @v1 [branch labels]: DatedFrom: 15-11-2022
+> ## To do 👇 Dev Logs @v1.0.0-beta.0 [branch labels]: DatedFrom: 15-11-2022 EndedOn: 🎈
 
 1.  setup/nextAuth & OauthSignIn with session data barebones managment
 
@@ -281,17 +281,27 @@ reff: https://www.prisma.io/docs/concepts/components/prisma-client/filtering-and
 
 - [ ] check responsiveness of each page in brave,edge specially brave.
 
-- [ ] cleanup, wrapup, update readme, feature section, test all flows, remove console statements, add common header in each code file with Author: Jasmeet Singh Bali
+```bash
 
-update all http codes and all related to trpc according to these rpc standards ref: https://trpc.io/docs/rpc
+- [✔] verify your identity
+- [✔] dashboard
+- [ ] my contacts page
+
+```
+
+- [ ] update all http codes and all related to trpc according to these rpc standards ref: https://trpc.io/docs/rpc return statements in trpc procedures
+
+- [ ] cleanup, wrapup, update readme, feature section, test all flows, remove console statements, add common header in each code file with author, license , description
 
 - [ ] tailwind css + landing page premium sleak page
 
-- [ ] deploy this mvp as beta stable version release
+- [ ] record a video for beta-v1 with showcasing all flows and add it in main readme
+
+- [ ] deploy this beta-v1 version release at vercel
 
 ---
 
-> ## 🎈 To do 👇 Dev Logs @v2 [branch labels]: DatedFrom: yet to be decided
+> ## 🎈 To do 👇 Dev Logs @v1.2.0-beta.1: DatedFrom: yet to be decided
 
 > 1. Transaction manager/Funds manager
 
@@ -326,7 +336,7 @@ ref: https://www.youtube.com/watch?v=sOq92prx00w
 
 ---
 
-> ## 🎈 To do 👇 Dev Logs @v2.2 [branch labels]: DatedFrom: yet to be decided
+> ## 🎈 To do 👇 Dev Logs @v1.3.0-beta.2 [branch labels]: DatedFrom: yet to be decided
 
 ```bash
 
@@ -338,7 +348,7 @@ reff: https://trpc.io/docs/subscriptions#creating-a-websocket-server
 
 ---
 
-> ## 🎈 To do 👇 Dev Logs @v2.6 [branch labels]: DatedFrom: yet to be decided
+> ## 🎈 To do 👇 Dev Logs @v1.4.0-beta.3 [branch labels]: DatedFrom: yet to be decided
 
 ```bash
 - [ ] setup buttons on possible location like login,verify, pages where failure chances are high in developer note so that they can directly send me a email from a modal within the app label it as programatically BUG|Feedback keeper when this is sended to my email.

@@ -14,16 +14,16 @@ The aim for this project is to make the book keeping simpler i.e track & record 
 
 ```
 
-> 🗃 [Features]
+> 🗃 [Features & Versions]
 
 ```bash
 
-# @v1
+# @v1.0.0-beta.0
 
 
 1. User-Flows:
 
-- [✔]  passwordless hassel-free sign in cum sign up flow via Email Magic Link or Oauth Github/Google, best in security , best in user-experience
+- [✔] passwordless hassel-free sign in cum sign up flow via Email Magic Link or Oauth Github/Google, best in security , best in user-experience
 - [✔] authenticator enabler option for account or other sensitive actions i.e after setting up authenticator crucial account related actions like account deletion, package update wud required additional authenticor code to complete the action
 - [✔] adding,editing,deleting contacts, dynamic search on contacts, settings- general & account are functional
 - [✔] email-subscription option available
