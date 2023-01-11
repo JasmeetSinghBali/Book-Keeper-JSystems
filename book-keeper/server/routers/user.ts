@@ -105,9 +105,9 @@ export const userRouter = router({
      */
     updateEmailPhone: trackedProcedure
     .input(updateEmailPhoneSchema)
-    .mutation(async({ctx,input}): Promise<CustMutationResultInterface | TRPCError> =>{
+    .mutation(async({ctx,input}) =>{
         
-        await opentelemetrytracer.startActiveSpan("updateEmailPhone-span", async (requestSpan)=> {
+        await opentelemetrytracer.startActiveSpan("updateEmailPhone-span", async (requestSpan): Promise<CustMutationResultInterface | TRPCError> => {
             
             try{
 
@@ -220,7 +220,6 @@ export const userRouter = router({
             } finally {
                 requestSpan.end();
             }
-    
         })
 
     }),
