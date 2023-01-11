@@ -27,6 +27,14 @@ Misc:
 - QR Code Based Authenticator for MFA
 - cloudinary (media[images/videos] cloud hosting) https://console.cloudinary.com/users/login
 - for geolocation & reverse geocoding https://www.bigdatacloud.com/
+- opentelemetry for tracing & instrumentation of prisma queries and trpc mutations & queries
+  note- automatic instrumentation cannot be established for trpc right now as their is no supported instrumentation library for trpc reff: https://opentelemetry.io/registry/?component=instrumentation
+
+- ✨ dockerized jaeger for visualization of traces, can be activate by uncommenting the jaegerExporter and commenting out the consoleExporter lines in opentelemetry.tracing.ts in utils of this project.
+
+                docker-compose up -f docker-compose.yaml -f docker-compose.jaeger.yaml up -d
+                # access jaeger UI at
+                localhost:16686
 
 ---
 
@@ -49,7 +57,15 @@ yarn create next-app --typescript
     "@emotion/styled": "^11.10.4",
     "@hookform/resolvers": "^2.9.10",
     "@next-auth/prisma-adapter": "^1.0.5",
-    "@prisma/client": "^4.8.0",
+    "@opentelemetry/exporter-jaeger": "^1.8.0",
+    "@opentelemetry/exporter-trace-otlp-http": "^0.34.0",
+    "@opentelemetry/instrumentation": "^0.34.0",
+    "@opentelemetry/resources": "^1.8.0",
+    "@opentelemetry/sdk-trace-base": "^1.8.0",
+    "@opentelemetry/sdk-trace-node": "^1.8.0",
+    "@opentelemetry/semantic-conventions": "^1.8.0",
+    "@prisma/client": "^4.8.1",
+    "@prisma/instrumentation": "^4.8.1",
     "@tanstack/react-query": "^4.14.3",
     "@trpc/client": "^10.0.0-proxy-beta.26",
     "@trpc/next": "^10.4.3",
@@ -254,9 +270,9 @@ reff: https://www.prisma.io/docs/concepts/components/prisma-client/filtering-and
 
 - [x] report bug in app email sending feature, sending email to my email when anyone write emails to me via handlebars and trpc server send email procedure exposed to users report bug in settings section
 
-- [ ] DB monitoring setup open-telimetry tracing https://www.prisma.io/docs/concepts/components/prisma-client/opentelemetry-tracing
+- [x] DB monitoring setup open-telimetry tracing https://www.prisma.io/docs/concepts/components/prisma-client/opentelemetry-tracing, probability sampling to reduce traces & spans in production env reff: https://opentelemetry.io/docs/reference/specification/trace/tracestate-probability-sampling/ & https://opentelemetry.io/docs/reference/specification/trace/sdk/#traceidratiobased reff: opentelemetry.tracing.ts in utils folder of the project
 
-- [ ] DB monitoring setup metrics https://www.prisma.io/docs/concepts/components/prisma-client/metrics
+- [x] ✨ add dockerized jaegar for visualizing traces for future use-cases
 
 - [ ] [logging & error & performance reports](https://github.com/vercel/next.js/tree/canary/examples/with-sentry)
 
@@ -286,6 +302,10 @@ reff: https://www.prisma.io/docs/concepts/components/prisma-client/filtering-and
 - [ ] 🧩 user add request to issue new credit/debit keeper card with default/initial payment, the request is processed by admin and the card is funded with initial balance
 
 - [ ] 🧩 user can recharge the card, user can have at max 5 keeper card, user can send funds to other contacts keeper card only, also contact must be registered on the system for the send money to work
+
+- - [ ] add playwright for end-to-end testing reff: https://playwright.dev/docs/intro,
+try reff: NOTE THIS IS NOT ACCURATE https://github.com/trpc/examples-next-prisma-starter/blob/main/playwright.config.ts, 🎈  try setting up github actions also reff: https://docs.github.com/en/billing/managing-billing-for-github-actions/about-billing-for-github-actions
+✨reff: https://kontent.ai/blog/next-js-playwright-tests-github-action/
 
 ```
 

@@ -17,6 +17,7 @@
     "@emotion/styled": "^11.10.4",
     "@hookform/resolvers": "^2.9.10",
     "@next-auth/prisma-adapter": "^1.0.5",
+    "@opentelemetry/exporter-jaeger": "^1.8.0",
     "@opentelemetry/exporter-trace-otlp-http": "^0.34.0",
     "@opentelemetry/instrumentation": "^0.34.0",
     "@opentelemetry/resources": "^1.8.0",

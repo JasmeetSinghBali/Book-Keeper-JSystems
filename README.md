@@ -20,9 +20,33 @@ The aim for this project is to make the book keeping simpler i.e track & record 
 
 # @v1
 
-1. User-Flows:  passwordless hassel-free sign in cum sign up flow via Email Magic Link or Oauth Github/Google, best in security , best in user-experience.
+
+1. User-Flows:
+
+- [x]  passwordless hassel-free sign in cum sign up flow via Email Magic Link or Oauth Github/Google, best in security , best in user-experience
+- [x] authenticator enabler option for account or other sensitive actions i.e after setting up authenticator crucial account related actions like account deletion, package update wud required additional authenticor code to complete the action
+- [x] adding,editing,deleting contacts, dynamic search on contacts, settings- general & account are functional
+- [x] email-subscription option available
+- [x] in-app bug-report, that sends email directly to the support team/dev team at keeper
+
+2. System-Flows:
+
+- [x] Automated MFA verification via OTP dispatched to user email on each sign-up or login
+- [x] geolocation & basic-tracking/fingerprint user setup
+- [x] tracing & instrumentation on DB queries|trpc calls
+
+        # all prisma queries are automatically traced
+        # to trace a specific trpc mutation/query at server side use global available opentelemetrytracer and wrap that mutation or query inside it
+        opentelemetrytracer.startActiveSpan
+
+
+- [x] email template and handlebars for fully isolated & customizable enterprise-grade-emails.
+- [x] dual restriction mechanism -  session & trpc user related mutation&queries access system
+- [x] Automated token rotation, after trpc token expires
 
 ```
+
+**✨[For more detailed info: check](https://github.com/Jasmeet-1998/Book-Keeper-JSystems/blob/stable/sketch_blueprint_dev/tech_stack_and_dev_logs.md)**
 
 ---
 
