@@ -99,7 +99,7 @@ const SettingsNavbar = () => {
                             </motion.div>
                         
                         <Flex
-                            mt={[50,50,20,20,20]}
+                            mt={[20,20,20,20,20]}
                             ms={[-97,-70,-70,-20,-95]}
                         >
                             {/*navbar icons container section*/}

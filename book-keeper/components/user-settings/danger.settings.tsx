@@ -1,4 +1,4 @@
-import { AlertDialog, AlertDialogBody, AlertDialogContent, AlertDialogFooter, AlertDialogHeader, AlertDialogOverlay, Badge, Box, Button, Divider, Flex, Grid, GridItem, Heading, Icon, Link, PinInput, PinInputField, Tag, TagLabel, TagLeftIcon, Text, useDisclosure } from '@chakra-ui/react';
+import { AlertDialog, AlertDialogBody, AlertDialogContent, AlertDialogFooter, AlertDialogHeader, AlertDialogOverlay, Badge, Box, Button, Divider, Flex, Grid, GridItem, Heading, Icon, Link, PinInput, PinInputField, Tag, TagLabel, TagLeftIcon, Text, Tooltip, useDisclosure } from '@chakra-ui/react';
 import React, { useEffect, useState } from 'react';
 import { AiFillBug, AiFillInfoCircle, AiOutlineIdcard, AiOutlineUpCircle, AiOutlineWarning, AiTwotoneThunderbolt } from 'react-icons/ai';
 import { motion } from 'framer-motion'
@@ -78,16 +78,17 @@ const DangerSettings = ({userStoreData}: any) => {
                     
                 >
                     <Flex
-                        mt={-5}
-                        mb={10}
+                        mt={5}
+                        mb={5}
                         h={["33%","27%","6%","8%","10%"]}
+                        ml={[55,45,10,0,0]}
                         display="flex"
                         flexDir="row"
                     >
                         <Divider orientation="vertical" borderColor="#D53F8C" mt={[1,1,2,-1,1]}/>
                         <Divider orientation="vertical" borderColor="#D53F8C" mt={[1,1,2,-1,1]}/>
                         <Divider orientation="vertical" borderColor="#D53F8C" mt={[1,1,2,-1,1]} />
-                        <Icon  display={['none',"flex","flex","flex","flex"]} as={AiOutlineIdcard} fontSize={["xs","sm","sm","md","md"]} mt={[1,1,2,-1,1]}></Icon>
+                        <Icon  display={["none","flex","flex","flex","flex"]} as={AiOutlineIdcard} fontSize={["xs","sm","sm","md","md"]} mt={[1,1,2,-1,1]}></Icon>
                         <motion.div initial="hidden" animate="visible" variants={{
                             hidden:{
                                 scale: .8,
@@ -101,17 +102,18 @@ const DangerSettings = ({userStoreData}: any) => {
                                 }
                             },
                         }}>
-                            <Heading display={['none',"flex","flex","flex","flex"]} color="purple.700" mt={[1,1,1,-1,1]} ml={1.8} letterSpacing="tighter" fontWeight="semibold" fontSize={["2xl","normal","xl","2xl","3xl"]}>Plan and Access Logs</Heading>
+                            <Heading display={["none","flex","flex","flex","flex"]} color="purple.700" mt={[1,1,1,-1,1]} ml={1.8} letterSpacing="tighter" fontWeight="semibold" fontSize={["2xl","normal","xl","2xl","3xl"]}>Plan and Access Logs</Heading>
                         </motion.div>
                     </Flex>
 
                     {/* 🎈 CurrentPlan, IP & Last Accessed date logs Section*/}
                     <Grid
-                        h='200px'
+                        h={['300px','300px','1000px','1000px','1000px']}
                         templateRows='repeat(2, 1fr)'
                         templateColumns={['repeat(2, 1fr)','repeat(2, 1fr)','repeat(2, 1fr)','repeat(3, 1fr)','repeat(4, 1fr)']}
                         gap={5}
-                        display={['none',"flex","flex","flex","flex"]}
+                        display={["none","flex","flex","flex","flex"]}
+                        ml={[55,45,10,0,0]}
                         >
                         <GridItem boxShadow="xl" borderWidth="thin" rowSpan={2} colSpan={1} bg='gray.200'>
                             <Badge variant="solid" colorScheme="purple">Active Plan</Badge>
@@ -170,11 +172,12 @@ const DangerSettings = ({userStoreData}: any) => {
 
                     {/* Update Plan Section*/}
                     <Flex
-                        mt={10}
-                        mb={10}
+                        mt={[-5,5,5,5,5]}
+                        mb={5}
                         h={["33%","27%","6%","8%","10%"]}
                         display="flex"
                         flexDir="row"
+                        ml={[55,45,10,0,0]}
                     >
                         <Divider orientation="vertical" borderColor="#D53F8C" mt={[1,1,2,-1,1]}/>
                         <Divider orientation="vertical" borderColor="#D53F8C" mt={[1,1,2,-1,1]}/>
@@ -196,12 +199,15 @@ const DangerSettings = ({userStoreData}: any) => {
                             <Heading color="purple.700" mt={[1,1,1,-1,1]} ml={1.8} letterSpacing="tighter" fontWeight="semibold" fontSize={["2xl","normal","xl","2xl","3xl"]}>Update Plan</Heading>
                         </motion.div>
                         <Link href="http://keeper.updatePlan/paymentGateway" _hover={{textDecor: 'none', color: "pink.500"}} display="flex">
-                            <Text fontWeight="thick" letterSpacing="tighter">click here to update/renew your plan -{'>'} <Icon fontSize={["3xl","5xl","4xl","5xl","6xl"]} as={AiTwotoneThunderbolt}></Icon></Text>
+                            <Tooltip hasArrow label="update plan" bg="gray.300" color="black">
+                                <Icon fontSize={["3xl","5xl","4xl","5xl","6xl"]} as={AiTwotoneThunderbolt}></Icon>
+                            </Tooltip>
                         </Link>
                     </Flex>
                     <Flex
                         display="flex"
-                        mt={2}
+                        mt={3}
+                        ml={[55,45,5,0,0]}
                     >
                         {/* 🎈 Report bugs section*/}
                         <motion.button key="reportappbug" className="card" whileHover={{
@@ -221,6 +227,7 @@ const DangerSettings = ({userStoreData}: any) => {
                     <Flex
                         mt={30}
                         mb={10}
+                        ml={[55,45,5,0,0]}
                         h={["33%","27%","6%","8%","10%"]}
                         display="flex-start"
                         flexDir="column"
