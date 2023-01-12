@@ -285,7 +285,11 @@ reff: https://www.prisma.io/docs/concepts/components/prisma-client/filtering-and
 
 - [✔] verify your identity
 - [✔] dashboard
-- [ ] my contacts page
+- [✔] my contacts page
+- [✔] settings-account
+- [ ] settings-general
+- [ ] settings-billing
+- [ ] settings-integration
 
 ```
 
