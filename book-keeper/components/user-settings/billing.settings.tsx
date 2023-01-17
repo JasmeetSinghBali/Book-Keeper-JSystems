@@ -16,11 +16,11 @@ const BillingSettings = ({userStoreData}: any) => {
                 w="100%"
                 h="80%"
                 p={3}
-                mt={[-10,-10,5,5,5]}
+                mt={[30,15,65,20,10]}
                 mb={1}
                 display="flex"
                 flexDir="column"
-                marginLeft={[3,2,17,20,20]}
+                marginLeft={[65,45,65,10,5]}
             >
                 <Flex
                     w="100%"

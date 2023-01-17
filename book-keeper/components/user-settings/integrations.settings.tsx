@@ -11,11 +11,11 @@ const IntegrationSettings = ({userStoreData}: any) => {
                 w="100%"
                 h="80%"
                 p={3}
-                mt={[-10,-10,5,5,5]}
+                mt={[35,25,65,20,5]}
                 mb={1}
                 display="flex"
                 flexDir="column"
-                marginLeft={[3,2,17,20,20]}
+                marginLeft={[35,25,65,20,10]}
             >
                  <Flex
                     w="100%"

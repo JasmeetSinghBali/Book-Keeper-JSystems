@@ -45,7 +45,7 @@ const GeneralSettings = ({userStoreData}: any) => {
                 mb={1}
                 display="flex"
                 flexDir="column"
-                marginLeft={[3,2,17,20,20]}
+                marginLeft={[10,35,65,10,10]}
             >
 
                 <Flex
@@ -56,7 +56,7 @@ const GeneralSettings = ({userStoreData}: any) => {
                     
                 >
                     <Flex
-                        mt={-5}
+                        mt={[13,11,9,7,5]}
                         h={["33%","27%","6%","8%","10%"]}
                         
                         
