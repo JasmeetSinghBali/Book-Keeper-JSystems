@@ -56,8 +56,8 @@ export const rpcServerAccessRouter = router({
           message: `failed to dispatch email otp for ${input.email}`,
         })
       }
-      console.log("rpcAccess sessioned procedure email OTP dispatched....");
-      console.log(emailDispatched);
+      // console.log("rpcAccess sessioned procedure email OTP dispatched....");
+      // console.log(emailDispatched);
       return new Promise<CustQueryResultInterface>((resolve)=>{
         resolve(Object.freeze({
           success: true,
@@ -107,7 +107,7 @@ export const rpcServerAccessRouter = router({
           message: `Incorrect/Expired OTP was supplied`
         })
       }
-      console.log(validationResult);
+      // console.log(validationResult);
 
       const updatedrpcAccess: User | any = await ctx.prisma?.user.update({
         where:{
@@ -263,7 +263,7 @@ export const rpcServerAccessRouter = router({
       // check rpcTokenValidity
       const pd: any = await verifyJwt(input.rpc_token);
       if(!pd){
-        console.log("jwt verification failed, rpc access session route");
+        // console.log("jwt verification failed, rpc access session route");
         throw new TRPCError({
           code: "UNAUTHORIZED",
           message: "rpc token validity expired!"

@@ -1,4 +1,3 @@
-import { TRPCError } from '@trpc/server';
 import { z } from 'zod';
 import { publicProcedure, router } from '../trpc';
 import { rpcServerAccessRouter } from './rpcaccess';
@@ -8,7 +7,7 @@ import { userRouter } from './user';
 export const appRouter = router({
     
   /**
-   * @desc- test hello 
+   * @desc- test/ping hello 
    * @type publicProcedure
    * */
     message: publicProcedure
@@ -18,8 +17,8 @@ export const appRouter = router({
       }),
     )
     .query(({ ctx, input }) => {
-      console.log('======== this is how ctx will look like on trpc server public procedure =========')
-      console.log(ctx);
+      // console.log('======== this is how ctx will look like on trpc server public procedure =========')
+      // console.log(ctx);
       return {
         greeting: `hello ${input?.name ?? 'world'}`,
         from: 'this message is from trpc server',

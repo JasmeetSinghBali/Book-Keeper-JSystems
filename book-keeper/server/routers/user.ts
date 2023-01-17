@@ -89,8 +89,8 @@ export const userRouter = router({
           message: `failed to dispatch email otp for ${input.email}`,
         })
       }
-      console.log("user protected/tracked procedure email OTP dispatched....");
-      console.log(emailDispatched);
+    //   console.log("user protected/tracked procedure email OTP dispatched....");
+    //   console.log(emailDispatched);
       return new Promise<CustMutationResultInterface| TRPCError>((resolve)=>{
         resolve(Object.freeze({
           message: `otp was dispatched to ${input.email}`,
@@ -113,7 +113,7 @@ export const userRouter = router({
             try{
 
                 const { email, phone, emailCode } = input;
-                console.log("reached update email phone route");
+                // console.log("reached update email phone route");
                 if(ctx.userAttachedData.role !== 'USER'){
                     throw new TRPCError({
                         code: "UNAUTHORIZED",
@@ -212,7 +212,7 @@ export const userRouter = router({
                     }))
                 });
             }catch(err: any){
-                console.log(err);
+                // console.log(err);
                 requestSpan.setAttribute("http.status",500);
                 throw new TRPCError({
                     code: "INTERNAL_SERVER_ERROR",
@@ -525,7 +525,6 @@ export const userRouter = router({
     .input(editContactSchema)
     .mutation(async({ctx,input}): Promise<CustMutationResultInterface | TRPCError> =>{
         
-        console.log("===========reached UPDATE USER CONTACT MUTATION=========")
         if(ctx.userAttachedData.role !== 'USER'){
             throw new TRPCError({
                 code: "UNAUTHORIZED",
@@ -816,9 +815,9 @@ export const userRouter = router({
             
             const emailDispatched: Boolean = await sendEmailSubsMail(ctx.userAttachedData.email, `Account: ${ctx.userAttachedData.email} was removed successfully!` );
       
-            if(!emailDispatched){
-                console.log("failed to dispatch email-subscription to user's account for account-removal")
-            }
+            // if(!emailDispatched){
+            //     console.log("failed to dispatch email-subscription to user's account for account-removal")
+            // }
         }
 
         return new Promise<CustMutationResultInterface | TRPCError>((resolve)=>{
@@ -843,7 +842,7 @@ export const userRouter = router({
                 access_token: z.string().min(1),
             }),
         )
-        .mutation(async ({ ctx, input }) => {
+        .mutation(async ({ ctx, input }): Promise< CustMutationResultInterface | TRPCError> => {
             
             if(ctx.userAttachedData.role !== 'USER'){
                 throw new TRPCError({
@@ -883,7 +882,7 @@ export const userRouter = router({
                 bug_report: z.string().min(1)
             }),
         )
-        .mutation(async ({ ctx, input }) => {
+        .mutation(async ({ ctx, input }): Promise<CustMutationResultInterface | TRPCError> => {
             
             if(ctx.userAttachedData.role !== 'USER'){
                 throw new TRPCError({
@@ -895,7 +894,7 @@ export const userRouter = router({
             const emailDispatched: Boolean = await sendBugReportMail(ctx.userAttachedData.email, input.bug_report );
       
             if(!emailDispatched){
-                console.log("failed to dispatch bug report email to support/dev team at keeper.")
+                // console.log("failed to dispatch bug report email to support/dev team at keeper.")
                 throw new TRPCError({
                     code: "INTERNAL_SERVER_ERROR",
                     message: "Failed to report bug to support/dev team, our mail servers are down! please try again later."
