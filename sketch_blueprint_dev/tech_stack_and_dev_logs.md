@@ -287,9 +287,10 @@ reff: https://www.prisma.io/docs/concepts/components/prisma-client/filtering-and
 - [✔] dashboard
 - [✔] my contacts page
 - [✔] settings-account
-- [ ] settings-general
-- [ ] settings-billing
-- [ ] settings-integration
+- [✔] settings-general
+- [✔] settings-billing
+- [✔] settings-integration
+- [✔] login,checkmail,verify
 
 ```
 
