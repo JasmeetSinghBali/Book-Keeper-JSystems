@@ -279,7 +279,7 @@ reff: https://www.prisma.io/docs/concepts/components/prisma-client/filtering-and
   [sentrynpm](https://www.npmjs.com/package/@sentry/nextjs)
   [sentrydocs](https://docs.sentry.io/platforms/javascript/guides/nextjs/)
 
-- [ ] check responsiveness of each page in brave,edge specially brave.
+- [✔] check responsiveness of each page in brave,edge specially brave.
 
 ```bash
 
@@ -294,9 +294,8 @@ reff: https://www.prisma.io/docs/concepts/components/prisma-client/filtering-and
 
 ```
 
-- [ ] update all http codes and all related to trpc according to these rpc standards ref: https://trpc.io/docs/rpc return statements in trpc procedures
-
-- [ ] cleanup, wrapup, update readme, feature section, test all flows, remove console statements, add common header in each code file with author, license , description
+- [✔] cleanup, wrapup, update readme, feature section, test all flows, remove console statements,
+  update all http codes and all related to trpc according to these rpc standards ref: https://trpc.io/docs/rpc return statements in trpc procedures
 
 - [ ] tailwind css + landing page premium sleak page
 
