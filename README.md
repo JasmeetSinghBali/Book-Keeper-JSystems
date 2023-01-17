@@ -46,11 +46,11 @@ The aim for this project is to make the book keeping simpler i.e track & record 
 
 ```
 
-**✨[For more detailed info: check](https://github.com/Jasmeet-1998/Book-Keeper-JSystems/blob/stable/sketch_blueprint_dev/tech_stack_and_dev_logs.md)**
-
 ---
 
 ---
+
+> ## **DEV. SPACE**
 
 ### <p align="center"> 🚀 **_Running the app_** </p>
 
@@ -82,6 +82,8 @@ yarn dev
 
 
 ```
+
+**✨[For more detailed dev-info: check](https://github.com/Jasmeet-1998/Book-Keeper-JSystems/blob/stable/sketch_blueprint_dev/tech_stack_and_dev_logs.md)**
 
 ---
 

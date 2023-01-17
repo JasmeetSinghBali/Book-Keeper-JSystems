@@ -1,5 +1,5 @@
 import type { NextPage } from 'next';
-import Landing from '../components/common/landing';
+import Landing from '../components/common/landing-page/landing';
 
 const Home: NextPage = () => {
   
