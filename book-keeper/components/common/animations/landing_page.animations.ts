@@ -14,11 +14,11 @@ export const navVariants = {
       transition: {
         type: 'spring',
         stiffness: 80,
-        delay: 1,
+        delay: 0.9,
       },
     },
   };
-  
+  // slide animations left to right and right to left from transition hidden to show
   export const slideIn = (direction, type, delay, duration) => ({
     hidden: {
       x: direction === 'left' ? '-100%' : direction === 'right' ? '100%' : 0,
@@ -36,6 +36,7 @@ export const navVariants = {
     },
   });
   
+  // where stagger children and delaychildren allow to have container's child animation
   export const staggerContainer = (staggerChildren, delayChildren) => ({
     hidden: {},
     show: {
@@ -45,7 +46,7 @@ export const navVariants = {
       },
     },
   });
-  
+
   export const textVariant = (delay) => ({
     hidden: {
       y: 50,
