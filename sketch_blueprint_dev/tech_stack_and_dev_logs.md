@@ -301,7 +301,7 @@ reff: https://www.prisma.io/docs/concepts/components/prisma-client/filtering-and
 
 - [ ] yarn lint & resolve warnings & errors
 
-- [ ] record a video for beta-v1 with showcasing all flows and add it in main readme
+- [ ] record a video for beta-v1 with showcasing all flows , create a giphy https://giphy.com/create/gifmaker and add it in main readme
 
 - [ ] deploy this beta-v1 version release at vercel
 
