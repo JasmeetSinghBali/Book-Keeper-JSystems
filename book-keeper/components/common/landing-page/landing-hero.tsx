@@ -26,7 +26,7 @@ const LandingHero = () => (
                         className="flex flex-row justify-center items-center"
                     >
                         <div className="md:w-[80px] sm:w-[45px] w-[20px] md:h-[88px] sm:h-[45px] h-[38px] md:border-[12px] border-[9px] rotate-45 hover:skew-y-12 border-purple-500 sm:mx-4 mx-[6px] space-x-0.5 " />
-                        <h1 className="font-extrabold lg:text-[100px] md:text-[70px] sm:text-[35px] text-[34px] lg:leading-[158.4px] md:leading-[114.4px] sm:leading-[74.4px] leading-[64.4px] uppercase text-purple-500">
+                        <h1 className="font-thin lg:text-[100px] md:text-[70px] sm:text-[35px] text-[34px] lg:leading-[158.4px] md:leading-[114.4px] sm:leading-[74.4px] leading-[64.4px] uppercase text-white">
                            JSys.
                         </h1>
                     </motion.div>
