@@ -35,13 +35,21 @@ const LandingHero = () => (
                     variants={slideIn('left','tween', 0.3,0.9)}
                     className="relative w-full md:-mt-[20px] -mt-[12px]"
                 >
-                    <div className="absolute w-full h-[300px] hero-gradient rounded-tl-[140px] z-[0] -top-[30px]">
-                        <img
-                            src="/keepercover.png"
-                            alt="keeper-cover"
-                            className="w-full smh-[500px] h-[350px] object-cover rounded-tl-[140px] z-10 relative" 
-                        />
-                    </div>
+                    <div className="absolute w-full h-[300px] hero-gradient rounded-tl-[140px] z-[0] -top-[30px]" />
+                    <img
+                        src="/keepercover.png"
+                        alt="keeper-cover"
+                        className="w-full smh-[500px] h-[350px] object-cover rounded-tl-[140px] z-10 relative" 
+                    />
+                    <a href="#explore">
+                        <div className="w-full flex justify-end sm:-mt-[70px] -mt-[50px] pr-[40px] relative z-10">
+                            <img
+                                src="/flowto.png"
+                                alt="explore"
+                                className="sm:w-[150px] w-[100px] sm:h-[155px] h-[100px] object-contain"
+                            />
+                        </div>
+                    </a>
                 </motion.div>
             </motion.div>
         </section>   
