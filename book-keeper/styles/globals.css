@@ -2,6 +2,13 @@
 @tailwind components;
 @tailwind utilities;
 
+*{
+  margin:0;
+  padding:0;
+  box-sizing: border-box;
+  font-family: "Eudoxus Sans" sans-serif;
+}
+
 /*============= common app navbar styles =======================*/
 .active {
   color:goldenrod;
@@ -94,4 +101,12 @@
     hsl(220deg 76% 51%) 100%
   );
   filter: blur(125px);
+}
+.hero-gradient {
+  background: linear-gradient(
+    97.86deg,
+    #a509ff 0%,
+    #34acc7 53.65%,
+    #a134c7 100%
+  );
 }
