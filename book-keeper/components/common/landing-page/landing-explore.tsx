@@ -1,14 +1,45 @@
-import React from 'react';
-
+import React, {useState} from 'react';
 import { motion } from 'framer-motion';
-import { LandingCustomTitleText, LandingCustomTypingText } from './landing-customtext';
+import { LandingCustomExploreCard, LandingCustomTitleText, LandingCustomTypingText } from './landing-customs';
 import styles from '../../../styles/index';
-import { fadeIn, staggerContainer } from '../animations/landing_page.animations';
+import { staggerContainer } from '../animations/landing_page.animations';
+import { exploreKeeperPreviews } from './landing-misc';
 
 
-const LandingExplore = () => (
-    <section>
-    </section>           
-)
+const LandingExplore = () => {
+    const [active, setActive] = useState('02');
+    return (
+        <section className={`${styles.paddings}`}
+        id="explore"
+        >
+            <motion.div
+                variants={staggerContainer}
+                initial="hidden"
+                whileInView="show"
+                viewport={{once:false,amount:0.25}}
+                className={`${styles.innerWidth} mx-auto flex flex-col`}
+            >
+                <LandingCustomTypingText title="| Keeper. Preview" textStyles="text-center"/>
+                <LandingCustomTitleText title={<>Choose The Screen To Expand <br className="md:block hidden" /> The Preview</>} textStyles="text-center" />
+                <div className="mt-[50px] flex lg:flex-row flex-col min-h-[70vh] gap-5">
+                    {
+                        exploreKeeperPreviews.map((preview: any,index: any)=>(
+                            <LandingCustomExploreCard 
+                                key={preview.id}
+                                {...preview}
+                                index={index}
+                                active={active}
+                                handleClick={setActive}
+                            />
+                        ))
+                    }
+                </div>
+            </motion.div>
+        </section>
+    )
+
+}
+               
+
 
 export default LandingExplore;
