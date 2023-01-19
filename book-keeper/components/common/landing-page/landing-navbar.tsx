@@ -17,11 +17,11 @@ const LandingNavbar = () => {
         >
             <div className="absolute w-[100%] inset-0 gradient-01" />
             <div className={`${styles.innerWidth} mx-auto flex justify-between gap-8`}>
-            <Icon display={["inline","inline","none","inline","inline"]} as={RiBookMarkFill} fontSize="md" color="white"></Icon>
+            <Icon display={"inline"} as={RiBookMarkFill} fontSize="xl" color="white"></Icon>
                 <h2 className="font-extrabold text-[24px] leading-[30px] text-white" >
                     KEEPER.
                 </h2>
-            <Icon display={["inline","inline","none","inline","inline"]} as={AiOutlineLink} fontSize="md" color="white"></Icon>
+            <Icon display={"inline"} as={AiOutlineLink} fontSize="xl" color="white"></Icon>
             </div>
             
         </motion.nav>
