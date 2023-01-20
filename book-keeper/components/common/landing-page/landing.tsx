@@ -3,6 +3,7 @@ import LandingAbout from './landing-about';
 import LandingExplore from './landing-explore';
 import LandingFeatures from './landing-features';
 import LandingFeedbacks from './landing-feedback';
+import LandingFooter from './landing-footer';
 import LandingGetStarted from './landing-getstarted';
 import LandingHero from './landing-hero';
 import LandingInsights from './landing-insights';
@@ -30,6 +31,7 @@ const Landing = () => {
                 <div className="gradient-04 z-0" />
                 <LandingFeedbacks />
             </div>
+            <LandingFooter />
         </div>
     )
 }

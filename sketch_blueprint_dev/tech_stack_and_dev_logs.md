@@ -297,7 +297,7 @@ reff: https://www.prisma.io/docs/concepts/components/prisma-client/filtering-and
 - [✔] cleanup, wrapup, update readme, feature section, test all flows, remove console statements,
   update all http codes and all related to trpc according to these rpc standards ref: https://trpc.io/docs/rpc return statements in trpc procedures
 
-- [ ] tailwind css + landing page premium sleak page reff: https://tailwindcss.com/docs/responsive-design very similar to chakra UI
+- [x] tailwind css + landing page premium sleak page reff: https://tailwindcss.com/docs/responsive-design very similar to chakra UI
 
 - [ ] yarn lint & resolve warnings & errors
 

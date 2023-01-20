@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 import styles from '../../../styles/index';
 import { navVariants } from '../animations/landing_page.animations';
 import { RiBookMarkFill } from 'react-icons/ri';
-import { Icon } from '@chakra-ui/react';
+import { IconButton } from '@chakra-ui/react';
 import { FcLink } from 'react-icons/fc';
 import { AiOutlineLink } from 'react-icons/ai';
 
@@ -17,11 +17,15 @@ const LandingNavbar = () => {
         >
             <div className="absolute w-[100%] inset-0 gradient-01" />
             <div className={`${styles.innerWidth} mx-auto flex justify-between gap-8`}>
-            <Icon display={"inline"} as={RiBookMarkFill} fontSize="xl" color="white"></Icon>
+            <a href="/user/login">
+                <IconButton display={"inline"} as={RiBookMarkFill} size="xs"  aria-label={'login'}></IconButton>
+            </a>
                 <h2 className="font-extrabold text-[24px] leading-[30px] text-white" >
                     KEEPER.
                 </h2>
-            <Icon display={"inline"} as={AiOutlineLink} fontSize="xl" color="white"></Icon>
+            <a href="https://github.com/Jasmeet-1998" target="_blank">
+                <IconButton display={"inline"} as={AiOutlineLink} size="xs" aria-label={'founder'}></IconButton>
+            </a>
             </div>
             
         </motion.nav>
@@ -29,3 +33,4 @@ const LandingNavbar = () => {
 }
 
 export default LandingNavbar;
+
