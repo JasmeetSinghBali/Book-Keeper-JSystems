@@ -37,7 +37,7 @@ const LandingFeedbacks = () => (
                     alt="Jasmeet Bali"
                     className="w-full lg:h-[610px] h-auto min-h-[210px] object-cover rounded-[40px]"
                 />
-                <motion.div variants={zoomIn(0.4,1)} className="lg:block hidden absolute -left-[8%] top-[25%]">
+                <motion.div variants={zoomIn(0.3,1)} className="lg:block sm:hidden absolute -left-[8%] top-[25%]">
                     <img src="/flowto.png" alt="zoominAction" className="w-[155px] h-[155px] object-contain"/>
                 </motion.div>
             </motion.div>

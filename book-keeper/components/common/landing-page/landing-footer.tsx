@@ -6,7 +6,7 @@ import styles from '../../../styles/index';
 import { fadeIn, footerVariants, staggerContainer,zoomIn } from '../animations/landing_page.animations';
 import { socialsList } from './landing-misc';
 
-console.log(socialsList)
+
 const LandingFooter = () => (
         <motion.footer
         variants={footerVariants}
@@ -20,10 +20,13 @@ const LandingFooter = () => (
                     <h4 className="font-bold md:text-[64px] text-[44px] text-white">
                         Sign Up Today & Try Keeper.
                     </h4>
-                    <button type="button" className="flex items-center h-fit py-4 px-6 bg-[#25618B] rounded-[32px] gap-[12px]">
-                        <img  src="/tryoutkeeper.svg" alt="trykeeper" className="w-[24px] h-[24px] object-contain" />
-                        <span className="font-normal text-[16px] text-white">Try Keeper.</span>
-                    </button>
+                    <a href="/user/login">
+                        <button type="button" className="flex items-center h-fit py-4 px-6 bg-[#25618B] rounded-[32px] gap-[12px]">
+                            <img  src="/tryoutkeeper.svg" alt="trykeeper" className="w-[24px] h-[24px] object-contain" />
+                            <span className="font-normal text-[16px] text-white">Try Keeper.</span>
+                        </button>
+                    </a>
+                    
                 </div>
                 <div className="flex flex-col">
                     <div className="mb-[50px] h-[2px] bg-white opacity-10" />
