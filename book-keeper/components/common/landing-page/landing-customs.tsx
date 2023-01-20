@@ -62,3 +62,28 @@ export const LandingCustomExploreCard = ({ id ,imgUrl,title,index,active, handle
         }
     </motion.div>
 );
+
+export const StartSteps = ({number,text}: any) => (
+    <div className={`${styles.flexCenter} flex-row`}>
+        <div className={`${styles.flexCenter} w-[70px] h-[70px] rounded-[24px] bg-[#323f5d]`}>
+            <p className="font-bold text-[20px] text-white">0{number}</p>
+        </div>
+        <p className="flex-1 ml-[30px] font-normal text-[18px] text-[#B0B0B0] leading-[32px]">
+            {text}
+        </p>
+    </div>
+)
+
+export const NewFeatures = ({imgUrl, title, subtitle}: any) => (
+    <div className="flex-1 flex flex-col sm:max-w-[250px] min-w-[210px]">
+        <div className={`${styles.flexCenter} w-[70px] h-[70px] rounded-[24px] bg-[#323f5d]`}>
+            <img
+                src={imgUrl}
+                alt="feature-icon"
+                className="w-1/3 h-1/3 object-contain"
+             />
+        </div>        
+        <h1 className="mt-[26px] font-bold text-[24px] leading-[3opx] text-white">{title}</h1>
+        <p className="flex-1 mt-[16px] font-normal text-[18px] text-[#b0b0b0] leading-[32px]">{subtitle}</p>
+    </div>
+)
