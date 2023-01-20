@@ -2,9 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
-*{
-  margin:0;
-  padding:0;
+* {
+  margin: 0;
+  padding: 0;
   box-sizing: border-box;
   font-family: "Eudoxus Sans" sans-serif;
   scroll-behavior: smooth;
@@ -12,21 +12,21 @@
 
 /*============= common app navbar styles =======================*/
 .active {
-  color:goldenrod;
+  color: goldenrod;
 }
 
-.active-icon{
-  color:goldenrod !important;
+.active-icon {
+  color: goldenrod !important;
 }
 
-.sidebar-items{
+.sidebar-items {
   color: gray;
   font-size: medium;
-  font-weight:lighter;
+  font-weight: lighter;
 }
 
-@media only screen and (max-width: 768px){
-  .sidebar-items{
+@media only screen and (max-width: 768px) {
+  .sidebar-items {
     margin-bottom: 0 !important;
   }
 }
@@ -36,7 +36,7 @@
 }
 
 .sidebar-items:hover p {
-  color: goldenrod; 
+  color: goldenrod;
 }
 
 .sidebar-items:hover svg {
@@ -50,15 +50,15 @@
 
 /*============== settings navbar styles =================*/
 .active-two {
-  border-bottom: 2px solid #D53F8C;
-  border-color: #D53F8C ;
-  color:#D53F8C;
+  border-bottom: 2px solid #d53f8c;
+  border-color: #d53f8c;
+  color: #d53f8c;
 }
 
-.sidebar-items-two{
+.sidebar-items-two {
   color: gray;
   font-size: medium;
-  font-weight:600;
+  font-weight: 600;
 }
 
 .sidebar-items-two p {
@@ -66,22 +66,21 @@
 }
 
 .sidebar-items-two:hover p {
-  border-bottom: 2px solid #D53F8C;
-  color:#D53F8C; 
+  border-bottom: 2px solid #d53f8c;
+  color: #d53f8c;
 }
-
 
 /*Misc Browser Scroll/Slider Styles*/
 ::-webkit-scrollbar {
   height: 5px;
   width: 5px;
-  background: #CBD5E0;
+  background: #cbd5e0;
   -webkit-border-radius: 1ex;
   scroll-behavior: smooth;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #6B46C1;
+  background: #6b46c1;
   -webkit-border-radius: 1ex;
 }
 
@@ -149,4 +148,33 @@
   backdrop-filter: blur(4px);
   -webkit-backdrop-filter: blur(4px);
   border: 1px solid rgba(255, 255, 255, 0.18);
+}
+.gradient-05 {
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.04) 0%,
+    rgba(255, 255, 255, 0) 100%
+  );
+}
+
+.feedback-gradient {
+  position: absolute;
+  width: 200px;
+  height: 316px;
+  left: 0px;
+  top: 0px;
+
+  background: #8d39a3;
+  filter: blur(175px);
+}
+
+.footer-gradient {
+  position: absolute;
+  width: 500px;
+  height: 100px;
+  left: 37%;
+  bottom: 0;
+
+  background: #65c4fa;
+  filter: blur(150px);
 }
