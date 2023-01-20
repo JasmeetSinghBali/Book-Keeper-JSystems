@@ -6,6 +6,7 @@ import LandingFeedbacks from './landing-feedback';
 import LandingGetStarted from './landing-getstarted';
 import LandingHero from './landing-hero';
 import LandingInsights from './landing-insights';
+import LandingMap from './landing-map';
 import LandingNavbar from './landing-navbar';
 
 const Landing = () => {
@@ -23,6 +24,7 @@ const Landing = () => {
                 <div className="gradient-04 z-0" />
                 <LandingFeatures />
             </div>
+            <LandingMap />
             <div className="relative">
                 <LandingInsights />
                 <div className="gradient-04 z-0" />

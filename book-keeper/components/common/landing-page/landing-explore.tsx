@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import { motion } from 'framer-motion';
 import { LandingCustomExploreCard, LandingCustomTitleText, LandingCustomTypingText } from './landing-customs';
 import styles from '../../../styles/index';
-import { staggerContainer } from '../animations/landing_page.animations';
+import { fadeIn, staggerContainer } from '../animations/landing_page.animations';
 import { exploreKeeperPreviews } from './landing-misc';
 
 

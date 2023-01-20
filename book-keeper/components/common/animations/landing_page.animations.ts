@@ -107,7 +107,7 @@ export const navVariants = {
     },
   });
   
-  export const planetVariants = (direction) => ({
+  export const miscKeeperVariants = (direction) => ({
     hidden: {
       x: direction === 'left' ? '-100%' : '100%',
       rotate: 120,
