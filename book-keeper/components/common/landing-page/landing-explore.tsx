@@ -9,7 +9,7 @@ import { exploreKeeperPreviews } from './landing-misc';
 const LandingExplore = () => {
     const [active, setActive] = useState('02');
     return (
-        <section className={`${styles.paddings}`}
+        <section className={`sm:p-20 xs:p-10 px-8 py-14`}
         id="explore"
         >
             <motion.div

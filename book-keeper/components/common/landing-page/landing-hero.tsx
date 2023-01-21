@@ -25,7 +25,7 @@ const LandingHero = () => (
                         variants={textVariant(1.4)}
                         className="flex flex-row justify-center items-center"
                     >
-                        <div className="md:w-[80px] sm:w-[45px] w-[20px] md:h-[88px] sm:h-[45px] h-[38px] md:border-[12px] border-[9px] rotate-45 hover:skew-y-12 border-white sm:mx-4 mx-[6px] space-x-0.5 " />
+                        <div className="md:w-[80px] sm:w-[45px] w-[20px] md:h-[88px] sm:h-[45px] h-[38px] md:border-[12px] border-[9px] rotate-45 hover:skew-y-12 border-yellow-400 sm:mx-4 mx-[6px] space-x-0.5 " />
                         <h1 className="font-thin lg:text-[100px] md:text-[70px] sm:text-[35px] text-[34px] lg:leading-[158.4px] md:leading-[114.4px] sm:leading-[74.4px] leading-[64.4px] uppercase text-white">
                            JSys.
                         </h1>
