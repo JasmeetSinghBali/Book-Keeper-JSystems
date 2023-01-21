@@ -18,13 +18,13 @@ const LandingNavbar = () => {
             <div className="absolute w-[100%] inset-0 gradient-01" />
             <div className={`${styles.innerWidth} mx-auto flex justify-between gap-8`}>
             <a href="/user/login">
-                <IconButton display={"inline"} as={RiBookMarkFill} size="xs"  aria-label={'login'}></IconButton>
+                <IconButton display={"inline"} as={RiBookMarkFill} size="xs" bgColor="whiteAlpha.50" color="purple.300" _hover={{bgColor: "inherit", color:"yellow.400"}}  aria-label={'login'}></IconButton>
             </a>
                 <h2 className="font-extrabold text-[24px] leading-[30px] text-white" >
                     KEEPER.
                 </h2>
             <a href="https://github.com/Jasmeet-1998" target="_blank">
-                <IconButton display={"inline"} as={AiOutlineLink} size="xs" aria-label={'founder'}></IconButton>
+                <IconButton display={"inline"} as={AiOutlineLink} size="xs" bgColor="whiteAlpha.50" color="purple.300" _hover={{bgColor: "inherit", color:"yellow.400"}} aria-label={'founder'}></IconButton>
             </a>
             </div>
             
