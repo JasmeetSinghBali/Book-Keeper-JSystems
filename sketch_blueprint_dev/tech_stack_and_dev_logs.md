@@ -299,7 +299,7 @@ reff: https://www.prisma.io/docs/concepts/components/prisma-client/filtering-and
 
 - [x] tailwind css + landing page premium sleak page reff: https://tailwindcss.com/docs/responsive-design very similar to chakra UI
 
-- [ ] change app svg and add meta tags in "\_app.tsx"
+- [x] change app svg and add meta tags in "\_app.tsx"
 
 - [ ] yarn lint & resolve warnings & errors
 
