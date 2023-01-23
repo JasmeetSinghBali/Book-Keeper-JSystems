@@ -4,6 +4,7 @@ import type { AppProps, AppType } from 'next/app'
 import { motion, AnimatePresence } from 'framer-motion';
 import { trpcClient } from '../utils/Clientrpc';
 import {SessionProvider} from 'next-auth/react';
+import Head from 'next/head';
 
 const MyApp: AppType = ({ Component, pageProps: { session, ...pageProps }, router }: any) => {
   return (
@@ -23,6 +24,13 @@ const MyApp: AppType = ({ Component, pageProps: { session, ...pageProps }, route
               opacity: 0
             }
           }}>
+            <Head>
+              <link rel="icon" href="/keeperIcon.png"/>
+              <meta name="keywords" content="finance-app,book-keeping,keeper" />
+              <meta name="author" content="Jasmeet Singh Bali" />
+              <meta name="description" content="Individual | Business Book-Keeping Made Simpler."/>
+              <title>Keeper: Individual | Business Book-Keeping Made Simpler</title>
+            </Head>
             <Component {...pageProps} />
           </motion.div>
         </AnimatePresence>
