@@ -301,7 +301,7 @@ reff: https://www.prisma.io/docs/concepts/components/prisma-client/filtering-and
 
 - [x] change app svg and add meta tags in "\_app.tsx"
 
-- [ ] yarn lint & resolve warnings & errors
+- [x] yarn lint & resolve warnings & errors
 
 - [ ] record a video for beta-v1 with showcasing all flows , create a giphy https://giphy.com/create/gifmaker and add it in main readme
 

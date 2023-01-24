@@ -5,6 +5,7 @@ import { LandingCustomTitleText, LandingCustomTypingText, NewFeatures } from './
 import styles from '../../../styles/index';
 import { fadeIn, staggerContainer, miscKeeperVariants } from '../animations/landing_page.animations';
 import { newFeatures } from './landing-misc';
+import Image from 'next/image';
 
 const LandingFeatures = () => (
     <section className={`${styles.paddings} relative z-10`}>
@@ -20,7 +21,7 @@ const LandingFeatures = () => (
             className="flex-[0.75] flex justify-center flex-col"
             >
                 <LandingCustomTypingText title="| What's New?" textStyles="text-center"/>
-                <LandingCustomTitleText title={<>What's New About Keeper.?</>} textStyles="text-center"/>
+                <LandingCustomTitleText title={<>What&apos;s New About Keeper.?</>} textStyles="text-center"/>
                 <div className="mt-[418px] flex flex-wrap justify-between gap-[24px]">
                     {newFeatures.map((feature)=>(
                         <NewFeatures
@@ -34,7 +35,7 @@ const LandingFeatures = () => (
                 variants={miscKeeperVariants('right')}
                 className={`flex-1 ${styles.flexCenter}`}
             >
-                <img
+                <Image
                     src= "/whats-new.png"
                     alt="get-started"
                     className="w-[90%] h-[90%] object-contain" 

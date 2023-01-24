@@ -1,13 +1,13 @@
 import type { NextPage } from 'next';
 import { useSession, signIn, signOut } from 'next-auth/react';
-import { Box, Button, Divider, Flex, Grid, Heading, Icon, Input, InputGroup, InputLeftAddon, Skeleton, Stack, Text, VStack, chakra } from '@chakra-ui/react';
+import { Box, Button, Divider, Flex, Grid, Heading, Icon, Input, InputGroup, InputLeftAddon, Skeleton, Stack, Text, VStack, chakra, InputLeftElement } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
 import { trpcClient } from '../../utils/Clientrpc';
 import { RiBookMarkFill } from 'react-icons/ri';
 import { BsGithub , BsGoogle, BsTwitter} from 'react-icons/bs';
 import { motion } from 'framer-motion';
 import { FiLogIn } from 'react-icons/fi';
-import { AiFillMail } from 'react-icons/ai';
+import { AiFillMail, AiOutlineMail } from 'react-icons/ai';
 import { useState } from 'react';
 import Link from 'next/link';
 
@@ -151,13 +151,14 @@ const LogIn: NextPage = () => {
                             <Stack ml={5} mt={4} spacing={2}>
                               <chakra.form onSubmit={handleEmailSignIn}>
                                 <InputGroup>
-                                  <InputLeftAddon children='@mail' />
+                                  <InputLeftElement>
+                                    <AiOutlineMail/>
+                                  </InputLeftElement>
                                   <Input 
                                     value={userEmail}
                                     type='email'
                                     onChange={e => setUserEmail(e.target.value)} 
-                                    placeholder='john.doe@funxmail.com'>
-                                  </Input>
+                                    placeholder='john.doe@funxmail.com' />
                                 </InputGroup>
                                 {/** 🚧 Sign in button via mail magic link */}
                                 <Button 

@@ -71,7 +71,9 @@ const BillingSettings = ({userStoreData}: any) => {
                             flexDir={["column","column","row","row","row"]}
                         >
                             <InputGroup bgColor="#fff" mb={4} border="none" borderColor="#1A202C" borderRadius="2px" ml={[10,1,5,10,50]}>
-                                <InputLeftElement pointerEvents="none" children={<AiOutlineFileSearch color="#1A202C"/>} />
+                                <InputLeftElement pointerEvents="none" >
+                                    <AiOutlineFileSearch color="#1A202C"/>
+                                </InputLeftElement>
                                 <Input type="date" borderRadius="1px"/>
                             </InputGroup>
                             <IconButton

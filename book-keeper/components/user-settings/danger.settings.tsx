@@ -281,7 +281,7 @@ const DangerSettings = ({userStoreData}: any) => {
                                     </PinInput>
                                 </Box>
                                 }
-                                Are you sure? You can't undo this action afterwards.
+                                Are you sure? You can&apos;t undo this action afterwards.
                                 {currentUserDataZustand?.user?.mfa_isEnabled && 'Please provide authenticator code to successfully complete this action'}
                                 </AlertDialogBody>
 

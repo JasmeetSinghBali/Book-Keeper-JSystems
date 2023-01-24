@@ -23,7 +23,7 @@ const LandingAbout = () => (
                 className="mt-[8px] font-normal sm:text-[20px] text-[20px] text-center text-gray-300 tracking-tightest hover:tracking-widest"
             >
                 <span className="font-bold text-white italic">Keeper. is a MIT LICENSED [only applicable to unpaid version/package]</span> utility based tool with motto  
-                <span className="font-bold text-white italic">"individual/business book-keeping related compliance and engagements made simpler",</span> In addition to that it has 
+                <span className="font-bold text-white italic">&quot;individual/business book-keeping related compliance and engagements made simpler&quot;,</span> In addition to that it has 
                 <span className="font-bold text-white italic"> dual nature/usecase package support unpaid i.e community and paid i.e premium respectively, </span>
                 the tool is exposed to unpaid audience under MIT LICENSE guidelines while the paid version will be exposed to audience under proprietary software
                 while the specifics and details governing the paid package version is yet to be decided in future & is uncertain presently, 

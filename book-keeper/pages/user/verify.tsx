@@ -12,7 +12,7 @@ import { useRouter } from "next/router";
 /**
  * @desc asks user for email OTP to enable rpc access & attach rpc token in cookie header & redirect user to dashboard page  
  * */
-export default function verify(){
+export default function Verify(){
     
     const { push, pathname } = useRouter();
     const {data: session, status} = useSession();

@@ -231,7 +231,9 @@ const UserContactSection = () => {
                     <Flex alignContent="center">
                         <chakra.form onSubmit={handleFTSearch}>
                             <InputGroup bgColor="#fff" mb={4} border="none" borderColor="#1A202C" borderRadius="10px" mr={2}>
-                                <InputLeftElement pointerEvents="none" children={<AiOutlineFileSearch color="#1A202C"/>} />
+                                <InputLeftElement pointerEvents="none">
+                                    <AiOutlineFileSearch color="#1A202C"/>
+                                </InputLeftElement>
                                 <Input 
                                     type="text" 
                                     placeholder="search by email,phone or cardnumber [full-text-search]"
@@ -294,7 +296,7 @@ const UserContactSection = () => {
                                         {/**image upload section*/}
                                         <FormControl>
                                             <Box>
-                                                <Text fontWeight="semibold" mb={1}>Contact's Image</Text>
+                                                <Text fontWeight="semibold" mb={1}>Contact&apos;s Image</Text>
                                                 <Stack mt={2} mb={2} direction='column'>
                                                     <Input
                                                         type="file"
@@ -369,7 +371,7 @@ const UserContactSection = () => {
                             </DrawerBody>
                         <DrawerFooter borderTopWidth='1px'>
                             <Stack mt={2} direction = 'column'>
-                                <Alert display={ addNewContactMutation.isError || !addNewContactMutation.data ? 'flex' : 'none'} status='info'><AlertIcon />double check input's! </Alert>
+                                <Alert display={ addNewContactMutation.isError || !addNewContactMutation.data ? 'flex' : 'none'} status='info'><AlertIcon />double check input&apos;s! </Alert>
                                 <Alert display={ validationError ? 'flex' : 'none'} status='error'><AlertIcon />Validation failed ! make sure you enter correct details of the contact ! </Alert>
                             </Stack>
                             <Button variant='outline' mr={3} onClick={onClose} _hover={{bg:"red.400"}}>
