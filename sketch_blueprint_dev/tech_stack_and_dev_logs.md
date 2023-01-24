@@ -305,7 +305,7 @@ reff: https://www.prisma.io/docs/concepts/components/prisma-client/filtering-and
 
 - [x] record a video for beta-v1 with showcasing all flows , create a giphy https://giphy.com/create/gifmaker and add it in main readme
 
-- [ ] deploy this beta-v1 version release at vercel
+- [ ] deploy this v1.0.0-beta.0 version release at vercel
 
 ---
 
