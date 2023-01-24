@@ -9,7 +9,7 @@ import { trpcClient } from '../../utils/Clientrpc';
 import { useCurrentRpcToken } from '../../store/rpc-token-store';
 
 
-export default function invoices(){
+export default function Invoices(){
      
     const { push } = useRouter();     
     const { data: session, status } = useSession();

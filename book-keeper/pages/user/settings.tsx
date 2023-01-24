@@ -11,7 +11,7 @@ import { useCurrentUserInfo } from '../../store/current-user-info.store';
 import { useCurrentRpcToken } from '../../store/rpc-token-store';
 
 
-export default function settings(){
+export default function Settings(){
     
     const { push } = useRouter(); 
     const { data: session, status } = useSession();

@@ -69,7 +69,9 @@ const SearchNotificationSection = () =>{
                 */}
                 <Flex alignContent="center">
                     <InputGroup bgColor="#fff" mb={4} border="none" borderColor="#1A202C" borderRadius="10px" mr={2}>
-                        <InputLeftElement pointerEvents="none" children={<AiOutlineFileSearch color="#1A202C"/>} />
+                        <InputLeftElement pointerEvents="none" >
+                            <AiOutlineFileSearch color="#1A202C"/>
+                        </InputLeftElement>
                         <Input type="number" placeholder="Search card via number" borderRadius="10px"/>
                     </InputGroup>
                     {/*🧩 Notification Section */}
@@ -107,7 +109,7 @@ const SearchNotificationSection = () =>{
                             <DrawerBody>
                                 <Stack spacing='24px'>
                                 <Box>
-                                    <Text fontWeight="semibold" mb={1}>Contact's Image</Text>
+                                    <Text fontWeight="semibold" mb={1}>Contact&apos;s Image</Text>
                                     <Input
                                         type="file"
                                         id='contactimage'
@@ -327,7 +329,7 @@ const SearchNotificationSection = () =>{
                         
                         contactsFreshList?.data?.data?.contact_list.map((cont: any)=>{
                             
-                            return (<Avatar src={cont?.image?.length !== 0 ? cont.image : "avatar-2.jpg"}/>)    
+                            return (<Avatar key={cont?.image} src={cont?.image?.length !== 0 ? cont.image : "avatar-2.jpg"}/>)    
                         })
                         
                         :
@@ -346,17 +348,19 @@ const SearchNotificationSection = () =>{
                 <Text color="gray" mt={10} mb={2}>Card Number</Text>
                 <InputGroup>
                     <InputLeftElement
-                        pointerEvents="none"
-                        children={<AiFillCreditCard color="gray.700" />} 
-                    />
+                        pointerEvents="none" 
+                    >
+                        <AiFillCreditCard color="gray.700" />
+                    </InputLeftElement>
                     <Input type="number" placeholder="xxxx xxxx xxxx xxxx" />
                 </InputGroup>
                 <Text color="gray" mt={10} mb={2}>Amount</Text>
                 <InputGroup>
                     <InputLeftElement
-                        pointerEvents="none"
-                        children={<FiDollarSign color="gray.700" />} 
-                    />
+                        pointerEvents="none" 
+                    >
+                        <FiDollarSign color="gray.700" />
+                    </InputLeftElement>
                     <Input type="number" placeholder="1.00" />
                 </InputGroup>
                 <Button mt={4} _hover={{bg:"teal"}} bgColor="blackAlpha.900" color="white" p={7} borderRadius={15}>Send Money</Button>

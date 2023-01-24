@@ -7,6 +7,7 @@ import { Icon } from '@chakra-ui/react';
 import { FcLink } from 'react-icons/fc';
 import { AiOutlineLink } from 'react-icons/ai';
 import { slideIn, staggerContainer, textVariant } from '../animations/landing_page.animations';
+import Image from 'next/image';
 
 const LandingHero = () => (        
         <section className={`${styles.yPaddings} sm:pl-3 pl-6`}>
@@ -36,14 +37,14 @@ const LandingHero = () => (
                     className="relative w-full md:-mt-[20px] -mt-[12px]"
                 >
                     <div className="absolute w-full h-[300px] hero-gradient rounded-tl-[140px] z-[0] -top-[30px]" />
-                    <img
+                    <Image
                         src="/keepercover.png"
                         alt="keeper-cover"
                         className="w-full smh-[500px] h-[350px] object-cover rounded-tl-[140px] z-10 relative" 
                     />
                     <a href="#explore">
                         <div className="w-full flex justify-end sm:-mt-[70px] -mt-[50px] pr-[40px] relative z-10">
-                            <img
+                            <Image
                                 src="/flowto.png"
                                 alt="explore"
                                 className="sm:w-[150px] w-[100px] sm:h-[155px] h-[100px] object-contain"

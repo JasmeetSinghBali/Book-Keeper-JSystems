@@ -3,14 +3,14 @@ import {
     Flex, Heading, Text,
 } from "@chakra-ui/react";
 import Navbar from '../../components/common/navbar';
-import UserContactSection from '../../components/user-contacts.tsx/user.contact';
+import UserContactSection from '../../components/user-contacts/user.contact';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/router';
 import { trpcClient } from '../../utils/Clientrpc';
 import { useCurrentRpcToken } from '../../store/rpc-token-store';
 
 
-export default function contacts(){
+export default function Contacts(){
     const { push } = useRouter(); 
     
     const { data: session, status } = useSession();

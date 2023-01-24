@@ -12,7 +12,7 @@ import { useCurrentRpcToken } from '../../store/rpc-token-store';
 import { useCurrentUserInfo } from '../../store/current-user-info.store';
 
 
-export default function dashboard(){
+export default function Dashboard(){
  
     const { push, pathname } = useRouter();
     const { data: session, status } = useSession(); 

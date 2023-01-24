@@ -115,7 +115,7 @@ const EnableAccountMfaModal = () => {
                 <ModalOverlay />
                 <ModalContent>
                     <ModalHeader>
-                        Enable's your account's MFA
+                        Enable&apos;s your account&apos;s MFA
                     </ModalHeader>
                     <ModalCloseButton />
 
@@ -127,7 +127,9 @@ const EnableAccountMfaModal = () => {
                                     objectFit='cover'
                                     src={fetchQrCodeMutation.data && fetchQrCodeMutation?.data?.data?.show_url}
                                     fallbackSrc='https://i.pinimg.com/originals/49/e5/8d/49e58d5922019b8ec4642a2e2b9291c2.png'
-                                    align="right bottom" />
+                                    align="right bottom"
+                                    alt="Qr-code-display"
+                                    />
                             </Stack>
                             <Accordion allowToggle mb={2} display={!fetchQrCodeMutation.data ? 'none' : 'flex' }>
                                 <AccordionItem>
@@ -172,7 +174,7 @@ const EnableAccountMfaModal = () => {
                                 <Alert display={!fetchQrCodeMutation.data ? 'flex' : 'none'} status='warning'><AlertIcon />Loading qr code generation...  if it fails to generate qr code  please refresh the page & try again or contact support if issue persists.</Alert>
                                 <Alert display={currentUserZustand?.user?.mfa_isEnabled ? 'flex' : 'none' } status='warning'>
                                     <AlertIcon />
-                                    Seems your account has already enabled mfa, if you have lost access to MFA, please contact jasmeetbali.dev.2021@gmail.com to reset your account's MFA.
+                                    Seems your account has already enabled mfa, if you have lost access to MFA, please contact jasmeetbali.dev.2021@gmail.com to reset your account&apos;s MFA.
                                 </Alert>
                             </Stack>
 

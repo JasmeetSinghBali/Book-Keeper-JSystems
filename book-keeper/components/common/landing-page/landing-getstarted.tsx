@@ -5,6 +5,7 @@ import { LandingCustomTitleText, LandingCustomTypingText, StartSteps } from './l
 import styles from '../../../styles/index';
 import { fadeIn, staggerContainer, miscKeeperVariants } from '../animations/landing_page.animations';
 import { startingFeatures } from './landing-misc';
+import Image from 'next/image';
 
 
 
@@ -21,7 +22,7 @@ const LandingGetStarted = () => (
                 variants={miscKeeperVariants('left')}
                 className={`flex-1 ${styles.flexCenter}`}
             >
-                <img
+                <Image
                     src= "/get-started.png"
                     alt="get-started"
                     className="w-[90%] h-[90%] object-contain" 

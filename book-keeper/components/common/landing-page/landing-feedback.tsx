@@ -4,6 +4,7 @@ import { motion } from 'framer-motion';
 import { LandingCustomTitleText, LandingCustomTypingText } from './landing-customs';
 import styles from '../../../styles/index';
 import { fadeIn, staggerContainer,zoomIn } from '../animations/landing_page.animations';
+import Image from 'next/image';
 
 
 const LandingFeedbacks = () => (
@@ -26,19 +27,19 @@ const LandingFeedbacks = () => (
                     </p>
                 </div> 
                 <p className="mt-[24px] font-normal sm:text-[24px] text-[18px] sm:leading-[45px] leading-[39px] text-white">
-                    "With the uncertainity of future and what it awaits, be it good or bad depending on individual's perception,
-                     A need always arise's to take charge of your finances be it individual or business oriented....
-                     Keeper. is developed with the same motto aligned."
+                &quot;With the uncertainity of future and what it awaits, be it good or bad depending on individual&apos;s perception,
+                     A need always arise&apos;s to take charge of your finances be it individual or business oriented....
+                     Keeper. is developed with the same motto aligned.&quot;
                 </p>
             </motion.div>
             <motion.div variants={fadeIn('left','tween',0.2,1)} className="relative flex-1 flex justify-center items-center">
-                <img 
+                <Image
                     src="/founder.jpg"
                     alt="Jasmeet Bali"
                     className="w-full lg:h-[610px] h-auto min-h-[210px] object-cover rounded-[40px]"
                 />
                 <motion.div variants={zoomIn(0.3,1)} className="lg:block sm:hidden absolute -left-[8%] top-[25%]">
-                    <img src="/flowto.png" alt="zoominAction" className="w-[155px] h-[155px] object-contain"/>
+                    <Image src="/flowto.png" alt="zoominAction" className="w-[155px] h-[155px] object-contain"/>
                 </motion.div>
             </motion.div>
         </motion.div>
