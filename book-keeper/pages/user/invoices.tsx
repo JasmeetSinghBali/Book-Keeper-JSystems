@@ -35,16 +35,14 @@ export default function Invoices(){
     },[]);
 
     return(
-        <>
-            <Flex
-                h={[null,null,"100vh"]}
-                flexDir={["column","column","row"]}
-                overflow="hidden"
-                maxW="2000px"
-                backgroundColor="#EDF2F7"
-            >
-                <Navbar /> 
-            </Flex>
-        </>
+        <Flex
+            h={[null,null,"100vh"]}
+            flexDir={["column","column","row"]}
+            overflow="hidden"
+            maxW="2000px"
+            backgroundColor="#EDF2F7"
+        >
+            <Navbar /> 
+        </Flex>
     )
 }

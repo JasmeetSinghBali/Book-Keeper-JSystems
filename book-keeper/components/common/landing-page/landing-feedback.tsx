@@ -4,7 +4,6 @@ import { motion } from 'framer-motion';
 import { LandingCustomTitleText, LandingCustomTypingText } from './landing-customs';
 import styles from '../../../styles/index';
 import { fadeIn, staggerContainer,zoomIn } from '../animations/landing_page.animations';
-import Image from 'next/image';
 
 
 const LandingFeedbacks = () => (
@@ -33,13 +32,13 @@ const LandingFeedbacks = () => (
                 </p>
             </motion.div>
             <motion.div variants={fadeIn('left','tween',0.2,1)} className="relative flex-1 flex justify-center items-center">
-                <Image
-                    src="/founder.jpg"
+                <img
+                    src="/keeper-app-preview.gif"
                     alt="Jasmeet Bali"
                     className="w-full lg:h-[610px] h-auto min-h-[210px] object-cover rounded-[40px]"
                 />
                 <motion.div variants={zoomIn(0.3,1)} className="lg:block sm:hidden absolute -left-[8%] top-[25%]">
-                    <Image src="/flowto.png" alt="zoominAction" className="w-[155px] h-[155px] object-contain"/>
+                    <img src="/flowto.png" alt="zoominAction" className="w-[155px] h-[155px] object-contain"/>
                 </motion.div>
             </motion.div>
         </motion.div>
