@@ -14,7 +14,7 @@ The aim for this project is to make the book keeping simpler i.e track & record 
 
 ```
 
-![](https://github.com/Jasmeet-1998/Book-Keeper-JSystems/tree/stable/book-keeper/public/keeper-app-preview.gif)
+![Keeper-app-preview-gif](https://github.com/Jasmeet-1998/Book-Keeper-JSystems/blob/stable/book-keeper/public/keeper-app-preview.gif)
 
 > 🗃 [Features & Versions]
 
