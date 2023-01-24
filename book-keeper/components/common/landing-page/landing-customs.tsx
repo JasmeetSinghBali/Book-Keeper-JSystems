@@ -6,7 +6,6 @@ import styles from '../../../styles';
 import { Icon } from '@chakra-ui/react';
 import { FcAbout } from 'react-icons/fc';
 import { FiMousePointer } from 'react-icons/fi';
-import Image from 'next/image';
 
 
 export const LandingCustomTypingText = ({title, textStyles}) => (
@@ -37,7 +36,7 @@ export const LandingCustomExploreCard = ({ id ,imgUrl,title,index,active, handle
         className={`relative ${active === id ? 'lg:flex-[3.5] flex-[10]' : 'lg:flex-[0.5] flex-[2]'} flex items-center justify-center min-w-[170px] h-[700px] transition-[flex] duration-[0.7s] ease-out-flex cursor-pointer`}
         onClick={()=>handleClick(id)}
     >
-        <Image src={imgUrl}
+        <img src={imgUrl}
         alt={title}
         className="absolute w-full h-full object-cover rounded-[34px]" 
         />
@@ -78,7 +77,7 @@ export const StartSteps = ({number,text}: any) => (
 export const NewFeatures = ({imgUrl, title, subtitle}: any) => (
     <div className="flex-1 flex flex-col sm:max-w-[250px] min-w-[210px]">
         <div className={`${styles.flexCenter} w-[70px] h-[70px] rounded-[24px] bg-[#323f5d]`}>
-            <Image
+            <img
                 src={imgUrl}
                 alt="feature-icon"
                 className="w-1/3 h-1/3 object-contain"
@@ -91,7 +90,7 @@ export const NewFeatures = ({imgUrl, title, subtitle}: any) => (
 
 export const InsightCard = ({imgUrl, title, subtitle, index }) => (
     <motion.div variants={fadeIn('up','spring', index*0.5 , 1 )} className="flex md:flex-row flex-col gap-4">
-        <Image src={imgUrl} alt="insights" className="md:w-[270px] w-full h-[250px] rounded-[32px] object-cover" />
+        <img src={imgUrl} alt="insights" className="md:w-[270px] w-full h-[250px] rounded-[32px] object-cover" />
         <div className="w-full flex justify-between items-center">
             <div className="flex-1 md:ml-[62px] flex flex-col max-w-[650px]">
                 <h4 className="font-normal lg:text-[42px] text-[26px] text-white">{title}</h4>

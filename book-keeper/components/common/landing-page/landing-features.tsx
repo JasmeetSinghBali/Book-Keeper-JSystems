@@ -5,7 +5,6 @@ import { LandingCustomTitleText, LandingCustomTypingText, NewFeatures } from './
 import styles from '../../../styles/index';
 import { fadeIn, staggerContainer, miscKeeperVariants } from '../animations/landing_page.animations';
 import { newFeatures } from './landing-misc';
-import Image from 'next/image';
 
 const LandingFeatures = () => (
     <section className={`${styles.paddings} relative z-10`}>
@@ -35,7 +34,7 @@ const LandingFeatures = () => (
                 variants={miscKeeperVariants('right')}
                 className={`flex-1 ${styles.flexCenter}`}
             >
-                <Image
+                <img
                     src= "/whats-new.png"
                     alt="get-started"
                     className="w-[90%] h-[90%] object-contain" 

@@ -122,13 +122,13 @@ const EnableAccountMfaModal = () => {
                     <chakra.form onSubmit={handleAccountMfa}>
                         <ModalBody pb={2}>
                             <Stack mt={2} ml={300} mb={2} direction='column'>
-                                <Image
+                                <img
                                     boxSize='150px'
                                     objectFit='cover'
                                     src={fetchQrCodeMutation.data && fetchQrCodeMutation?.data?.data?.show_url}
                                     fallbackSrc='https://i.pinimg.com/originals/49/e5/8d/49e58d5922019b8ec4642a2e2b9291c2.png'
                                     align="right bottom"
-                                    alt="Qr-code-display"
+                                    alt="QRCode"
                                     />
                             </Stack>
                             <Accordion allowToggle mb={2} display={!fetchQrCodeMutation.data ? 'none' : 'flex' }>
