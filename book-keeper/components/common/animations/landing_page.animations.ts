@@ -37,7 +37,7 @@ export const navVariants = {
   });
   
   // where stagger children and delaychildren allow to have container's child animation
-  export const staggerContainer = (staggerChildren, delayChildren) => ({
+  export const staggerContainer = (staggerChildren: any, delayChildren: any) => ({
     hidden: {},
     show: {
       transition: {
@@ -47,7 +47,7 @@ export const navVariants = {
     },
   });
 
-  export const textVariant = (delay) => ({
+  export const textVariant = (delay: any) => ({
     hidden: {
       y: 50,
       opacity: 0,
@@ -88,7 +88,7 @@ export const navVariants = {
     },
   };
   
-  export const fadeIn = (direction, type, delay, duration) => ({
+  export const fadeIn = (direction: any, type: any, delay: any, duration: any) => ({
     hidden: {
       x: direction === 'left' ? 100 : direction === 'right' ? -100 : 0,
       y: direction === 'up' ? 100 : direction === 'down' ? -100 : 0,
@@ -107,7 +107,7 @@ export const navVariants = {
     },
   });
   
-  export const miscKeeperVariants = (direction) => ({
+  export const miscKeeperVariants = (direction: any) => ({
     hidden: {
       x: direction === 'left' ? '-100%' : '100%',
       rotate: 120,
@@ -123,7 +123,7 @@ export const navVariants = {
     },
   });
   
-  export const zoomIn = (delay, duration) => ({
+  export const zoomIn = (delay: any, duration: any) => ({
     hidden: {
       scale: 0,
       opacity: 0,
