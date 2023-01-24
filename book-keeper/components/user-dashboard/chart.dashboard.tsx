@@ -87,7 +87,7 @@ const BKChartMain = () => {
     return(
         <Line
             data={data}
-            options={options}
+            options={options as any}
         />
     )
 }

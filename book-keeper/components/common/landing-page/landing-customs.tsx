@@ -8,7 +8,7 @@ import { FcAbout } from 'react-icons/fc';
 import { FiMousePointer } from 'react-icons/fi';
 
 
-export const LandingCustomTypingText = ({title, textStyles}) => (
+export const LandingCustomTypingText = ({title, textStyles}: any) => (
     <motion.p
         variants={textContainer}
         className={`font-normal text-[24px] text-gray-300 ${textStyles}`}
@@ -23,7 +23,7 @@ export const LandingCustomTypingText = ({title, textStyles}) => (
      
 );
 
-export const LandingCustomTitleText = ({title, textStyles}) => (
+export const LandingCustomTitleText = ({title, textStyles}: any) => (
     <motion.h2 variants={textVariant2} initial="hidden" whileInView="show" className={`mt-[8px] font-bold md:text-[64px] text-[40px] text-white ${textStyles}`}>
         {title}
     </motion.h2>
@@ -88,7 +88,7 @@ export const NewFeatures = ({imgUrl, title, subtitle}: any) => (
     </div>
 )
 
-export const InsightCard = ({imgUrl, title, subtitle, index }) => (
+export const InsightCard = ({imgUrl, title, subtitle, index }: any) => (
     <motion.div variants={fadeIn('up','spring', index*0.5 , 1 )} className="flex md:flex-row flex-col gap-4">
         <img src={imgUrl} alt="insights" className="md:w-[270px] w-full h-[250px] rounded-[32px] object-cover" />
         <div className="w-full flex justify-between items-center">

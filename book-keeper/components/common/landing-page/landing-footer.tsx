@@ -3,7 +3,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { LandingCustomTitleText, LandingCustomTypingText } from './landing-customs';
 import styles from '../../../styles/index';
-import { fadeIn, footerVariants, staggerContainer,zoomIn } from '../animations/landing_page.animations';
+import { footerVariants } from '../animations/landing_page.animations';
 import { socialsList } from './landing-misc';
 import Link from 'next/link';
 

@@ -14,11 +14,7 @@ import { useCurrentUserInfo } from "../../store/current-user-info.store";
 
 const SettingsNavbar = () => {
     const [settingsOption,selectSettingsOption] = useState('general');
-    const { data: session } = useSession();
-
-    const userEmail: any = session?.user?.email;
-    const result: any = trpcClient.user.whoami.useQuery({ email: userEmail });
-    const userInfo: any = result?.data?.data;
+    const { data: session } = useSession();    
 
     const currentUserDataZustand: any = useCurrentUserInfo.getState();
     console.log("Zustand store========user data==== inside navbar settings");

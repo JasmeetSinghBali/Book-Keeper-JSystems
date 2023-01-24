@@ -9,10 +9,10 @@ import { newFeatures } from './landing-misc';
 const LandingFeatures = () => (
     <section className={`${styles.paddings} relative z-10`}>
         <motion.div 
-            variants={staggerContainer}
+            variants={staggerContainer as any}
             initial="hidden"
             whileInView="show"
-            viewport={{once:'false',amount: 0.25}}
+            viewport={ { once:false, amount: 0.25 } }
             className={`${styles.innerWidth} mx-auto flex lg:flex-row flex-col gap-8`}
         >
             <motion.div

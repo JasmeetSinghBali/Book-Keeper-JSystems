@@ -6,7 +6,7 @@ import { slideIn, staggerContainer, textVariant } from '../animations/landing_pa
 const LandingHero = () => (        
         <section className={`${styles.yPaddings} sm:pl-3 pl-6`}>
             <motion.div
-                variants={staggerContainer}
+                variants={staggerContainer as any}
                 initial="hidden"
                 whileInView="show"
                 viewport={{once: false, amount: 0.25}}

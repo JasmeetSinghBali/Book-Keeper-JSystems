@@ -122,7 +122,7 @@ const EnableAccountMfaModal = () => {
                     <chakra.form onSubmit={handleAccountMfa}>
                         <ModalBody pb={2}>
                             <Stack mt={2} ml={300} mb={2} direction='column'>
-                                <img
+                                <Image
                                     boxSize='150px'
                                     objectFit='cover'
                                     src={fetchQrCodeMutation.data && fetchQrCodeMutation?.data?.data?.show_url}

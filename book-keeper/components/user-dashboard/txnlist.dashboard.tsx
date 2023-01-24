@@ -17,7 +17,7 @@ import {
     AiFillCaretDown,
     AiFillCaretUp,
 } from 'react-icons/ai';
-import BKChartMain from './chart.dashboard.tsx'
+import BKChartMain from './chart.dashboard'
 import { motion } from 'framer-motion';
 import AnimatedCharacter from '../common/animations/animate.character';
 import ChartRanger  from './chart.dashboard.filter';
