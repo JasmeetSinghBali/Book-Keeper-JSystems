@@ -134,7 +134,7 @@ const LogIn: NextPage = () => {
                                 fontWeight="semibold" 
                                 color="gray.600"
                             >
-                              <Icon display={"inline"} as={RiBookMarkFill} fontSize="lg" color="#805AD5"></Icon>Keeper.   
+                              <Icon display={"inline"} as={RiBookMarkFill} fontSize="lg" color="#805AD5"></Icon>Keeper. [v1.0.0-beta.0]   
                             </Heading>
                             <Divider mt={2} ></Divider>
                             <Heading
@@ -199,7 +199,7 @@ const LogIn: NextPage = () => {
                             </VStack>
                             <Divider mt={2} ></Divider>
                             <Text color="gray.600" fontSize="xs" py={2} ml={44} fontWeight='hairline' fontFamily='cursive'>📝Note from developer📝</Text>
-                            <Text color="gray.600" fontSize="xs" py={2} ml={12} fontWeight='hairline' fontFamily='cursive'>Google-OAuth(in sandbox env) if you are not able to sign in contact jasmeetbali.dev.2021@gmail.com to add your gmail to test accounts.</Text>
+                            <Text color="gray.600" fontSize="xs" py={2} ml={12} fontWeight='hairline' fontFamily='cursive'>Due to past spam accounts and requests that results in draining the limited resources utilized by this project, the access to the app is limited and is only available on request to jasmeetbali.dev.2021@gmail.com</Text>
                         </motion.div>
                       </Flex>
                     </Flex>
