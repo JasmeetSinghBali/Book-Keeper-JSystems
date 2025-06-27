@@ -24,7 +24,7 @@ const LandingNavbar = () => {
                 <h2 className="font-extrabold text-[24px] leading-[30px] text-white" >
                     KEEPER.
                 </h2>
-            <a href="https://github.com/Jasmeet-1998" target="_blank" rel="noreferrer">
+            <a href="https://github.com/JasmeetSinghBali" target="_blank" rel="noreferrer">
                 <IconButton display={"inline"} as={AiOutlineLink} size="xs" bgColor="whiteAlpha.50" color="yellow.400" _hover={{bgColor: "inherit", color:"purple.300"}} aria-label={'founder'}></IconButton>
             </a>
             </div>
