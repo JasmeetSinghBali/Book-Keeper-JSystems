@@ -42,7 +42,7 @@ const LandingFooter = () => (
 
                         <div className="flex gap-4">
                             {socialsList.map((social) => (
-                                <a key={social.name} href="https://github.com/Jasmeet-1998/Book-Keeper-JSystems" target="_blank" rel="noreferrer">
+                                <a key={social.name} href="https://github.com/JasmeetSinghBali/Book-Keeper-JSystems" target="_blank" rel="noreferrer">
                                     <img
                                         key={social.name}
                                         src={social.imgUrl}
